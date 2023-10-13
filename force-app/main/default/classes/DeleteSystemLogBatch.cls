@@ -1,8 +1,9 @@
 /**
  * Batch Apex class to hard delete System_Log__c objects created before a specified cutoff date.
  * Author:          aykut.palak@sbcinc.com
- * ModifiedDate:    13.10.2023
+ * CreationDate:    13.10.2023
  * ModifiedBy:      aykut.parlak@sbcinc.com
+ * ModifiedDate:    13.10.2023
  */
 public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
     /**
