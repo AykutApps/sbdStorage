@@ -205,4 +205,8 @@ public class OrderingEventsPricingMatrixCtl {
             return dt1.CompareString.compareTo(dt2.CompareString);
         }
     }
+
+    public void AptE() {
+        system.debug('test');
+    }
 }
