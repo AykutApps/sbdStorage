@@ -1,6 +1,7 @@
 public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
     public Database.QueryLocator start(Database.BatchableContext context) {
-        return Database.getQueryLocator('SELECT Id, CreatedDate FROM System_Log__c WHERE CreatedDate < 2023-01-01T00:00:00Z');
+        Date cutoffDate = Date.newInstance(2023, 1, 1);
+        return Database.getQueryLocator('SELECT Id, CreatedDate FROM System_Log__c WHERE cutoffDate < :cutoffDate');
     }
 
     public void execute(Database.BatchableContext context, List<System_Log__c> scope) {
