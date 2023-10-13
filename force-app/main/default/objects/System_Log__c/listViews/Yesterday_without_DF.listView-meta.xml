@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Yesterday_without_DF</fullName>
+    <columns>OBJECT_ID</columns>
+    <columns>NAME</columns>
+    <columns>Extended_Information__c</columns>
+    <columns>Code_Identifier__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>Description__c</columns>
+    <columns>Logged_In_User__c</columns>
+    <columns>Log_Item_Source__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>YESTERDAY</value>
+    </filters>
+    <filters>
+        <field>NAME</field>
+        <operation>notContain</operation>
+        <value>Consumer</value>
+    </filters>
+    <filters>
+        <field>Log_Item_Source__c</field>
+        <operation>notEqual</operation>
+        <value>ORD_OrderStatusModelHelper</value>
+    </filters>
+    <label>Yesterday without DF/OrderStatus</label>
+    <language>en_US</language>
+</ListView>
