@@ -210,8 +210,8 @@ public class OrderingEventsPricingMatrixCtl {
         system.debug('test');
     }
 
-    public void AptE() {
-        String MyName;
+    public void AptEr() {
+        String MyName = 'test3';
         system.debug('test');
     }
 }
