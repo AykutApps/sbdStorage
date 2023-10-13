@@ -209,4 +209,9 @@ public class OrderingEventsPricingMatrixCtl {
     public void AptE() {
         system.debug('test');
     }
+
+    public void AptE() {
+        String MyName;
+        system.debug('test');
+    }
 }
