@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_Prefix_Cannot_Exceed_8_Characters</fullName>
+    <active>true</active>
+    <description>A PO Prefix cannot exceed 8 characters if provided</description>
+    <errorConditionFormula>IF(AND(OR(ISNEW(),ISCHANGED(PO_Prefix__c))
+   ,LEN(PO_Prefix__c) &gt; 8
+   )
+, true
+, false
+)</errorConditionFormula>
+    <errorDisplayField>PO_Prefix__c</errorDisplayField>
+    <errorMessage>When provided, the PO Prefix cannot exceed 8 characters due to field sizes in COM.  Be sure to get rid of any blank spaces.</errorMessage>
+</ValidationRule>

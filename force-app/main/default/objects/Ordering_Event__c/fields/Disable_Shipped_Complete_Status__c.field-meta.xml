@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Shipped_Complete_Status__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description
+    >mburr.2021-11-04  PSO Orders are now staged on the iSeries, so the SFDC Order Status logic will not know when a PSO Order -- represented by an SF Order record -- is fully shipped (aka &quot;SHIPPED COMPLETE&quot;). If checked, this checkbox prevents the SHIPPED COMPLETE logic from firing in SFDC when order-status records from the iSeries are processed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText
+    >If checked, related SF Orders will not be flagged as SHIPPED COMPLETE when the iSeries sends status updates to Salesforce.  When this event is complete, click the button Apply Shipped Complete to update the status on each SF Order.</inlineHelpText>
+    <label>Disable Shipped Complete Status</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
