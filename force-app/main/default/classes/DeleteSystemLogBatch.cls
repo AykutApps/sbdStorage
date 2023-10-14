@@ -1,9 +1,9 @@
 /**
  * Batch Apex class to hard delete System_Log__c objects created before a specified cutoff date.
- * Author:          aykut.palak@sbcinc.com
- * CreationDate:    13.10.2023
- * ModifiedBy:      aykut.parlak@sbcinc.com
- * ModifiedDate:    13.10.2023
+ * Author: aykut.palak@sbcinc.com
+ * CreationDate: 13.10.2023
+ * ModifiedBy: aykut.parlak@sbcinc.com
+ * ModifiedDate: 13.10.2023
  */
 public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
     /**
@@ -17,16 +17,20 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
         Date cutoffDate = Date.newInstance(2023, 1, 1);
 
         // Use the cutoffDate in the dynamic SOQL query
-        String query = 'SELECT Id, CreatedDate FROM System_Log__c WHERE CreatedDate < :cutoffDate';
-
-        return Database.getQueryLocator(query);
+        return Database.getQueryLocator(
+            [
+                SELECT Id, CreatedDate
+                FROM System_Log__c
+                WHERE CreatedDate < :cutoffDate
+            ]
+        );
     }
 
     /**
      * Execute method to process the retrieved System_Log__c records.
      *
      * @param context The batchable context.
-     * @param scope The list of System_Log__c records to process.
+     * @param scope   The list of System_Log__c records to process.
      */
     public void execute(Database.BatchableContext context, List<System_Log__c> scope) {
         List<Id> recordsToDelete = new List<Id>();
