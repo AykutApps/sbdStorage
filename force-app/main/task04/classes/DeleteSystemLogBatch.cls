@@ -6,27 +6,30 @@
  * ModifiedDate: 13.10.2023
  */
 public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
-    Date cutoffDate;
+    Date cutoffStartDate;
+    Date cutoffEndDate;
     /**
      * @description Start method that sets up the initial query for the batch job.
      *
      * @param context The batchable context.
      * @return A QueryLocator to retrieve System_Log__c records created before the cutoff date.
      */
-    public DeleteSystemLogBatch(Date providedCutoffDate) {
-        cutoffDate = providedCutoffDate;
+    public DeleteSystemLogBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
+        cutoffStartDate = providedCutoffStartDate;
+        cutoffEndDate = providedCutoffEndDate;
     }
 
     public Database.QueryLocator start(Database.BatchableContext context) {
         // Define the cutoff date as January 1, 2023 if not provided
-        cutoffDate = (cutoffDate == null) ? Date.newInstance(2023, 1, 1) : cutoffDate;
+        cutoffStartDate = (cutoffStartDate == null) ? Date.newInstance(2014, 1, 1) : cutoffStartDate;
+        cutoffEndDate = (cutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : cutoffEndDate;
 
         // Use the cutoffDate in the dynamic SOQL query
         return Database.getQueryLocator(
             [
                 SELECT Id, CreatedDate
                 FROM System_Log__c
-                WHERE CreatedDate < :cutoffDate
+                WHERE CreatedDate < :cutoffEndDate AND CreatedDate > :cutoffStartDate
             ]
         );
     }
