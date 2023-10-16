@@ -54,6 +54,7 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
         if (!recordsToDelete.isEmpty()) {
             try {
                 // Use Database.emptyRecycleBin to permanently delete the records
+                Database.delete(recordsToDelete);
                 Database.emptyRecycleBin(recordsToDelete);
             } catch (Exception ex) {
                 // Log any errors while deleting records

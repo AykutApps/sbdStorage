@@ -11,7 +11,7 @@ public class DeleteSystemLogBatchTest {
         insert testLogs;
 
         // Create an instance of the batch class
-        DeleteSystemLogBatch batchJob = new DeleteSystemLogBatch(Date.today().addDays(1));
+        DeleteSystemLogBatch batchJob = new DeleteSystemLogBatch(Date.today().addDays(1), Date.today().addDays(-1));
 
         // Start the batch job
         Test.startTest();
