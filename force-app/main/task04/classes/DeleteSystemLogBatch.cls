@@ -1,18 +1,19 @@
 /**
  * @description Batch Apex class that permanently deletes System_Log__c objects created before a specified cutoff date.
  * Author: aykut.palak@sbcinc.com
- * CreationDate: 13.10.2023
- * ModifiedBy: aykut.parlak@sbcinc.com
- * ModifiedDate: 13.10.2023
+ * Creation Date: 13.10.2023
+ * Modified By: aykut.parlak@sbcinc.com
+ * Modified Date: 13.10.2023
  */
 public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
     Date cutoffStartDate;
     Date cutoffEndDate;
+
     /**
-     * @description Start method that sets up the initial query for the batch job.
+     * @description Constructor method that sets up the initial query for the batch job.
      *
-     * @param context The batchable context.
-     * @return A QueryLocator to retrieve System_Log__c records created before the cutoff date.
+     * @param providedCutoffStartDate The provided cutoff start date.
+     * @param providedCutoffEndDate The provided cutoff end date.
      */
     public DeleteSystemLogBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
         // Define the cutoff start and end dates
@@ -20,8 +21,14 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
         cutoffEndDate = (providedCutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : providedCutoffEndDate;
     }
 
+    /**
+     * @description Start method that sets up the initial query for the batch job.
+     *
+     * @param context The batchable context.
+     * @return A QueryLocator to retrieve System_Log__c records created between the cutoff dates
+     */
     public Database.QueryLocator start(Database.BatchableContext context) {
-        // Use the cutoffDate in the dynamic SOQL query
+        // Use the cutoffStartDate and cutoffEndDate in the dynamic SOQL query
         return Database.getQueryLocator(
             [
                 SELECT Id, CreatedDate
@@ -35,7 +42,7 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
      * @description Execute method to process the retrieved System_Log__c records.
      *
      * @param context The batchable context.
-     * @param scope   The list of System_Log__c records to process.
+     * @param scope The list of System_Log__c records to process.
      */
     public void execute(Database.BatchableContext context, List<System_Log__c> scope) {
         List<Id> recordsToDelete = new List<Id>();
@@ -48,9 +55,9 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
             try {
                 // Use Database.emptyRecycleBin to permanently delete the records
                 Database.emptyRecycleBin(recordsToDelete);
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 // Log any errors while deleting records
-                SystemLogHelper.insertSystemLog('deleteSystemLog', 'Error deleting records: ', e);
+                SystemLogHelper.insertSystemLog('deleteSystemLog', 'Error deleting records: ', ex);
             }
         }
     }
@@ -61,6 +68,6 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
      * @param context The batchable context.
      */
     public void finish(Database.BatchableContext context) {
-        // Any post-processing cab be performed here if needed
+        // Any post-processing can be performed here if needed
     }
 }
