@@ -1,5 +1,5 @@
 @isTest
-public class DeleteSystemLogBatchTest {
+public class SystemLogDeleteBatchTest {
     @isTest
     static void testBatchJob() {
         // Create test System_Log__c records
@@ -11,7 +11,7 @@ public class DeleteSystemLogBatchTest {
         insert testLogs;
 
         // Create an instance of the batch class
-        DeleteSystemLogBatch batchJob = new DeleteSystemLogBatch(Date.today().addDays(1), Date.today().addDays(-1));
+        SystemLogDeleteBatch batchJob = new SystemLogDeleteBatch(Date.today().addDays(1), Date.today().addDays(-1));
 
         // Start the batch job
         Test.startTest();

@@ -2,10 +2,8 @@
  * @description Batch Apex class that permanently deletes System_Log__c objects created before a specified cutoff date.
  * Author: aykut.palak@sbcinc.com
  * Creation Date: 13.10.2023
- * Modified By: aykut.parlak@sbcinc.com
- * Modified Date: 13.10.2023
  */
-public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
+public class SystemLogDeleteBatch implements Database.Batchable<SObject> {
     Date cutoffStartDate;
     Date cutoffEndDate;
 
@@ -15,7 +13,7 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
      * @param providedCutoffStartDate The provided cutoff start date.
      * @param providedCutoffEndDate The provided cutoff end date.
      */
-    public DeleteSystemLogBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
+    public SystemLogDeleteBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
         // Define the cutoff start and end dates
         cutoffStartDate = (providedCutoffStartDate == null) ? Date.newInstance(2014, 1, 1) : providedCutoffStartDate;
         cutoffEndDate = (providedCutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : providedCutoffEndDate;
@@ -58,7 +56,7 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
                 Database.emptyRecycleBin(recordsToDelete);
             } catch (Exception ex) {
                 // Log any errors while deleting records
-                SystemLogHelper.insertSystemLog('deleteSystemLog', 'Error deleting records: ', ex);
+                SystemLogHelper.insertSystemLog('systemLogDeletionError', 'Error on deleting system log records.', ex);
             }
         }
     }
