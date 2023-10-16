@@ -50,7 +50,7 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
                 Database.emptyRecycleBin(recordsToDelete);
             } catch (Exception e) {
                 // Log any errors while deleting records
-                System.debug('Error deleting records: ' + e.getMessage());
+                SystemLogHelper.insertSystemLog('deleteSystemLog', 'Error deleting records: ', e);
             }
         }
     }
