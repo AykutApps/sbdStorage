@@ -1,4 +1,8 @@
-public class OrderingEventsPricingMatrixCtl {
+/**
+ * The OrderingEventsPricingMatrixCtl class is responsible for viewing the pricing matrix for ordering events.
+ */
+public without sharing class OrderingEventsPricingMatrixCtl {
+    // Properties
     public List<DataItem> productListToView { get; set; }
     public String productListToViewString { get; set; }
     public List<DataItem> orderingEventProductsList { get; set; }
@@ -9,17 +13,30 @@ public class OrderingEventsPricingMatrixCtl {
     Map<String, String> productPricebookPriceMap;
     public String exportFileName { get; set; }
 
+    /**
+     * Constructor with oeId parameter.
+     *
+     * @param oeIdProvided The Id of the ordering event.
+     */
     public OrderingEventsPricingMatrixCtl(String oeIdProvided) {
         oeId = oeIdProvided;
         initateOrderingEventsPricingMatrix();
     }
 
+    /**
+     * Default constructor.
+     * Initializes OrderingEventsPricingMatrixCtl instance using the oeId from the current page URL parameter.
+     */
     public OrderingEventsPricingMatrixCtl() {
         Map<String, String> urlParams = ApexPages.currentPage().getParameters();
         oeId = urlParams.get('oeId');
         initateOrderingEventsPricingMatrix();
     }
 
+    /**
+     * Initialize the Ordering Events Pricing Matrix.
+     * Gets the ordering event with products, retrieves pricebook Ids, builds the product pricebook price map, and sets the ordering event products list.
+     */
     public void initateOrderingEventsPricingMatrix() {
         getOrderEventWithProducts();
         getListOfPricebookIds();
@@ -28,6 +45,10 @@ public class OrderingEventsPricingMatrixCtl {
         setExportFileName();
     }
 
+    /**
+     * Retrieve the ordering event with products.
+     * Queries the database for the ordering event and its associated products.
+     */
     private void getOrderEventWithProducts() {
         orderEvent = [
             SELECT
@@ -64,6 +85,10 @@ public class OrderingEventsPricingMatrixCtl {
         ];
     }
 
+    /**
+     * Get a list of pricebook Ids.
+     * Adds non-null pricebook Ids from the ordering event to the pricebookIds list.
+     */
     private void getListOfPricebookIds() {
         pricebookIds = new List<Id>();
         if (orderEvent.Price_Book_Retail__c != null)
@@ -84,30 +109,39 @@ public class OrderingEventsPricingMatrixCtl {
             pricebookIds.add(orderEvent.Price_Book_Level_7__c);
     }
 
+    /**
+     * Build the product pricebook price map.
+     * Retrieves pricebook entries for the products associated with the ordering event and builds a map with the product Id and pricebook price.
+     */
     private void getProductPricebookPriceMap() {
         productPricebookPriceMap = new Map<String, String>();
-        List<PricebookEntry> pricebookEntiries = [
+        List<PricebookEntry> pricebookEntries = [
             SELECT Id, format(UnitPrice) price, Product2Id, Pricebook2Id
             FROM PricebookEntry
             WHERE Product2Id IN (SELECT Product__c FROM Ordering_Event_Product__c WHERE Ordering_Event__c = :oeId) AND Pricebook2Id IN :pricebookIds
         ];
 
-        for (PricebookEntry pe : pricebookEntiries) {
-            productPricebookPriceMap.put(String.valueof(pe.Product2Id) + String.valueof(pe.Pricebook2Id), string.valueof(pe.get('price')));
+        for (PricebookEntry pe : pricebookEntries) {
+            productPricebookPriceMap.put('' + pe.Product2Id + pe.Pricebook2Id, String.valueof(pe.get('price')));
         }
     }
 
+    /**
+     * Set the ordering event products list.
+     * Builds a list of DataItem objects containing product information and sorts it.
+     * Also sets the productListToView and productListToViewString properties.
+     */
     public void setOrderingEventProductsList() {
         orderingEventProductsList = new List<DataItem>();
         for (Ordering_Event_Product__c oep : orderEvent.Ordering_Event_Products__r) {
-            String retailPrice = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Retail__c));
-            String level1 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_1__c));
-            String level2 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_2__c));
-            String level3 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_3__c));
-            String level4 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_4__c));
-            String level5 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_5__c));
-            String level6 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_6__c));
-            String level7 = productPricebookPriceMap.get(String.valueof(oep.Product__c) + String.valueof(orderEvent.Price_Book_Level_7__c));
+            String retailPrice = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Retail__c);
+            String level1 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_1__c);
+            String level2 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_2__c);
+            String level3 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_3__c);
+            String level4 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_4__c);
+            String level5 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_5__c);
+            String level6 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_6__c);
+            String level7 = productPricebookPriceMap.get('' + oep.Product__c + orderEvent.Price_Book_Level_7__c);
 
             orderingEventProductsList.add(
                 new DataItem(
@@ -132,10 +166,19 @@ public class OrderingEventsPricingMatrixCtl {
         productListToView = orderingEventProductsList.clone();
         productListToViewString = JSON.serialize(productListToView);
     }
+
+    /**
+     * Set the export file name.
+     * Sets the exportFileName property to the PO Prefix of the ordering event.
+     */
     public void setExportFileName() {
         exportFileName = orderEvent.PO_Prefix__c;
     }
 
+    /**
+     * Filter the data based on the filterText.
+     * Filters the ordering event products list based on the filterText and updates the productListToView.
+     */
     public void filterData() {
         system.debug(filterText);
         if (String.isBlank(filterText)) {
@@ -143,19 +186,32 @@ public class OrderingEventsPricingMatrixCtl {
         } else {
             List<DataItem> tempProductList = new List<DataItem>();
             for (DataItem item : orderingEventProductsList) {
-                if (item.ProductCode.contains(filterText) || item.DetailSKU.contains(filterText) || item.MasterSKU.contains(filterText) || item.Description.contains(filterText)) {
+                if (
+                    item.ProductCode.containsIgnoreCase(filterText) ||
+                    item.DetailSKU.containsIgnoreCase(filterText) ||
+                    item.MasterSKU.containsIgnoreCase(filterText) ||
+                    item.Description.containsIgnoreCase(filterText)
+                ) {
                     tempProductList.add(item);
                 }
-                productListToView = tempProductList.clone();
             }
+            productListToView = tempProductList.clone();
         }
     }
 
+    /**
+     * Reset the filter.
+     * Resets the filterText and calls the filterData method to update the productListToView.
+     */
     public void resetfilter() {
         filterText = null;
         filterData();
     }
 
+    /**
+     * The DataItem class represents a single item of data for an ordering event product.
+     * It contains properties for various product details and implements the Comparable interface for sorting.
+     */
     public class DataItem implements Comparable {
         public String Section { get; set; }
         public String Brand { get; set; }
@@ -206,6 +262,12 @@ public class OrderingEventsPricingMatrixCtl {
             CompareString = sec + rp;
         }
 
+        /**
+         * Compare this DataItem object with another object.
+         *
+         * @param other The object to compare with.
+         * @return Integer value indicating the comparison result.
+         */
         public Integer compareTo(Object other) {
             DataItem dt1 = (DataItem) this;
             DataItem dt2 = (DataItem) other;
