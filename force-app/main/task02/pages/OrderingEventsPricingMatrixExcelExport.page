@@ -1,0 +1,34 @@
+<apex:page controller="OrderingEventsPricingMatrixCtl_v2" sidebar="false" action="{!loadDataExcel}" contentType="application/vnd.ms-excel#{!exportFileName}.xls">
+    <table border="1">
+        <tr>
+            <th>Section</th>
+            <th>Brand</th>
+            <th>Product Code</th>
+            <th>Detail SKU</th>
+            <th>Retail Price</th>
+            <th>Level1</th>
+            <th>Level2</th>
+            <th>Level3</th>
+            <th>Level4</th>
+            <th>Level5</th>
+            <th>Level6</th>
+            <th>Level7</th>
+        </tr>
+        <apex:repeat value="{!productListToView}" var="a">
+            <tr>
+                <td>{!a.Section}</td>
+                <td>{!a.Brand}</td>
+                <td>{!a.ProductCode}</td>
+                <td>{!a.DetailSKU}</td>
+                <td>{!a.RetailPrice}</td>
+                <td>{!a.Level1}</td>
+                <td>{!a.Level2}</td>
+                <td>{!a.Level3}</td>
+                <td>{!a.Level4}</td>
+                <td>{!a.Level5}</td>
+                <td>{!a.Level6}</td>
+                <td>{!a.Level7}</td>
+            </tr>
+        </apex:repeat>
+    </table>
+</apex:page>
