@@ -15,15 +15,12 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
      * @return A QueryLocator to retrieve System_Log__c records created before the cutoff date.
      */
     public DeleteSystemLogBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
-        cutoffStartDate = providedCutoffStartDate;
-        cutoffEndDate = providedCutoffEndDate;
+        // Define the cutoff start and end dates
+        cutoffStartDate = (providedCutoffStartDate == null) ? Date.newInstance(2014, 1, 1) : providedCutoffStartDate;
+        cutoffEndDate = (providedCutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : providedCutoffEndDate;
     }
 
     public Database.QueryLocator start(Database.BatchableContext context) {
-        // Define the cutoff date as January 1, 2023 if not provided
-        cutoffStartDate = (cutoffStartDate == null) ? Date.newInstance(2014, 1, 1) : cutoffStartDate;
-        cutoffEndDate = (cutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : cutoffEndDate;
-
         // Use the cutoffDate in the dynamic SOQL query
         return Database.getQueryLocator(
             [
