@@ -61,6 +61,6 @@ public class DeleteSystemLogBatch implements Database.Batchable<SObject> {
      * @param context The batchable context.
      */
     public void finish(Database.BatchableContext context) {
-        // You can perform any post-processing here if needed
+        // Any post-processing cab be performed here if needed
     }
 }
