@@ -1,25 +1,24 @@
-<apex:page controller="OrderingEventsPricingMatrixCtl_v2" showHeader="true" sidebar="true">
+<apex:page controller="OrderingEventsPricingMatrixCtl" showHeader="true" sidebar="true">
     <apex:param name="paramName" value="paramValue" />
 
     <script>
         function downloadBlob(content, filename, contentType) {
-            // Create a blob
-            var blob = new Blob([content], { type: contentType });
-            var url = URL.createObjectURL(blob);
-            var pom = document.createElement("a");
-            pom.href = url;
-            pom.setAttribute("download", filename);
-            pom.click();
+            const blob = new Blob([content], { type: contentType });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            link.click();
         }
+
         function exportToCSV() {
-            console.log("{!JSENCODE(oeid)}");
-            let productsListString = "{!JSENCODE(productListToViewString)}";
-            let productsList = JSON.parse(productsListString);
+            const oeid = "{!JSENCODE(oeid)}";
+            const productsListString = "{!JSENCODE(productListToViewString)}";
+            const productsList = JSON.parse(productsListString);
 
             console.log(productsListString);
             console.log(productsList);
 
-            const items = productsList;
             const replacer = (key, value) => {
                 if (value === null) {
                     return "";
@@ -33,11 +32,13 @@
             };
 
             const header = ["Section", "Brand", "ProductCode", "MasterSKU", "DetailSKU", "RetailPrice", "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7"];
-            const csv = [header.join(","), ...items.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)).join(","))].join("\r\n");
-            downloadBlob(csv, "{!exportFileName}.csv", "text/csv;charset=utf-8;");
+            const csvRows = [header, ...productsList.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)))];
+            const csvContent = csvRows.map((row) => row.join(",")).join("\n");
+            downloadBlob(csvContent, "{!exportFileName}.csv", "text/csv;charset=utf-8;");
         }
+
         function exportToExcel() {
-            window.open("/apex/OrderingEventsPricingMatrixExcelExport?oeid=" + "{!$CurrentPage.parameters.oeid}", "_blank");
+            window.open(`/apex/OrderingEventsPricingMatrixExcelExport?oeid=${"{!$CurrentPage.parameters.oeid}"}`, "_blank");
         }
     </script>
 

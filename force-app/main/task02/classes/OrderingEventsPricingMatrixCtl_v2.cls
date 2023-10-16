@@ -1,4 +1,4 @@
-public class OrderingEventsPricingMatrixCtl {
+public class OrderingEventsPricingMatrixCtl_v2 {
     public List<DataItem> productListToView { get; set; }
     public String productListToViewString { get; set; }
     public List<DataItem> orderingEventProductsList { get; set; }
@@ -9,12 +9,12 @@ public class OrderingEventsPricingMatrixCtl {
     Map<String, String> productPricebookPriceMap;
     public String exportFileName { get; set; }
 
-    public OrderingEventsPricingMatrixCtl(String oeIdProvided) {
+    public OrderingEventsPricingMatrixCtl_v2(String oeIdProvided) {
         oeId = oeIdProvided;
         initateOrderingEventsPricingMatrix();
     }
 
-    public OrderingEventsPricingMatrixCtl() {
+    public OrderingEventsPricingMatrixCtl_v2() {
         Map<String, String> urlParams = ApexPages.currentPage().getParameters();
         oeId = urlParams.get('oeId');
         initateOrderingEventsPricingMatrix();

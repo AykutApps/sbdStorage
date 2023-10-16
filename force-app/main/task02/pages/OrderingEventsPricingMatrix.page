@@ -1,5 +1,47 @@
 <apex:page controller="OrderingEventsPricingMatrixCtl" showHeader="true" sidebar="true">
     <apex:param name="paramName" value="paramValue" />
+
+    <script>
+        function downloadBlob(content, filename, contentType) {
+            const blob = new Blob([content], { type: contentType });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            link.click();
+        }
+
+        function exportToCSV() {
+            const oeid = "{!JSENCODE(oeid)}";
+            const productsListString = "{!JSENCODE(productListToViewString)}";
+            const productsList = JSON.parse(productsListString);
+
+            console.log(productsListString);
+            console.log(productsList);
+
+            const replacer = (key, value) => {
+                if (value === null) {
+                    return "";
+                } else if (typeof value === "string" && value.includes("USD")) {
+                    return value.replace("USD ", "");
+                } else if (["RetailPrice", "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7"].includes(key)) {
+                    return Number(value);
+                } else {
+                    return value;
+                }
+            };
+
+            const header = ["Section", "Brand", "ProductCode", "MasterSKU", "DetailSKU", "RetailPrice", "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7"];
+            const csvRows = [header, ...productsList.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)))];
+            const csvContent = csvRows.map((row) => row.join(",")).join("\n");
+            downloadBlob(csvContent, "{!exportFileName}.csv", "text/csv;charset=utf-8;");
+        }
+
+        function exportToExcel() {
+            window.open(`/apex/OrderingEventsPricingMatrixExcelExport?oeid=${"{!$CurrentPage.parameters.oeid}"}`, "_blank");
+        }
+    </script>
+
     <apex:form id="mform">
         <apex:pageBlock title="Ordering Event Details" mode="edit">
             <apex:pageBlockSection collapsible="true">
@@ -23,22 +65,12 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="Apply Filter" action="{!filterData}" rerender="dataTable" /> &nbsp;
-                <apex:commandButton value="Reset Filter" action="{!resetfilter}" rerender="mform" />
+                <apex:commandButton value="Apply Filter" action="{!filterData}" rerender="dataTable" />
+                <apex:commandButton value="Reset Filter" action="{!resetfilter}" rerender="mform" />&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandButton value="Export To CSV" onclick="exportToCSV(); return false;" />
+                <apex:commandButton value="Export To Excel" onclick="exportToExcel(); return false;" />
             </apex:pageBlockButtons>
         </apex:pageBlock>
-
-        <!-- <apex:pageBlock title="Products Filter">
-            <apex:pageBlockSection columns="1">
-                <apex:outputPanel layout="block" helpText="My custom help text...">
-                    <apex:outputLabel style="font-weight:bold"> Enter your filter text </apex:outputLabel> &nbsp;
-                    <apex:inputText value="{!filterText}" label="Enter your filter text" /> &nbsp;
-                    <apex:commandButton value="Apply Filter" action="{!filterData}" rerender="dataTable" /> &nbsp;
-                    <apex:commandButton value="Reset Filter" action="{!resetfilter}" rerender="mform" />
-                </apex:outputPanel>
-            </apex:pageBlockSection>
-        </apex:pageBlock> -->
-
         <apex:pageBlock title="Ordering Event Products Table">
             <apex:pageBlockTable value="{!productListToView}" var="item" id="dataTable">
                 <apex:column headerValue="Section">
