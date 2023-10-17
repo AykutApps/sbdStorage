@@ -1,5 +1,8 @@
 /**
  * The OrderingEventsPricingMatrixCtl class is responsible for viewing the pricing matrix for ordering events.
+ *
+ * Author: aykut.parlak@sbdinc.com
+ * Creation Date: 10.10.2023
  */
 public without sharing class OrderingEventsPricingMatrixCtl {
     // Properties
