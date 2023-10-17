@@ -119,13 +119,13 @@ public without sharing class OrderingEventsPricingMatrixCtl {
     private void getProductPricebookPriceMap() {
         productPricebookPriceMap = new Map<String, String>();
         List<PricebookEntry> pricebookEntries = [
-            SELECT Id, format(UnitPrice) price, Product2Id, Pricebook2Id
+            SELECT Id, UnitPrice, Product2Id, Pricebook2Id
             FROM PricebookEntry
             WHERE Product2Id IN (SELECT Product__c FROM Ordering_Event_Product__c WHERE Ordering_Event__c = :oeId) AND Pricebook2Id IN :pricebookIds
         ];
 
         for (PricebookEntry pe : pricebookEntries) {
-            productPricebookPriceMap.put('' + pe.Product2Id + pe.Pricebook2Id, String.valueof(pe.get('price')));
+            productPricebookPriceMap.put('' + pe.Product2Id + pe.Pricebook2Id, String.valueof(pe.get('UnitPrice')));
         }
     }
 

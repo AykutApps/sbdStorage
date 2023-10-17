@@ -1,4 +1,9 @@
-<apex:page controller="OrderingEventsPricingMatrixCtl" sidebar="false" action="{!initateOrderingEventsPricingMatrix}" contentType="application/vnd.ms-excel#{!exportFileName}.xls">
+<apex:page
+    controller="OrderingEventsPricingMatrixCtl"
+    sidebar="false"
+    action="{!initateOrderingEventsPricingMatrix}"
+    contentType="application/vnd.ms-excel#{!exportFileName}_PriceMatrix.xls"
+>
     <table border="1">
         <thead>
             <!-- Table header row -->

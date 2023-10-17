@@ -31,7 +31,7 @@
             const header = ["Section", "Brand", "ProductCode", "MasterSKU", "DetailSKU", "RetailPrice", "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7"];
             const csvRows = [header, ...productsList.map((row) => header.map((fieldName) => JSON.stringify(row[fieldName], replacer)))];
             const csvContent = csvRows.map((row) => row.join(",")).join("\n");
-            downloadBlob(csvContent, "{!exportFileName}.csv", "text/csv;charset=utf-8;");
+            downloadBlob(csvContent, "{!exportFileName}_PriceMatrix.csv", "text/csv;charset=utf-8;");
         }
 
         function exportToExcel() {
