@@ -7,10 +7,10 @@
  *
  * Date cutoffStartDate = Date.newInstance(2023, 10, 16);
  * Date cutoffEndDate = Date.newInstance(2023, 10, 17);
- * SystemLogDeleteBatch batchJob = new SystemLogDeleteBatch(cutoffStartDate,cutoffEndDate);
+ * SYS_SystemLogDeleteBatch batchJob = new SYS_SystemLogDeleteBatch(cutoffStartDate,cutoffEndDate);
  * Database.executeBatch(batchJob, 2000);
  */
-public class SystemLogDeleteBatch implements Database.Batchable<SObject> {
+public class SYS_SystemLogDeleteBatch implements Database.Batchable<SObject> {
     Date cutoffStartDate;
     Date cutoffEndDate;
 
@@ -20,7 +20,7 @@ public class SystemLogDeleteBatch implements Database.Batchable<SObject> {
      * @param providedCutoffStartDate The provided cutoff start date.
      * @param providedCutoffEndDate The provided cutoff end date.
      */
-    public SystemLogDeleteBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
+    public SYS_SystemLogDeleteBatch(Date providedCutoffStartDate, Date providedCutoffEndDate) {
         // Define the cutoff start and end dates
         cutoffStartDate = (providedCutoffStartDate == null) ? Date.newInstance(2014, 1, 1) : providedCutoffStartDate;
         cutoffEndDate = (providedCutoffEndDate == null) ? Date.newInstance(2023, 1, 1) : providedCutoffEndDate;

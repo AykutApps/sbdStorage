@@ -1,21 +1,21 @@
 @isTest
-public class SystemLogDeleteBatchTest {
+public class SYS_SystemLogDeleteBatchTest {
     @isTest
     static void testBatchJob() {
         // Create test System_Log__c records
         List<System_Log__c> testLogs = new List<System_Log__c>();
-        for (Integer i = 0; i < 10; i++) {
-            System_Log__c log = new System_Log__c(CreatedDate = Date.newInstance(2022, 12, 31));
+        for (Integer i = 0; i < 2000; i++) {
+            System_Log__c log = new System_Log__c(Code_Identifier__c = 'test', Description__c = 'test', Log_Item_Source__c = 'test');
             testLogs.add(log);
         }
         insert testLogs;
 
         // Create an instance of the batch class
-        SystemLogDeleteBatch batchJob = new SystemLogDeleteBatch(Date.today().addDays(1), Date.today().addDays(-1));
+        SYS_SystemLogDeleteBatch batchJob = new SYS_SystemLogDeleteBatch(Date.today().addDays(-1), Date.today().addDays(1));
 
         // Start the batch job
         Test.startTest();
-        Database.executeBatch(batchJob);
+        Database.executeBatch(batchJob, 2000);
         Test.stopTest();
 
         // Verify that the records were deleted
