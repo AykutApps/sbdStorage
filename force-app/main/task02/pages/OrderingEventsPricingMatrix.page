@@ -16,9 +16,6 @@
             const productsListString = "{!JSENCODE(productListToViewString)}";
             const productsList = JSON.parse(productsListString);
 
-            console.log(productsListString);
-            console.log(productsList);
-
             const replacer = (key, value) => {
                 if (value === null) {
                     return "";
