@@ -1,0 +1,34 @@
+<apex:page controller="USR_CompareSFUsersCtl" lightningStylesheets="true" tabStyle="User">
+    <apex:form>
+        <div style="width: 50%">
+            <apex:pageMessages />
+            <apex:pageBlock title="Compare SF Users">
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="Compare Users" action="{!compareUsers}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="2" collapsible="false" title="Base User">
+                    <apex:outputField value="{!baseUser.FirstName}" />
+                    <apex:outputField value="{!baseUser.IsActive}" />
+                    <apex:outputField value="{!baseUser.LastName}" />
+                    <apex:outputField value="{!baseUser.UserName}" />
+                    <apex:outputField value="{!baseUser.Profile.Name}" label="SF Profile" />
+                    <apex:outputField value="{!baseUser.Email}" />
+                    <apex:outputField value="{!baseUser.UserRole.Name}" label="SF Role" />
+                    <apex:outputField value="{!baseUser.FederationIdentifier}" />
+                    <apex:outputField value="{!baseUser.Title}" />
+                    <apex:outputField value="{!baseUser.Contact.Name}" label="SF Contact" rendered="{!if(baseUser.ContactId!=null,true,false)}" />
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" collapsible="false" title="Choose Users">
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel>SF User 2: Username </apex:outputLabel>
+                        <apex:inputText value="{!otherUserName}" size="80" />
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel>SF User 3: Username </apex:outputLabel>
+                        <apex:inputText value="{!anotherUserName}" size="80" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+</apex:page>
