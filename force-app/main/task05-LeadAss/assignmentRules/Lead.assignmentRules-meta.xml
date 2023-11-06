@@ -15,7 +15,7 @@
     </assignmentRule>
     <assignmentRule>
         <fullName>Pro Leads from Facebook%2FGoogle Ads</fullName>
-        <active>true</active>
+        <active>false</active>
         <ruleEntry>
             <assignedTo>mattb@pesnet.com</assignedTo>
             <assignedToType>User</assignedToType>
