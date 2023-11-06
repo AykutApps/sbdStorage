@@ -45,3 +45,19 @@ $RECYCLE.BIN/
 **/venv/
 **/objects/**
 **/default/**
+tasks/task05-LeadAssignments/localdev/duplicated values.txt
+tasks/task05-LeadAssignments/localdev/leadassignment_original_v1.xml
+tasks/task05-LeadAssignments/localdev/leadassignment_original_v2.csv
+tasks/task05-LeadAssignments/localdev/leadassignment_original_v3.csv
+tasks/task05-LeadAssignments/localdev/leadassignment_original_v4.csv
+tasks/task05-LeadAssignments/localdev/leadassignment_v0.txt
+tasks/task05-LeadAssignments/localdev/leadassignment_v1.csv
+tasks/task05-LeadAssignments/localdev/leadassignment_v2.csv
+tasks/task05-LeadAssignments/localdev/leadassignment_v3.csv
+tasks/task05-LeadAssignments/localdev/LeadAssignmentByPostalCode_refined test.csv
+tasks/task05-LeadAssignments/localdev/LeadAssignmentByPostalCode_refined.csv
+tasks/task05-LeadAssignments/localdev/merge file.txt.
+tasks/task05-LeadAssignments/localdev/notes
+tasks/task05-LeadAssignments/localdev/package-lock.json
+tasks/task05-LeadAssignments/localdev/package.json
+tasks/*
