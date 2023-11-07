@@ -1,0 +1,114 @@
+<apex:page controller="USR_CompareSFUsersCtl" lightningStylesheets="true" tabStyle="User">
+    <style type="text/css">
+        <!-- SAME VALUES - if values on columns 2 and/or 3 match the base, then match background color as the base but reduce opacity so the eye can ignore same values -->
+        .same      { opacity: 0.4;
+                     background-color: #FFFFFF;
+                   }
+        <!-- I DO NOT MATCH BASE AND WE BOTH HAVE VALUES - match background color on base but opacity should be 100% so that it is clear the values do not match -->
+        .different { background-color: #FFFFFF;
+                   }
+        <!-- BASE HAS A VALUE BUT I DO NOT - change background to red so it is clear that column 2 and/or 3 might be missing a value/setting -->
+        .missing   { background-color: #FFCCCC;
+                   }
+        <!-- I HAVE A VALUE BUT BASE DOES NOT - change background to green so it is clear that the base column doesn't have a value but columns 2 and/or 3 do -->
+        .extra     { background-color: #CCFFCC;
+                   }
+    </style>
+    <apex:pageMessages />
+    <apex:pageBlock rendered="{!testMode}">
+        baseId: {!baseUser.Id}<br /> baseUser.Username: {!baseUser.Username}<br />
+        <br />
+        otherId: {!otherUser.Id}<br /> otherUser.Username: {!otherUser.Username}<br />
+        <br />
+        anotherId: {!anotherUser.Id}<br /> anotherUser.Username: {!anotherUser.Username}<br />
+    </apex:pageBlock>
+    <apex:form>
+        <!-- START: Header and Navigation bar -->
+        <div style="width: 50%">
+            <apex:pageBlock title="Compare SF Users">
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="Choose Different Users" action="{!chooseUsers}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="{!if(showAnalysis,'Hide Analysis','Show Analysis')}" action="{!toggleAnalysis}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="Swap Users" action="{!swapUsers}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="Refresh" action="{!refresh}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="Save as PDF" action="{!saveAsPDF}" disabled="true" />
+                    &nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="Export" action="{!saveAsSheet}" disabled="true" />
+                </apex:pageBlockButtons>
+                <apex:outputPanel layout="block">
+                    <b>Legend</b>: &nbsp;&nbsp;&nbsp;
+                    <apex:outputPanel layout="inline" styleClass="missing"> &nbsp;&nbsp; No value on this user &nbsp;&nbsp; </apex:outputPanel>
+                    &nbsp;&nbsp;&nbsp;
+                    <apex:outputPanel layout="inline" styleClass="same"> &nbsp;&nbsp; Values matches base user&nbsp;&nbsp; </apex:outputPanel>
+                    &nbsp;&nbsp;&nbsp;
+                    <apex:outputPanel layout="inline" styleClass="different"> &nbsp;&nbsp; Value is different from the base user &nbsp;&nbsp; </apex:outputPanel>
+                    &nbsp;&nbsp;&nbsp;
+                    <apex:outputPanel layout="inline" styleClass="extra"> &nbsp;&nbsp; No value on base user &nbsp;&nbsp; </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </div>
+        <!-- END: Header and Navigation bar -->
+    </apex:form>
+
+    <!-- START: GridRows for Analysis - 3 columns - Col 1 for base-user, Col2 for other-user, Col3 for another-user -->
+    <div>
+        <apex:pageBlock>
+            <apex:pageBlockTable value="{!rows}" var="r">
+                <apex:column headerValue="Row" value="{!r.sortOrder}" />
+                <apex:column headerValue="Parent" value="{!r.parentLabel}" style="width: 8%" />
+                <apex:column headerValue="Type" value="{!r.metaType}" />
+                <apex:column headerValue="Setting/Field/Permission" value="{!r.metaLabel}" style="width: 18%" />
+                <apex:column headerValue="API Name" value="{!r.metaApi}" rendered="{!testMode}" />
+                <apex:column headerValue="Base User" style="width: 18%">
+                    {!r.baseValue}
+                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                        &nbsp;&nbsp;&nbsp;<apex:outputLink
+                            value="/{!r.baseValue}?noredirect=1&isUserEntityOverride=1"
+                            target="_blank"
+                            rendered="{!if(r.baseValue!=null,'true','false')}"
+                            >view</apex:outputLink
+                        >
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="User 2 Analysis" value="{!r.otherAnalysis}" rendered="{!or(showAnalysis,testMode)}" />
+                <apex:column
+                    headerValue="User 2 {!if(and(otherUsername!=null,otherUser=null),'( cannot find '+otherUsername+' )','')}"
+                    style="width: 18%"
+                    styleClass="{!if(otherUser=null,'',r.otherAnalysis)}"
+                >
+                    {!r.otherValue}
+                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                        &nbsp;&nbsp;&nbsp;<apex:outputLink
+                            value="/{!r.otherValue}?noredirect=1&isUserEntityOverride=1"
+                            target="_blank"
+                            rendered="{!if(r.otherValue!=null,'true','false')}"
+                            >view</apex:outputLink
+                        >
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="User 3 Analysis" value="{!r.anotherAnalysis}" rendered="{!if(anotherUser=null,false,or(showAnalysis,testMode))}" />
+                <apex:column
+                    headerValue="User 3 {!if(and(anotherUsername!=null,anotherUser=null),'( cannot find '+anotherUsername+' )','')}"
+                    style="width: 18%"
+                    styleClass="{!if(anotherUser=null,'',r.anotherAnalysis)}"
+                    rendered="{!if(anotherUser=null,false,true)}"
+                >
+                    {!r.anotherValue}
+                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                        &nbsp;&nbsp;&nbsp;<apex:outputLink
+                            value="/{!r.anotherValue}?noredirect=1&isUserEntityOverride=1"
+                            target="_blank"
+                            rendered="{!if(r.anotherValue!=null,'true','false')}"
+                            >view</apex:outputLink
+                        >
+                    </apex:outputPanel>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </div>
+    <!-- END: GridRows for Analysis - 3 columns -->
+</apex:page>
