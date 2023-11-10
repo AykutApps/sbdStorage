@@ -1,9 +1,10 @@
 <apex:page controller="USR_CompareSFUsersCtl" lightningStylesheets="true" tabStyle="User">
+    <!-- Main Form -->
     <apex:form>
         <div style="width: 50%">
             <apex:pageMessages />
             <apex:pageBlock title="Compare SF Users">
-                <apex:pageBlockButtons location="top">
+                <apex:pageBlockButtons location="bottom">
                     <apex:commandButton value="Compare Users" action="{!compareUsers}" />
                 </apex:pageBlockButtons>
                 <apex:pageBlockSection columns="2" collapsible="false" title="Base User">
@@ -18,17 +19,141 @@
                     <apex:outputField value="{!baseUser.Title}" />
                     <apex:outputField value="{!baseUser.Contact.Name}" label="SF Contact" rendered="{!if(baseUser.ContactId!=null,true,false)}" />
                 </apex:pageBlockSection>
-                <apex:pageBlockSection columns="1" collapsible="false" title="Choose Users">
+                <apex:pageBlockSection columns="2" collapsible="false" title="Choose Users">
                     <apex:pageBlockSectionItem>
-                        <apex:outputLabel>SF User 2: Username </apex:outputLabel>
-                        <apex:inputText value="{!otherUserName}" size="80" />
+                        <apex:outputLabel for="userLookupName1">Compare User 2: </apex:outputLabel>
+                        <apex:inputText
+                            html-readonly="true"
+                            id="compareUser2"
+                            onfocus="this.blur"
+                            onkeypress="this.blur()"
+                            value="{!compareUser2.Name}"
+                            onclick="openModal('User2'); return false;"
+                            styleClass="lookupField"
+                        />
                     </apex:pageBlockSectionItem>
+                    <!-- <button onclick="removeUser('User2'); return false;" class="slds-button slds-button_neutral" >Remove</button> -->
+                    <apex:commandButton value="Remove" onclick="removeUser('User2'); return false;" />
+
                     <apex:pageBlockSectionItem>
-                        <apex:outputLabel>SF User 3: Username </apex:outputLabel>
-                        <apex:inputText value="{!anotherUserName}" size="80" />
+                        <apex:outputLabel for="userLookupName2">Compare User 3: </apex:outputLabel>
+                        <apex:inputText html-readonly="true" id="compareUser3" value="{!compareUser3.Name}" onclick="openModal('User3'); return false;" styleClass="lookupField">
+                        </apex:inputText>
+                    </apex:pageBlockSectionItem>
+                    <!-- <button  onclick="removeUser('User3'); return false;" class="slds-button slds-button_neutral">Remove</button> -->
+                    <apex:commandButton value="Remove" onclick="removeUser('User3'); return false;" />
+
+                    <apex:pageBlockSectionItem>
+                        <apex:inputText id="compareUserName2" value="{!compareUser2.Username}" style="display: none" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:inputText id="compareUserName3" value="{!compareUser3.Username}" style="display: none" />
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:pageBlock>
         </div>
     </apex:form>
+
+    <!-- Lookup Modal Dialog -->
+    <apex:form>
+        <apex:outputPanel id="userLookupModal" styleClass="customPopup" layout="block" style="display: none">
+            <apex:outputPanel styleClass="popupBackground" layout="block" style="display: block" />
+            <apex:outputPanel styleClass="popupContent" layout="block" style="display: block">
+                <h3>User Search: &nbsp;</h3>
+
+                <apex:inputText value="{!searchString}" label="User Search" id="userSearchBox">
+                    <apex:actionSupport event="onkeyup" action="{!dynamicSearch}" reRender="searchResults" />
+                </apex:inputText>
+                <br />
+                <h3>Users: &nbsp;</h3>
+                <apex:pageBlock id="searchResults">
+                    <apex:pageBlockTable value="{!users}" var="u" rendered="{!users.size > 0}">
+                        <apex:column>
+                            <apex:commandLink
+                                value="{!u.Name}"
+                                onclick="selectUserName('{!u.Name}'); selectUserUsername('{!u.userName}'); return false;"
+                                reRender="userLookupModal"
+                            >
+                            </apex:commandLink>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+                <apex:commandButton value="Close" onclick="closeModal(); return false;" styleClass="btnClose" />
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+
+    <!-- js script-->
+    <script type="text/javascript">
+        let currentUser;
+        function openModal(selectedCurrentUser) {
+            currentUser = selectedCurrentUser;
+            document.querySelector("[id*='userLookupModal']").style.display = "block";
+        }
+        function closeModal() {
+            document.querySelector("[id*='userLookupModal']").style.display = "none";
+        }
+        function updateUserField(selectedUserName) {
+            document.querySelector("[id*='userLookupModal']").value = selectedUserName;
+            closeModal();
+        }
+        function selectUserName(userName) {
+            if (currentUser == "User2") document.querySelector("[id*='compareUser2']").value = userName;
+            else document.querySelector("[id*='compareUser3']").value = userName;
+            document.querySelector("[id*='userSearchBox']").value = "";
+            closeModal();
+        }
+
+        function selectUserUsername(userId) {
+            if (currentUser == "User2") document.querySelector("[id*='compareUserName2']").value = userId;
+            else document.querySelector("[id*='compareUserName3']").value = userId;
+            document.querySelector("[id*='userSearchBox']").value = "";
+            closeModal();
+        }
+        function removeUser(userName) {
+            if (userName == "User2") {
+                document.querySelector("[id*='compareUser2']").value = null;
+                document.querySelector("[id*='compareUserName2']").value = null;
+            } else {
+                document.querySelector("[id*='compareUser3']").value = null;
+                document.querySelector("[id*='compareUserName3']").value = null;
+            }
+        }
+    </script>
+
+    <!-- css -->
+    <style>
+        .customPopup {
+            z-index: 9999;
+            position: absolute;
+            width: 50%;
+            top: 20%;
+            left: 25%;
+            display: none;
+        }
+        .popupBackground {
+            background-color: black;
+            opacity: 0.5;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .popupContent {
+            background-color: white;
+            border: 2px solid #4b4f56;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .btnClose {
+            display: block;
+            margin: 10px 0 0;
+        }
+        .lookupField {
+            cursor: pointer;
+        }
+    </style>
 </apex:page>

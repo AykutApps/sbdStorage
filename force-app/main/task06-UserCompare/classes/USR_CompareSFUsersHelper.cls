@@ -219,7 +219,6 @@ public with sharing class USR_CompareSFUsersHelper {
         MTD_CompareModels.GridRow g;
         //build security comparision - SF Permission Set Assignments
         string parentType = 'Security';
-        string parentLabel = 'Permission Sets';
         string parentApi = 'PermissionSet';
         string metaType = 'PermissionSetAssignments';
 
@@ -227,15 +226,17 @@ public with sharing class USR_CompareSFUsersHelper {
         integer i = 100;
         if (permSetIdToMembersMap.size() > 0) {
             for (PermissionSet ps : [
-                SELECT Id, Label, Name, LicenseId, NamespacePrefix
+                SELECT Id, Label, Name, LicenseId, NamespacePrefix, Type
                 FROM PermissionSet
                 WHERE Id IN :permSetIdToMembersMap.keySet() AND IsOwnedByProfile = FALSE //mburr.2020-04-16 exclude the permission set that links to the user's SF Profile; it is ugly
                 ORDER BY Label
             ]) {
                 if (permSetIdToMembersMap.containsKey(ps.Id)) {
+                    String parentLabel = (ps.Type == 'Group') ? 'Permission Sets Group' : 'Permission Sets';
+
                     MTD_CompareModels.Membership m = permSetIdToMembersMap.get(ps.Id);
                     //create 1 GridRow per Permission Set
-                    g = new MTD_CompareModels.GridRow(i, parentType, parentLabel, parentApi, metaType, ps.Label, ps.Name);
+                    g = new MTD_CompareModels.GridRow(i, parentType, parentLabel, parentApi, metaType, ps.Label, ps.Name, ps.Id);
                     g.populateRow(((m.includesBase) ? ps.Label : ''), ((m.includesOther) ? ps.Label : ''), ((m.includesAnother) ? ps.Label : ''));
                     g.populateRowApis(((m.includesBase) ? ps.Name : ''), ((m.includesOther) ? ps.Name : ''), ((m.includesAnother) ? ps.Name : ''));
                     out.add(g);
@@ -245,6 +246,81 @@ public with sharing class USR_CompareSFUsersHelper {
         }
 
         //FINAL STEPS
+        return out;
+    }
+
+    public static List<MTD_CompareModels.GridRow> deriveChatterGroupGridRows(User baseUser, User otherUser, User anotherUser) {
+        List<MTD_CompareModels.GridRow> out = new List<MTD_CompareModels.GridRow>();
+
+        //PREP
+        Set<Id> userIds = new Set<Id>();
+        if (baseUser != null && baseUser.Id != null)
+            userIds.add(baseUser.Id);
+        if (otherUser != null && otherUser.Id != null)
+            userIds.add(otherUser.Id);
+        if (anotherUser != null && anotherUser.Id != null)
+            userIds.add(anotherUser.Id);
+
+        if (userIds.size() == 0) {
+            return out;
+        }
+
+        //Add Id of all groups attatched to provided Users into a Map (groupIdToMembersMap)
+        Map<Id, MTD_CompareModels.Membership> groupIdToMembersMap = new Map<Id, MTD_CompareModels.Membership>();
+        for (CollaborationGroupMember cgm : [
+            SELECT Id, CollaborationGroupId, CollaborationGroup.Name, CollaborationGroup.CollaborationType, CollaborationRole, Member.Name, MemberId
+            FROM CollaborationGroupMember
+            WHERE MemberId IN :userIds
+        ]) {
+            MTD_CompareModels.Membership m;
+            if (groupIdToMembersMap.containsKey(cgm.CollaborationGroupId)) {
+                m = groupIdToMembersMap.get(cgm.CollaborationGroupId);
+            } else {
+                m = new MTD_CompareModels.Membership(cgm.CollaborationGroupId);
+            }
+
+            if (baseUser != null && cgm.MemberId == baseUser.Id) {
+                m.includesBase = true;
+            }
+            if (otherUser != null && cgm.MemberId == otherUser.Id) {
+                m.includesOther = true;
+            }
+            if (anotherUser != null && cgm.MemberId == anotherUser.Id) {
+                m.includesAnother = true;
+            }
+
+            groupIdToMembersMap.put(cgm.CollaborationGroupId, m);
+        }
+
+        //WORK
+        MTD_CompareModels.GridRow gr;
+
+        string parentType = 'User';
+        string parentLabel = 'Chatter Group';
+        string parentApi = 'ChatterGroup';
+        string metaType = 'ChatterGroupMember';
+
+        Integer i = 300;
+        if (groupIdToMembersMap.size() > 0) {
+            for (CollaborationGroup cg : [
+                SELECT Id, Name, CollaborationType
+                FROM CollaborationGroup
+                WHERE Id IN :groupIdToMembersMap.keySet()
+                ORDER BY CollaborationType, Name ASC
+            ]) {
+                if (groupIdToMembersMap.containsKey(cg.Id)) {
+                    MTD_CompareModels.Membership m = groupIdToMembersMap.get(cg.Id);
+
+                    gr = new MTD_CompareModels.GridRow(i, parentType, parentLabel, parentApi, metaType, cg.Name, cg.Name);
+                    gr.populateRow(((m.includesBase) ? cg.Name : ''), ((m.includesOther) ? cg.Name : ''), ((m.includesAnother) ? cg.Name : ''));
+                    gr.populateRowApis(((m.includesBase) ? cg.Name : ''), ((m.includesOther) ? cg.Name : ''), ((m.includesAnother) ? cg.Name : ''));
+                    out.add(gr);
+                    i++;
+                }
+            }
+        }
+
+        //Final Steps
         return out;
     }
 }

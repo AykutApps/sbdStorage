@@ -40,6 +40,7 @@ public class MTD_CompareModels {
         public string metaType { get; set; }
         public string metaLabel { get; set; }
         public string metaApi { get; set; }
+        public id metaId { get; set; }
 
         public string baseVal { get; set; } //value or label; depends on the metaType
         public string baseApi { get; set; }
@@ -62,6 +63,17 @@ public class MTD_CompareModels {
             this.metaType = metaType; // Ex. Field
             this.metaLabel = metaLabel; // Ex. Serial Number
             this.metaApi = metaApi; // Ex. SerialNumber
+        }
+        public GridRow(integer sortOrder, string parentType, string parentLabel, string parentApi, string metaType, string metaLabel, string metaApi, id metaId) {
+            init();
+            this.sortOrder = sortOrder;
+            this.parentType = parentType; // Ex. SObject
+            this.parentLabel = parentLabel; // Ex. Registration
+            this.parentApi = parentApi; // Ex. Asset_Owernship__c
+            this.metaType = metaType; // Ex. Field
+            this.metaLabel = metaLabel; // Ex. Serial Number
+            this.metaApi = metaApi; // Ex. SerialNumber
+            this.metaId = metaId; // Ex. id
         }
 
         //public getters & setters

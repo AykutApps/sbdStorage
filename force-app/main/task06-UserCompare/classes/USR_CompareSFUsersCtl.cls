@@ -1,4 +1,4 @@
-public with sharing class USR_CompareSFUsersCtl {
+global with sharing class USR_CompareSFUsersCtl {
     /*  Simple utility that compares up to 3 users for the Salesforce.com Triager Support Team (aka sales/retail support).
     - base sf user:    provide SF Id in query-string-param "Id"
     - other sf user:   compare to base user; end-user keys User.Username on the VF page
@@ -29,8 +29,29 @@ public with sharing class USR_CompareSFUsersCtl {
 
     public List<MTD_CompareModels.GridRow> rows { get; private set; } //each row has 3 columns - col 1 for baseUser, col 2 for otherUser, col 3 for anotherUser
 
+    //////// LOOKUP //////////
+
+    public String searchString { get; set; }
+    public List<User> users { get; set; }
+    public User compareUser2 { get; set; }
+    public User compareUser3 { get; set; }
+
+    public void dynamicSearch() {
+        if (searchString != null && searchString.length() > 2) {
+            // Only search after 2 characters have been typed.
+            String query = '%' + searchString + '%';
+            users = [SELECT Id, Name, Username FROM User WHERE Name LIKE :query LIMIT 10];
+        } else {
+            users.clear();
+        }
+    }
+    //////////////
+
     //constructors
     public USR_CompareSFUsersCtl() {
+        users = new List<User>();
+        compareUser2 = new User();
+        compareUser3 = new User();
         init();
         //get testMode (optional)
         if (ApexPages.currentPage().getParameters().get('testMode') == '1') {
@@ -64,7 +85,6 @@ public with sharing class USR_CompareSFUsersCtl {
         //fetch user
         fetchUsers();
     }
-
     //public getters/setters
 
     //public actions
@@ -89,6 +109,7 @@ public with sharing class USR_CompareSFUsersCtl {
         rows = USR_CompareSFUsersHelper.deriveUserGridRows(baseUser, otherUser, anotherUser);
         rows.addAll(USR_CompareSFUsersHelper.derivePermissionSetGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveGroupAndQueueGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveChatterGroupGridRows(baseUser, otherUser, anotherUser));
 
         //route
         PageReference pg = Page.CompareSFUsers2; //VF Wizard Page 2
@@ -101,12 +122,14 @@ public with sharing class USR_CompareSFUsersCtl {
     public PageReference compareUsers() {
         rows = null;
         curPage = 2;
-
+        otherUsername = compareUser2?.UserName;
+        anotherUsername = compareUser3?.UserName;
         fetchUsers();
         //compare the base to 1 or 2 other SF Users
         rows = USR_CompareSFUsersHelper.deriveUserGridRows(baseUser, otherUser, anotherUser);
         rows.addAll(USR_CompareSFUsersHelper.derivePermissionSetGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveGroupAndQueueGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveChatterGroupGridRows(baseUser, otherUser, anotherUser));
 
         //route
         PageReference pg = Page.CompareSFUsers2; //VF Wizard Page 2
@@ -181,6 +204,12 @@ public with sharing class USR_CompareSFUsersCtl {
         } else {
             return pg;
         }
+    }
+
+    @RemoteAction
+    global static String updatePermission(String PermissionId, String UserId) {
+        insert new PermissionSetAssignment(PermissionSetId = PermissionId, AssigneeId = UserId);
+        return 'OK';
     }
 
     //private methods

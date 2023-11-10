@@ -1,4 +1,5 @@
 <apex:page controller="USR_CompareSFUsersCtl" lightningStylesheets="true" tabStyle="User">
+    <apex:slds />
     <style type="text/css">
         <!-- SAME VALUES - if values on columns 2 and/or 3 match the base, then match background color as the base but reduce opacity so the eye can ignore same values -->
         .same      { opacity: 0.4;
@@ -22,7 +23,7 @@
         <br />
         anotherId: {!anotherUser.Id}<br /> anotherUser.Username: {!anotherUser.Username}<br />
     </apex:pageBlock>
-    <apex:form>
+    <apex:form id="mainpage">
         <!-- START: Header and Navigation bar -->
         <div style="width: 50%">
             <apex:pageBlock title="Compare SF Users">
@@ -33,7 +34,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <apex:commandButton value="Swap Users" action="{!swapUsers}" />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <apex:commandButton value="Refresh" action="{!refresh}" />
+                    <apex:commandButton value="Refresh" action="{!refresh}" id="refreshCmd" />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <apex:commandButton value="Save as PDF" action="{!saveAsPDF}" disabled="true" />
                     &nbsp;&nbsp;&nbsp;
@@ -56,59 +57,93 @@
 
     <!-- START: GridRows for Analysis - 3 columns - Col 1 for base-user, Col2 for other-user, Col3 for another-user -->
     <div>
-        <apex:pageBlock>
-            <apex:pageBlockTable value="{!rows}" var="r">
-                <apex:column headerValue="Row" value="{!r.sortOrder}" />
-                <apex:column headerValue="Parent" value="{!r.parentLabel}" style="width: 8%" />
-                <apex:column headerValue="Type" value="{!r.metaType}" />
-                <apex:column headerValue="Setting/Field/Permission" value="{!r.metaLabel}" style="width: 18%" />
-                <apex:column headerValue="API Name" value="{!r.metaApi}" rendered="{!testMode}" />
-                <apex:column headerValue="Base User" style="width: 18%">
-                    {!r.baseValue}
-                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
-                        &nbsp;&nbsp;&nbsp;<apex:outputLink
-                            value="/{!r.baseValue}?noredirect=1&isUserEntityOverride=1"
-                            target="_blank"
-                            rendered="{!if(r.baseValue!=null,'true','false')}"
-                            >view</apex:outputLink
-                        >
-                    </apex:outputPanel>
-                </apex:column>
-                <apex:column headerValue="User 2 Analysis" value="{!r.otherAnalysis}" rendered="{!or(showAnalysis,testMode)}" />
-                <apex:column
-                    headerValue="User 2 {!if(and(otherUsername!=null,otherUser=null),'( cannot find '+otherUsername+' )','')}"
-                    style="width: 18%"
-                    styleClass="{!if(otherUser=null,'',r.otherAnalysis)}"
-                >
-                    {!r.otherValue}
-                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
-                        &nbsp;&nbsp;&nbsp;<apex:outputLink
-                            value="/{!r.otherValue}?noredirect=1&isUserEntityOverride=1"
-                            target="_blank"
-                            rendered="{!if(r.otherValue!=null,'true','false')}"
-                            >view</apex:outputLink
-                        >
-                    </apex:outputPanel>
-                </apex:column>
-                <apex:column headerValue="User 3 Analysis" value="{!r.anotherAnalysis}" rendered="{!if(anotherUser=null,false,or(showAnalysis,testMode))}" />
-                <apex:column
-                    headerValue="User 3 {!if(and(anotherUsername!=null,anotherUser=null),'( cannot find '+anotherUsername+' )','')}"
-                    style="width: 18%"
-                    styleClass="{!if(anotherUser=null,'',r.anotherAnalysis)}"
-                    rendered="{!if(anotherUser=null,false,true)}"
-                >
-                    {!r.anotherValue}
-                    <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
-                        &nbsp;&nbsp;&nbsp;<apex:outputLink
-                            value="/{!r.anotherValue}?noredirect=1&isUserEntityOverride=1"
-                            target="_blank"
-                            rendered="{!if(r.anotherValue!=null,'true','false')}"
-                            >view</apex:outputLink
-                        >
-                    </apex:outputPanel>
-                </apex:column>
-            </apex:pageBlockTable>
-        </apex:pageBlock>
+        <apex:form>
+            <apex:pageBlock>
+                <apex:pageBlockTable value="{!rows}" var="r">
+                    <apex:column headerValue="Row" value="{!r.sortOrder}" />
+                    <apex:column headerValue="Parent" value="{!r.parentLabel}" style="width: 8%" />
+                    <apex:column headerValue="Type" value="{!r.metaType}" />
+                    <apex:column headerValue="Setting/Field/Permission" value="{!r.metaLabel}" style="width: 18%" />
+                    <apex:column headerValue="API Name" value="{!r.metaApi}" rendered="{!testMode}" />
+                    <apex:column headerValue="Base User" style="width: 18%">
+                        {!r.baseValue}
+                        <apex:commandButton
+                            value="Add"
+                            onclick="updatePermission('{!r.metaId}'); return false;"
+                            rendered="{!AND(OR(r.otherAnalysis == 'extra', r.anotherAnalysis == 'extra'), r.metaType == 'PermissionSetAssignments')}"
+                        />
+                        <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                            &nbsp;&nbsp;&nbsp;<apex:outputLink
+                                value="/{!r.baseValue}?noredirect=1&isUserEntityOverride=1"
+                                target="_blank"
+                                rendered="{!if(r.baseValue!=null,'true','false')}"
+                                >view</apex:outputLink
+                            >
+                        </apex:outputPanel>
+                    </apex:column>
+                    <apex:column headerValue="User 2 Analysis" value="{!r.otherAnalysis}" rendered="{!or(showAnalysis,testMode)}" />
+                    <apex:column
+                        headerValue="User 2 {!if(and(otherUsername!=null,otherUser=null),'( cannot find '+otherUsername+' )','')}"
+                        style="width: 18%"
+                        styleClass="{!if(otherUser=null,'',r.otherAnalysis)}"
+                    >
+                        {!r.otherValue}
+                        <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                            &nbsp;&nbsp;&nbsp;<apex:outputLink
+                                value="/{!r.otherValue}?noredirect=1&isUserEntityOverride=1"
+                                target="_blank"
+                                rendered="{!if(r.otherValue!=null,'true','false')}"
+                                >view</apex:outputLink
+                            >
+                        </apex:outputPanel>
+                    </apex:column>
+                    <apex:column headerValue="User 3 Analysis" value="{!r.anotherAnalysis}" rendered="{!if(anotherUser=null,false,or(showAnalysis,testMode))}" />
+                    <apex:column
+                        headerValue="User 3 {!if(and(anotherUsername!=null,anotherUser=null),'( cannot find '+anotherUsername+' )','')}"
+                        style="width: 18%"
+                        styleClass="{!if(anotherUser=null,'',r.anotherAnalysis)}"
+                        rendered="{!if(anotherUser=null,false,true)}"
+                    >
+                        {!r.anotherValue}
+                        <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
+                            &nbsp;&nbsp;&nbsp;<apex:outputLink
+                                value="/{!r.anotherValue}?noredirect=1&isUserEntityOverride=1"
+                                target="_blank"
+                                rendered="{!if(r.anotherValue!=null,'true','false')}"
+                                >view</apex:outputLink
+                            >
+                        </apex:outputPanel>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
     </div>
     <!-- END: GridRows for Analysis - 3 columns -->
+
+    <!-- Spinner -->
+    <div class="slds-spinner_container slds-is-fixed slds-hide" id="sldsSpinner">
+        <div role="status" class="slds-spinner slds-spinner_medium">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+
+    <!-- Script for remote apex call -->
+    <script type="text/javascript">
+        function updatePermission(permissionId) {
+            document.getElementById("sldsSpinner").classList.remove("slds-hide");
+            Visualforce.remoting.Manager.invokeAction(
+                "{!$RemoteAction.USR_CompareSFUsersCtl.updatePermission}",
+                permissionId,
+                "{!baseUser.Id}",
+                function (result, event) {
+                    if (!event.status) alert("ERROR \n" + event.message);
+                    else document.querySelector("[id*='refreshCmd']").click();
+                    document.getElementById("sldsSpinner").classList.add("slds-hide");
+                },
+                { escape: true }
+            );
+        }
+    </script>
 </apex:page>
