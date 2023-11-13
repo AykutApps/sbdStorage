@@ -72,6 +72,11 @@
                             onclick="updatePermission('{!r.metaId}'); return false;"
                             rendered="{!AND(OR(r.otherAnalysis == 'extra', r.anotherAnalysis == 'extra'), r.metaType == 'PermissionSetAssignments')}"
                         />
+                        <apex:commandButton
+                            value="Add"
+                            onclick="updateGroup('{!r.metaId}'); return false;"
+                            rendered="{!AND(OR(r.otherAnalysis == 'extra', r.anotherAnalysis == 'extra'), r.parentApi == 'Group')}"
+                        />
                         <apex:outputPanel layout="inline" rendered="{!r.isSFId}">
                             &nbsp;&nbsp;&nbsp;<apex:outputLink
                                 value="/{!r.baseValue}?noredirect=1&isUserEntityOverride=1"
@@ -136,6 +141,21 @@
             Visualforce.remoting.Manager.invokeAction(
                 "{!$RemoteAction.USR_CompareSFUsersCtl.updatePermission}",
                 permissionId,
+                "{!baseUser.Id}",
+                function (result, event) {
+                    if (!event.status) alert("ERROR \n" + event.message);
+                    else document.querySelector("[id*='refreshCmd']").click();
+                    document.getElementById("sldsSpinner").classList.add("slds-hide");
+                },
+                { escape: true }
+            );
+        }
+
+        function updateGroup(groupId) {
+            document.getElementById("sldsSpinner").classList.remove("slds-hide");
+            Visualforce.remoting.Manager.invokeAction(
+                "{!$RemoteAction.USR_CompareSFUsersCtl.updateGroupMember}",
+                groupId,
                 "{!baseUser.Id}",
                 function (result, event) {
                     if (!event.status) alert("ERROR \n" + event.message);

@@ -155,7 +155,7 @@ public with sharing class USR_CompareSFUsersHelper {
                 if (groupIdToMembersMap.containsKey(g.Id)) {
                     MTD_CompareModels.Membership m = groupIdToMembersMap.get(g.Id);
 
-                    gr = new MTD_CompareModels.GridRow(i, parentType, ((g.type == 'Queue') ? g.Type : 'Group'), parentApi, metaType + ' (Direct)', g.Name, g.Name);
+                    gr = new MTD_CompareModels.GridRow(i, parentType, ((g.type == 'Queue') ? g.Type : 'Group'), parentApi, metaType + ' (Direct)', g.Name, g.Name, g.Id);
                     gr.populateRow(((m.includesBase) ? g.Name : ''), ((m.includesOther) ? g.Name : ''), ((m.includesAnother) ? g.Name : ''));
                     gr.populateRowApis(((m.includesBase) ? g.Name : ''), ((m.includesOther) ? g.Name : ''), ((m.includesAnother) ? g.Name : ''));
                     out.add(gr);

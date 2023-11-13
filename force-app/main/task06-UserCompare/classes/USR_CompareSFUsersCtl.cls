@@ -110,6 +110,7 @@ global with sharing class USR_CompareSFUsersCtl {
         rows.addAll(USR_CompareSFUsersHelper.derivePermissionSetGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveGroupAndQueueGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveChatterGroupGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveDelegateGroups(baseUser, otherUser, anotherUser));
 
         //route
         PageReference pg = Page.CompareSFUsers2; //VF Wizard Page 2
@@ -197,6 +198,8 @@ global with sharing class USR_CompareSFUsersCtl {
         rows = USR_CompareSFUsersHelper.deriveUserGridRows(baseUser, otherUser, anotherUser);
         rows.addAll(USR_CompareSFUsersHelper.derivePermissionSetGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveGroupAndQueueGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveChatterGroupGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveDelegateGroups(baseUser, otherUser, anotherUser));
 
         //route
         PageReference pg = null; //Page.CompareSFUsers2; //VF Wizard Page 2
@@ -210,6 +213,12 @@ global with sharing class USR_CompareSFUsersCtl {
     @RemoteAction
     global static String updatePermission(String PermissionId, String UserId) {
         insert new PermissionSetAssignment(PermissionSetId = PermissionId, AssigneeId = UserId);
+        return 'OK';
+    }
+
+    @RemoteAction
+    global static String updateGroupMember(String GroupId, String UserId) {
+        insert new GroupMember(GroupId = GroupId, UserOrGroupId = UserId);
         return 'OK';
     }
 
