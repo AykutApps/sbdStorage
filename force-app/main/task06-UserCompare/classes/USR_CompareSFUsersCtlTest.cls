@@ -125,11 +125,6 @@ private class USR_CompareSFUsersCtlTest {
         curPg = ctl.compareUsers();
         system.assertEquals(2, ctl.curPage);
 
-        // test permission set upate
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Type = 'Regular' LIMIT 1];
-        USR_CompareSFUsersCtl.updatePermission(ps.Id, base.Id);
-        system.Assert([SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :ps.Id AND AssigneeId = :base.Id].size() > 0);
-
         //verify the input fields were populated & the other/another users were loaded
         system.assertEquals(other.Username, ctl.otherUsername);
         system.assertEquals(other.Id, ctl.otherUser.Id);
@@ -226,5 +221,30 @@ private class USR_CompareSFUsersCtlTest {
 
         //verify no data state loads the current, logged in user
         system.assertEquals(UserInfo.getUserId(), ctl.baseUser.Id);
+    }
+
+    static testMethod void verifyUpdatePermission() {
+        User base = [
+            SELECT Id
+            FROM User
+            WHERE Id = :UserInfo.getUserId()
+        ];
+        // test permission set upate
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Type = 'Regular' LIMIT 1];
+        USR_CompareSFUsersCtl.updatePermission(ps.Id, base.Id);
+        system.Assert([SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :ps.Id AND AssigneeId = :base.Id].size() > 0);
+    }
+
+    static testMethod void verifyUpdateGroupMember() {
+        User base = [
+            SELECT Id
+            FROM User
+            WHERE Id = :UserInfo.getUserId()
+        ];
+        // test group members upate
+        Group testGroup = new Group(Name = 'Test Group', Type = 'Regular');
+        insert testGroup;
+        USR_CompareSFUsersCtl.updateGroupMember(testGroup.Id, base.Id);
+        system.Assert([SELECT Id FROM GroupMember WHERE GroupId = :testGroup.Id AND UserOrGroupId = :base.Id].size() > 0);
     }
 }

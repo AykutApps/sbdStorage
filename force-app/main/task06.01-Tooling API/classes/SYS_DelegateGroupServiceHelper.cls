@@ -38,7 +38,6 @@ public with sharing class SYS_DelegateGroupServiceHelper {
                 dgms = dgmr.records;
             }
         }
-
         return dgms;
     }
 
