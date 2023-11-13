@@ -370,9 +370,9 @@ public with sharing class USR_CompareSFUsersHelper {
         MTD_CompareModels.GridRow gr;
 
         string parentType = 'User';
-        string parentLabel = 'Delegated Group';
-        string parentApi = 'DelegatedGroup';
-        string metaType = 'DelegatedGroupMember';
+        string parentLabel = 'Delegate Group';
+        string parentApi = 'DelegateGroup';
+        string metaType = 'DelegateGroupMember';
 
         Integer i = 400;
         if (groupIdToMembersMap.size() > 0) {
