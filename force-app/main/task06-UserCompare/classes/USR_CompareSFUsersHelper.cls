@@ -323,4 +323,74 @@ public with sharing class USR_CompareSFUsersHelper {
         //Final Steps
         return out;
     }
+
+    public static List<MTD_CompareModels.GridRow> deriveDelegateGroups(User baseUser, User otherUser, User anotherUser) {
+        List<MTD_CompareModels.GridRow> out = new List<MTD_CompareModels.GridRow>();
+
+        //PREP
+        Set<Id> userIds = new Set<Id>();
+        if (baseUser != null && baseUser.Id != null)
+            userIds.add(baseUser.Id);
+        if (otherUser != null && otherUser.Id != null)
+            userIds.add(otherUser.Id);
+        if (anotherUser != null && anotherUser.Id != null)
+            userIds.add(anotherUser.Id);
+
+        if (userIds.size() == 0) {
+            return out;
+        }
+
+        //Add Id of all groups attatched to provided Users into a Map (groupIdToMembersMap)
+        Map<Id, MTD_CompareModels.Membership> groupIdToMembersMap = new Map<Id, MTD_CompareModels.Membership>();
+        List<SYS_DelegateGroupService.DelegateGroupMember> delegatedGroupMembers = SYS_DelegateGroupService.getDelegateGroupMembers();
+
+        for (SYS_DelegateGroupService.DelegateGroupMember dgm : delegatedGroupMembers) {
+            MTD_CompareModels.Membership m;
+            if (groupIdToMembersMap.containsKey(dgm.DelegateGroupId)) {
+                m = groupIdToMembersMap.get(dgm.DelegateGroupId);
+            } else {
+                m = new MTD_CompareModels.Membership(dgm.DelegateGroupId);
+            }
+
+            if (baseUser != null && dgm.userOrGroupId == baseUser.Id) {
+                m.includesBase = true;
+            }
+            if (otherUser != null && dgm.userOrGroupId == otherUser.Id) {
+                m.includesOther = true;
+            }
+            if (anotherUser != null && dgm.userOrGroupId == anotherUser.Id) {
+                m.includesAnother = true;
+            }
+
+            if (m.includesBase || m.includesOther || m.includesAnother)
+                groupIdToMembersMap.put(dgm.DelegateGroupId, m);
+        }
+
+        //WORK
+        MTD_CompareModels.GridRow gr;
+
+        string parentType = 'User';
+        string parentLabel = 'Delegated Group';
+        string parentApi = 'DelegatedGroup';
+        string metaType = 'DelegatedGroupMember';
+
+        Integer i = 400;
+        if (groupIdToMembersMap.size() > 0) {
+            List<SYS_DelegateGroupService.DelegateGroup> delegatedGroups = SYS_DelegateGroupService.getDelegateGroups();
+            for (SYS_DelegateGroupService.DelegateGroup dg : delegatedGroups) {
+                if (groupIdToMembersMap.containsKey(dg.Id)) {
+                    MTD_CompareModels.Membership m = groupIdToMembersMap.get(dg.Id);
+
+                    gr = new MTD_CompareModels.GridRow(i, parentType, parentLabel, parentApi, metaType, dg.Name, dg.Name);
+                    gr.populateRow(((m.includesBase) ? dg.Name : ''), ((m.includesOther) ? dg.Name : ''), ((m.includesAnother) ? dg.Name : ''));
+                    gr.populateRowApis(((m.includesBase) ? dg.Name : ''), ((m.includesOther) ? dg.Name : ''), ((m.includesAnother) ? dg.Name : ''));
+                    out.add(gr);
+                    i++;
+                }
+            }
+        }
+
+        //Final Steps
+        return out;
+    }
 }

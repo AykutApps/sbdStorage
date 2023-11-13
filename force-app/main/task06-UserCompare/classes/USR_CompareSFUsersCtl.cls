@@ -130,6 +130,7 @@ global with sharing class USR_CompareSFUsersCtl {
         rows.addAll(USR_CompareSFUsersHelper.derivePermissionSetGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveGroupAndQueueGridRows(baseUser, otherUser, anotherUser));
         rows.addAll(USR_CompareSFUsersHelper.deriveChatterGroupGridRows(baseUser, otherUser, anotherUser));
+        rows.addAll(USR_CompareSFUsersHelper.deriveDelegateGroups(baseUser, otherUser, anotherUser));
 
         //route
         PageReference pg = Page.CompareSFUsers2; //VF Wizard Page 2
