@@ -22,6 +22,11 @@ global class SYS_GenericDeleteBatch implements Database.Batchable<SObject> {
         this.query = query;
     }
 
+    /**
+     *     Constructs an instance of SYS_GenericDeleteBatch with an object name and retention days.
+     * @param objectName The API name of the object to delete records from.
+     * @param retentionDays The number of days to retain records before deletion.
+     */
     public SYS_GenericDeleteBatch(String objectName, String retentionDays) {
         this.query = String.format('SELECT Id FROM {0} WHERE CreatedDate < LAST_N_DAYS: {1}', new List<String>{ objectName, retentionDays });
     }
@@ -32,13 +37,9 @@ global class SYS_GenericDeleteBatch implements Database.Batchable<SObject> {
 
     global void execute(Database.BatchableContext bc, List<SObject> records) {
         Database.delete(records, false); // false for allowing partial processing (not all-or-none)
-        Database.emptyRecycleBin(records);
+        // Database.emptyRecycleBin(records); // activate this after testing
     }
 
-    /**
-     * Executes post-processing operations, if any.
-     * @param bc The BatchableContext object.
-     */
     global void finish(Database.BatchableContext bc) {
     }
 }

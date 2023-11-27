@@ -1,0 +1,5 @@
+<apex:page standardController="Data_Retention_Policy__c" extensions="SYS_GenericDeleteBatchHelper" action="{!runBatchJobFromUI}">
+    <apex:form>
+        <apex:inputHidden value="{!Data_Retention_Policy__c.Id}" />
+    </apex:form>
+</apex:page>
