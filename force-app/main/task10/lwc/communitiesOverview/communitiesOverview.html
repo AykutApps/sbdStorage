@@ -1,3 +1,6 @@
 <template>
-    <lightning-datatable key-field="Id" data={refinedNetworks} columns={columns} hide-checkbox-column> </lightning-datatable>
+    <lightning-card title="Communities Overview" icon-name="standard:account">
+        <lightning-datatable key-field="Id" data={refinedNetworks} columns={columns} type-attributes={customTypes} hide-checkbox-column> </lightning-datatable>
+    </lightning-card>
+    
 </template>

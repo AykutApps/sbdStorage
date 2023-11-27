@@ -1,17 +1,27 @@
 import { LightningElement, wire } from "lwc";
 import getRecords from "@salesforce/apex/GenericLWCService.getRecords";
+import MultilineText from 'c/multilineText';
 
 const columns = [
-    { label: "Id", fieldName: "Id" },
+    // { label: "Id", fieldName: "Id" },
     { label: "Name", fieldName: "Name" },
     { label: "Url Prefix", fieldName: "UrlPathPrefix" },
     { label: "Description", fieldName: "Description", wrapText: true },
-    { label: "Profiles", fieldName: "ProfileNames" , wrapText: true},
+    { label: "First Activation Date", fieldName: "FirstActivationDate", wrapText: true },
+    { label: "Profiles", fieldName: "ProfileNames", wrapText: true , type: 'multilineText', initialWidth: 320},
     { label: "Permission Sets", fieldName: "PermissionSetNames", wrapText: true, initialWidth: 320 },
-    { label: "Chatters", fieldName: "CollaborationGroupNames"}
+    { label: "Chatters Groups", fieldName: "CollaborationGroupNames" }
 ];
 
 export default class CommunitiesOverview extends LightningElement {
+
+    customTypes = {
+        multilineText: {
+            template: MultilineText,
+            typeAttributes: ['value'],
+        },
+    };
+
     error;
     networks = [];
     networkIdMap;
@@ -23,7 +33,7 @@ export default class CommunitiesOverview extends LightningElement {
     columns = columns;
     refinedNetworks = [];
 
-    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description FROM Network" })
+    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate FROM Network" })
     getNetworks({ data, errors }) {
         if (data) {
             console.log("networks:", data);
@@ -121,7 +131,7 @@ export default class CommunitiesOverview extends LightningElement {
         for (const id in networkIdMap) {
             let nw = networkIdMap[id];
             if (nw.profiles && !nw.profiles.length !== 0) {
-                nw.ProfileNames = nw.profiles.map((obj) => obj.Name).join(", ");
+                nw.ProfileNames = nw.profiles.map((obj) => obj.Name).join(",\n ");
             }
             if (nw.permissionSets && !nw.permissionSets.length !== 0) {
                 nw.PermissionSetNames = nw.permissionSets.map((obj) => obj.Name).join(", ");
@@ -129,7 +139,6 @@ export default class CommunitiesOverview extends LightningElement {
             if (nw.collaborationGroups && !nw.collaborationGroups.length !== 0) {
                 nw.CollaborationGroupNames = nw.collaborationGroups.map((obj) => obj.Name).join(", ");
             }
-
 
             this.refinedNetworks.push(nw);
         }

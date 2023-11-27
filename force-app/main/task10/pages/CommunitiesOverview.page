@@ -1,0 +1,17 @@
+<apex:page sidebar="false">
+    <apex:includeLightning/>
+
+    <div id="lightningvf" />
+
+    <script>
+        $Lightning.use("c:CommunitiesOverviewAuraApp", function () {
+            $Lightning.createComponent("c:communitiesOverview",
+                {},
+                "lightningvf",
+                function (cmp) {
+                }
+            );
+        });
+    </script>
+
+</apex:page>
