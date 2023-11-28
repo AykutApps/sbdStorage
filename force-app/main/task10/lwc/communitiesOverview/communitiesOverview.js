@@ -6,11 +6,12 @@ const columns = [
     // { label: "Id", fieldName: "Id" },
     { label: "Name", fieldName: "Name" },
     { label: "Url Prefix", fieldName: "UrlPathPrefix" },
-    { label: "Description", fieldName: "Description", wrapText: true },
-    { label: "First Activation Date", fieldName: "FirstActivationDate", wrapText: true },
-    { label: "Profiles", fieldName: "ProfileNames", wrapText: true , type: 'multilineText', initialWidth: 320},
+    { label: "Description", fieldName: "Description", wrapText: true,  initialWidth: 280 },
+    { label: "Activation Date", fieldName: "FirstActivationDate", wrapText: true },
+    { label: "Status", fieldName: "Status", initialWidth: 100},
+    { label: "Profiles", fieldName: "ProfileNames", wrapText: true , type: 'multilineText', initialWidth: 280},
     { label: "Permission Sets", fieldName: "PermissionSetNames", wrapText: true, initialWidth: 320 },
-    { label: "Chatters Groups", fieldName: "CollaborationGroupNames" }
+    { label: "Chatters Groups", fieldName: "CollaborationGroupNames",initialWidth: 240 }
 ];
 
 export default class CommunitiesOverview extends LightningElement {
@@ -33,7 +34,7 @@ export default class CommunitiesOverview extends LightningElement {
     columns = columns;
     refinedNetworks = [];
 
-    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate FROM Network" })
+    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate, Status FROM Network" })
     getNetworks({ data, errors }) {
         if (data) {
             console.log("networks:", data);

@@ -43,7 +43,6 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
-**/objects/**
 **/default/**
 tasks/task05-LeadAssignments/localdev/duplicated values.txt
 tasks/task05-LeadAssignments/localdev/leadassignment_original_v1.xml
