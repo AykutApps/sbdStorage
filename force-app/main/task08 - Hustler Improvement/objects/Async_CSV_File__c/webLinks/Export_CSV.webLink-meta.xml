@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Export_CSV</fullName>
     <availability>online</availability>
@@ -9,42 +9,43 @@
     <protected>false</protected>
     <url>{!REQUIRESCRIPT(&quot;/soap/ajax/58.0/connection.js&quot;)}
 
-// Initialize CSV content with headers
-var csvContent = &quot;data:text/csv;charset=utf-8,&quot;;
-
-// Define the query
-var query = &quot;SELECT Id, Column_1__c, Column_2__c, Column_3__c, Column_4__c, Column_5__c, Column_6__c FROM Async_CSV_Row__c WHERE Async_CSV_File__c = &apos;{!Async_CSV_File__c.Id}&apos;&quot;; 
-
-// Define the callback functions for success and failure
-var callback = {
-    onSuccess: function(queryResults) {
-        queryResults.records.forEach(function(record) {
-            // Create CSV row for each record
-            var csvRow = [
-                record.Column_1__c,
-                record.Column_2__c,
-                record.Column_3__c,
-                record.Column_4__c,
-                &apos;&quot;&apos; + record.Column_5__c + &apos;&quot;&apos;, // Escape double quotes
-                record.Column_6__c
-            ].join(&quot;,&quot;);
-            csvContent += csvRow + &quot;\r\n&quot;;
-        });
-
-        // Create and trigger the download link
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement(&quot;a&quot;);
-        link.setAttribute(&quot;href&quot;, encodedUri);
-        link.setAttribute(&quot;download&quot;, &quot;{!Async_CSV_File__c.Name}.csv&quot;);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    },
-    onFailure: function(error) {
-        alert(&quot;Query error: &quot; + error);
+var queryRows = &quot;SELECT Id, Column_1__c, Column_2__c, Column_3__c, Column_4__c, Column_5__c, Column_6__c FROM Async_CSV_Row__c WHERE Async_CSV_File__c = &apos;{!Async_CSV_File__c.Id}&apos; ORDER BY Row_Number__c&quot;; 
+var rowsResponse = sforce.connection.query(queryRows);
+if (Number(rowsResponse.size) &lt;2){
+    alert (&apos;No Records found!&apos;);
+} else {
+    var userIds = rowsResponse.records.slice(1).map(record =&gt; &quot;&apos;&quot; + record.Column_1__c + &quot;&apos;&quot;).join(&quot;,&quot;);
+    var usersResponse = sforce.connection.query(&quot;SELECT Id, Email FROM User WHERE Id IN (&quot; + userIds + &quot;)&quot;);
+    var userIdMap;
+    if (Number(usersResponse.size) &gt; 1){
+        userIdMap= usersResponse.records.reduce((map, record) =&gt; {
+            map[record.Id] = record.Email;
+            return map;
+        }, {});
+    } else if (Number(usersResponse.size) === 1) {
+        userIdMap = {};
+        userIdMap[usersResponse.records.Id] = usersResponse.records.Email;
+    } else  {
+        alert (&apos;No User found!&apos;);
     }
-};
 
-// Execute the query
-sforce.connection.query(query, callback);</url>
+    var csvContent = &quot;data:text/csv;charset=utf-8,&quot;;
+    csvContent += rowsResponse.records.map((record, index) =&gt; [
+        record.Column_1__c,
+        record.Column_2__c,
+        record.Column_3__c,
+        record.Column_4__c,
+        index === 0 ? record.Column_5__c : &apos;&quot;&apos; + record.Column_5__c + &apos;&quot;&apos;,
+        record.Column_6__c,
+        index === 0 ? &apos;Email&apos; : userIdMap[record.Column_1__c]
+    ].join(&quot;,&quot;)).join(&quot;\r\n&quot;);
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement(&quot;a&quot;);
+    link.setAttribute(&quot;href&quot;, encodedUri);
+    link.setAttribute(&quot;download&quot;, &quot;{!Async_CSV_File__c.Name}.csv&quot;);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}</url>
 </WebLink>
