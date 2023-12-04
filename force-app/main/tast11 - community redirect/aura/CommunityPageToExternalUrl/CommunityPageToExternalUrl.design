@@ -1,0 +1,4 @@
+<design:component label="Community Page To External Url">
+	<design:attribute name="externalUrl" label="External Url" description="Url to open in new window." />
+    <design:attribute name="loadInExistingWindow" label="Load In Existing Window" description="Link will use the same window, navigation back to the community must be handled in destination page." />
+</design:component>
