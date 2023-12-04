@@ -34,7 +34,7 @@ export default class CommunitiesOverview extends LightningElement {
     columns = columns;
     refinedNetworks = [];
 
-    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate, Status FROM Network" })
+    @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate, Status FROM Network ORDER BY Name" })
     getNetworks({ data, errors }) {
         if (data) {
             console.log("networks:", data);
