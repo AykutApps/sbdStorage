@@ -34,11 +34,14 @@ export default class CommunitiesOverview extends LightningElement {
     columns = columns;
     refinedNetworks = [];
 
+    processCheck = {};
+
     @wire(getRecords, { query: "SELECT Id, Name, UrlPathPrefix, Description, FirstActivationDate, Status FROM Network ORDER BY Name" })
     getNetworks({ data, errors }) {
         if (data) {
             console.log("networks:", data);
             this.networks = data;
+            this.processCheck.networks = true;
             this.checkDataRetrieveIsCompleted();
         }
     }
@@ -48,6 +51,7 @@ export default class CommunitiesOverview extends LightningElement {
         if (data) {
             console.log("NetworkMemberGroups:", data);
             this.networkMemberGroups = data;
+            this.processCheck.networkMemberGroups = true;
             this.checkDataRetrieveIsCompleted();
         }
     }
@@ -57,6 +61,7 @@ export default class CommunitiesOverview extends LightningElement {
         if (data) {
             console.log("Profiles:", data);
             this.profiles = data;
+            this.processCheck.profiles = true;
             this.checkDataRetrieveIsCompleted();
         }
     }
@@ -66,6 +71,7 @@ export default class CommunitiesOverview extends LightningElement {
         if (data) {
             console.log("PermissionSets:", data);
             this.permissionSets = data;
+            this.processCheck.permissionSets = true;
             this.checkDataRetrieveIsCompleted();
         }
     }
@@ -75,17 +81,18 @@ export default class CommunitiesOverview extends LightningElement {
         if (data) {
             console.log("CollaborationGroups:", data);
             this.collaborationGroups = data;
+            this.processCheck.collaborationGroups = true;
             this.checkDataRetrieveIsCompleted();
         }
     }
 
     checkDataRetrieveIsCompleted() {
         if (
-            this.networks.length !== 0 &&
-            this.networkMemberGroups.length !== 0 &&
-            this.profiles.length !== 0 &&
-            this.permissionSets.length !== 0 &&
-            this.collaborationGroups.length !== 0
+            this.processCheck.networks &&
+            this.processCheck.networkMemberGroups &&
+            this.processCheck.profiles &&
+            this.processCheck.permissionSets &&
+            this.processCheck.collaborationGroups
         ) {
             console.log("completed");
             this.refineNetworks();
