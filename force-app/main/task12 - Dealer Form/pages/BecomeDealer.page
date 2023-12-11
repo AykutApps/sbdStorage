@@ -1,6 +1,6 @@
 <apex:page controller="BecomeDealerCtrl" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
     <html>
-        <style>
+        <!-- <style>
             .uppercase-label {
                 text-transform: uppercase;
                 font-weight: 700;
@@ -11,7 +11,7 @@
             .form-element {
                 padding-bottom: 16px;
             }
-        </style>
+        </style> -->
 
         <body>
             <apex:slds />
@@ -50,8 +50,8 @@
                         <input
                             type="text"
                             id="first_name_main"
-                            name="first_name"
-                            onfocusout="validate('first_name')"
+                            name="First Name"
+                            onfocusout="validateField('first_name')"
                             maxlength="40"
                             class="slds-input"
                             required="required"
@@ -65,7 +65,7 @@
                 <div class="slds-form-element form-element" id="last_name_parent">
                     <label class="slds-form-element__label uppercase-label" for="last_name">*Last Name</label>
                     <div class="slds-form-element__control">
-                        <input type="text" id="last_name_main" name="last_name" onfocusout="validate('last_name')" maxlength="80" class="slds-input" />
+                        <input type="text" id="last_name_main" name="Last Name" onfocusout="validateField('last_name')" maxlength="80" class="slds-input" />
                     </div>
                     <div class="slds-form-element__help" id="last_name_error" style="display: none">Enter a value.</div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="slds-form-element form-element" id="company_parent">
                     <label class="slds-form-element__label uppercase-label" for="company">*Company</label>
                     <div class="slds-form-element__control">
-                        <input type="text" id="company_main" name="company" onfocusout="validate('company')" maxlength="40" class="slds-input" />
+                        <input type="text" id="company_main" name="Company" onfocusout="validateField('company')" maxlength="40" class="slds-input" />
                     </div>
                     <div class="slds-form-element__help" id="company_error" style="display: none">Enter a value.</div>
                 </div>
@@ -86,8 +86,8 @@
                         <input
                             type="tel"
                             id="phone_main"
-                            name="phone"
-                            onfocusout="validate('phone')"
+                            name="Phone"
+                            onfocusout="validateField('phone')"
                             maxlength="40"
                             class="slds-input"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
@@ -101,7 +101,7 @@
                 <div class="slds-form-element form-element" id="email_parent">
                     <label class="slds-form-element__label uppercase-label" for="email">*Email</label>
                     <div class="slds-form-element__control">
-                        <input type="email" id="email_main" name="email" onfocusout="validate('email')" maxlength="80" class="slds-input" />
+                        <input type="email" id="email_main" name="Email" onfocusout="validateField('email')" maxlength="80" class="slds-input" />
                     </div>
                     <div class="slds-form-element__help" id="email_error" style="display: none">Enter a value.</div>
                 </div>
@@ -402,7 +402,7 @@
             </apex:form>
         </body>
         <script>
-            function validate(elementId) {
+            function validateField(elementId) {
                 var errorClass = "slds-has-error";
                 var element = document.querySelector(`[id*='${elementId}_main']`);
                 var element_parent = document.querySelector(`[id*='${elementId}_parent']`);
@@ -412,65 +412,83 @@
                         element_parent.classList.remove(errorClass);
                         element_error.style.display = "none";
                     }
+                    return null;
                 } else {
                     if (!element_parent.classList.contains(errorClass)) {
                         element_parent.classList.add(errorClass);
                         element_error.style.display = "";
                     }
+                    return element.name;
                 }
+            }
+
+            function validateForm(formElements) {
+                var requiredFormElements = ["first_name", "last_name", "company", "phone", "email"];
+                var missingFormElements = [];
+
+                for (var re of requiredFormElements) {
+                    if (!formElements[re] || formElements[re].trim() === "") {
+                        var elementName = validateField(re);
+                        if (elementName) missingFormElements.push(elementName);
+                    }
+                }
+
+                if (missingFormElements.length > 0) {
+                    alert("Missing Required Fields: " + missingFormElements.join(", "));
+                }
+            }
+
+            function getValue(idPattern, defaultValue = "") {
+                let element = document.querySelector(`[id*='${idPattern}']`);
+                if (!element) return defaultValue; // Element not found
+                if (element.type === "checkbox") return element.checked;
+                return element.value === "none" ? defaultValue : element.value;
+            }
+
+            function getCheckedValues(checkboxClass) {
+                let selectedValues = [];
+                let checkboxes = document.querySelectorAll(`.${checkboxClass}`);
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        selectedValues.push(checkbox.nextElementSibling.textContent.trim());
+                    }
+                });
+                return selectedValues;
             }
 
             function submit() {
                 console.log("SUBMIT EXE");
-                var formElements = {};
-                formElements["typeOfBusiness"] = document.querySelector(`[id*='typeOfBusiness']`).value === "none" ? "" : document.querySelector(`[id*='typeOfBusiness']`).value;
-                formElements["title"] = document.querySelector(`[id*='title_main']`).value;
-                formElements["first_name"] = document.querySelector(`[id*='first_name_main']`).value;
-                formElements["last_name"] = document.querySelector(`[id*='last_name_main']`).value;
-                formElements["company"] = document.querySelector(`[id*='company_main']`).value;
-                formElements["phone"] = document.querySelector(`[id*='phone_main']`).value;
-                formElements["email"] = document.querySelector(`[id*='email_main']`).value;
-                formElements["fax"] = document.querySelector(`[id*='fax']`).value;
-                formElements["address"] = document.querySelector(`[id*='address']`).value;
-                formElements["city"] = document.querySelector(`[id*='city']`).value;
-                formElements["state"] = document.querySelector(`[id*='state']`).value === "none" ? "" : document.querySelector(`[id*='state']`).value;
-                formElements["zip"] = document.querySelector(`[id*='zip']`).value;
-                formElements["website"] = document.querySelector(`[id*='website']`).value;
-                formElements["annualSalesVolume"] =
-                    document.querySelector(`[id*='annualSalesVolume']`).value === "none" ? "" : document.querySelector(`[id*='annualSalesVolume']`).value;
-                formElements["yearsInBusiness"] = document.querySelector(`[id*='yearsInBusiness']`).value === "none" ? "" : document.querySelector(`[id*='yearsInBusiness']`).value;
-                formElements["rentYourProperty"] =
-                    document.querySelector(`[id*='rentYourProperty']`).value === "none" ? "" : document.querySelector(`[id*='rentYourProperty']`).value;
-                formElements["facilitySize"] = document.querySelector(`[id*='facilitySize']`).value;
-                formElements["numberOfEmployees"] =
-                    document.querySelector(`[id*='numberOfEmployees']`).value === "none" ? "" : document.querySelector(`[id*='numberOfEmployees']`).value;
-                formElements["floorPlanProvider"] =
-                    document.querySelector(`[id*='floorPlanProvider']`).value === "none" ? "" : document.querySelector(`[id*='floorPlanProvider']`).value;
-                formElements["offeringServicesProductSold"] = document.querySelector(`[id*='offeringServicesProductSold']`).checked;
-                formElements["displayArea"] = document.querySelector(`[id*='displayArea']`).checked;
-                formElements["serviceArea"] = document.querySelector(`[id*='serviceArea']`).checked;
-                formElements["partsArea"] = document.querySelector(`[id*='partsArea']`).checked;
-                formElements["comment"] = document.querySelector(`[id*='comment']`).value;
-
-                var selectedOtherBrands = [];
-                var checkboxes = document.querySelectorAll(".other-brand-checkbox");
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        selectedOtherBrands.push(checkbox.nextElementSibling.textContent.trim());
-                    }
-                });
-                formElements["selectedOtherBrands"] = selectedOtherBrands;
-
-                var selectedOtherProducts = [];
-                var checkboxes = document.querySelectorAll(".other-product-checkbox");
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        selectedOtherProducts.push(checkbox.nextElementSibling.textContent.trim());
-                    }
-                });
-                formElements["selectedOtherProducts"] = selectedOtherProducts;
+                let formElements = {
+                    typeOfBusiness: getValue("typeOfBusiness"),
+                    title: getValue("title_main"),
+                    first_name: getValue("first_name_main"),
+                    last_name: getValue("last_name_main"),
+                    company: getValue("company_main"),
+                    phone: getValue("phone_main"),
+                    email: getValue("email_main"),
+                    fax: getValue("fax"),
+                    address: getValue("address"),
+                    city: getValue("city"),
+                    state: getValue("state"),
+                    zip: getValue("zip"),
+                    website: getValue("website"),
+                    annualSalesVolume: getValue("annualSalesVolume"),
+                    yearsInBusiness: getValue("yearsInBusiness"),
+                    rentYourProperty: getValue("rentYourProperty"),
+                    facilitySize: getValue("facilitySize"),
+                    numberOfEmployees: getValue("numberOfEmployees"),
+                    floorPlanProvider: getValue("floorPlanProvider"),
+                    offeringServicesProductSold: getValue("offeringServicesProductSold"),
+                    displayArea: getValue("displayArea"),
+                    serviceArea: getValue("serviceArea"),
+                    partsArea: getValue("partsArea"),
+                    comment: getValue("comment"),
+                    selectedOtherBrands: getCheckedValues("other-brand-checkbox"),
+                    selectedOtherProducts: getCheckedValues("other-product-checkbox")
+                };
 
                 console.log(formElements);
+                validateForm(formElements);
             }
         </script>
     </html>
