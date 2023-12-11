@@ -26,7 +26,7 @@
                         <label class="slds-form-element__label uppercase-label" for="typeOfBusiness">Type of Business</label>
                         <div class="slds-select_container">
                             <select class="slds-select" id="typeOfBusiness" name="typeOfBusiness" title="Type of Business">
-                                <option value="">--None--</option>
+                                <option value="none">--None--</option>
                                 <option value="Independent Retailer">Independent Retailer</option>
                                 <option value="Independent Rental">Independent Rental</option>
                                 <option value="Corporate">Corporate</option>
@@ -143,7 +143,7 @@
                     <label class="slds-form-element__label uppercase-label" for="state">State</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="state" name="state" title="State">
-                            <option value="">--Please select one--</option>
+                            <option value="none">--Please select one--</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
                             <option value="AZ">Arizona</option>
@@ -221,7 +221,7 @@
                     <label class="slds-form-element__label uppercase-label" for="annualSalesVolume">Current annual sales volume:</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="annualSalesVolume" name="annualSalesVolume">
-                            <option value="">--None--</option>
+                            <option value="none">--None--</option>
                             <option value="Less than $250,000">Less than $250,000</option>
                             <option value="$250,000 - $500,000">$250,000 - $500,000</option>
                             <option value="$500,000 - $1,000,000">$500,000 - $1,000,000</option>
@@ -236,7 +236,7 @@
                     <label class="slds-form-element__label uppercase-label" for="yearsInBusiness">Number of years in business:</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="yearsInBusiness" name="yearsInBusiness">
-                            <option value="">--None--</option>
+                            <option value="none">--None--</option>
                             <option value="Less than 1 year">Less than 1 year</option>
                             <option value="1 to 2 years">1 to 2 years</option>
                             <option value="2 to 5 years">2 to 5 years</option>
@@ -250,7 +250,7 @@
                     <label class="slds-form-element__label uppercase-label" for="rentYourProperty">Do you own or rent your property:</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="rentYourProperty" name="rentYourProperty">
-                            <option value="">--None--</option>
+                            <option value="none">--None--</option>
                             <option value="Own Property">Own Property</option>
                             <option value="Rent Property">Rent Property</option>
                             <option value="Looking for Property">Looking for Property</option>
@@ -271,7 +271,7 @@
                     <label class="slds-form-element__label uppercase-label" for="numberOfEmployees">Number of full-time employees:</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="numberOfEmployees" name="numberOfEmployees">
-                            <option value="">--None--</option>
+                            <option value="none">--None--</option>
                             <option value="1-2">1-2</option>
                             <option value="3-4">3-4</option>
                             <option value="5-10">5-10</option>
@@ -287,7 +287,7 @@
                     <label class="slds-form-element__label uppercase-label" for="floorPlanProvider">Current floor plan provider:</label>
                     <div class="slds-select_container">
                         <select class="slds-select" id="floorPlanProvider" name="floorPlanProvider">
-                            <option value="">--None--</option>
+                            <option value="none">--None--</option>
                             <option value="TCF">TCF</option>
                             <option value="Other">Other</option>
                         </select>
@@ -423,7 +423,7 @@
             function submit() {
                 console.log("SUBMIT EXE");
                 var formElements = {};
-                formElements["typeOfBusiness"] = document.querySelector(`[id*='typeOfBusiness']`).value;
+                formElements["typeOfBusiness"] = document.querySelector(`[id*='typeOfBusiness']`).value === "none" ? "" : document.querySelector(`[id*='typeOfBusiness']`).value;
                 formElements["title"] = document.querySelector(`[id*='title_main']`).value;
                 formElements["first_name"] = document.querySelector(`[id*='first_name_main']`).value;
                 formElements["last_name"] = document.querySelector(`[id*='last_name_main']`).value;
@@ -433,15 +433,19 @@
                 formElements["fax"] = document.querySelector(`[id*='fax']`).value;
                 formElements["address"] = document.querySelector(`[id*='address']`).value;
                 formElements["city"] = document.querySelector(`[id*='city']`).value;
-                formElements["state"] = document.querySelector(`[id*='state']`).value;
+                formElements["state"] = document.querySelector(`[id*='state']`).value === "none" ? "" : document.querySelector(`[id*='state']`).value;
                 formElements["zip"] = document.querySelector(`[id*='zip']`).value;
                 formElements["website"] = document.querySelector(`[id*='website']`).value;
-                formElements["annualSalesVolume"] = document.querySelector(`[id*='annualSalesVolume']`).value;
-                formElements["yearsInBusiness"] = document.querySelector(`[id*='yearsInBusiness']`).value;
-                formElements["rentYourProperty"] = document.querySelector(`[id*='rentYourProperty']`).value;
+                formElements["annualSalesVolume"] =
+                    document.querySelector(`[id*='annualSalesVolume']`).value === "none" ? "" : document.querySelector(`[id*='annualSalesVolume']`).value;
+                formElements["yearsInBusiness"] = document.querySelector(`[id*='yearsInBusiness']`).value === "none" ? "" : document.querySelector(`[id*='yearsInBusiness']`).value;
+                formElements["rentYourProperty"] =
+                    document.querySelector(`[id*='rentYourProperty']`).value === "none" ? "" : document.querySelector(`[id*='rentYourProperty']`).value;
                 formElements["facilitySize"] = document.querySelector(`[id*='facilitySize']`).value;
-                formElements["numberOfEmployees"] = document.querySelector(`[id*='numberOfEmployees']`).value;
-                formElements["floorPlanProvider"] = document.querySelector(`[id*='floorPlanProvider']`).value;
+                formElements["numberOfEmployees"] =
+                    document.querySelector(`[id*='numberOfEmployees']`).value === "none" ? "" : document.querySelector(`[id*='numberOfEmployees']`).value;
+                formElements["floorPlanProvider"] =
+                    document.querySelector(`[id*='floorPlanProvider']`).value === "none" ? "" : document.querySelector(`[id*='floorPlanProvider']`).value;
                 formElements["offeringServicesProductSold"] = document.querySelector(`[id*='offeringServicesProductSold']`).checked;
                 formElements["displayArea"] = document.querySelector(`[id*='displayArea']`).checked;
                 formElements["serviceArea"] = document.querySelector(`[id*='serviceArea']`).checked;
