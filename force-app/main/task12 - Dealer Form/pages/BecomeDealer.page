@@ -1,0 +1,473 @@
+<apex:page controller="BecomeDealerCtrl" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <html>
+        <style>
+            .uppercase-label {
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 0.75rem;
+                font-family: Aaux Pro, Arial, sans-serif;
+            }
+
+            .form-element {
+                padding-bottom: 16px;
+            }
+        </style>
+
+        <body>
+            <apex:slds />
+            <apex:form id="form" styleClass="slds-scope" style="max-width: 500px; padding: 20px; color: #000 !important">
+                <div style="font-family: Aaux Pro, Arial, sans-serif; font-size: 0.875rem">
+                    <p>Complete the brief survey below and receive more information from a member of our Independent Retail group.</p>
+                </div>
+                <br />
+                <span style="color: red">* Required field</span>
+                <div class="slds-form-element form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-form-element__label uppercase-label" for="typeOfBusiness">Type of Business</label>
+                        <div class="slds-select_container">
+                            <select class="slds-select" id="typeOfBusiness" name="typeOfBusiness" title="Type of Business">
+                                <option value="">--None--</option>
+                                <option value="Independent Retailer">Independent Retailer</option>
+                                <option value="Independent Rental">Independent Rental</option>
+                                <option value="Corporate">Corporate</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <div class="slds-form-element form-element" id="title_parent">
+                    <label class="slds-form-element__label uppercase-label" for="title">Title</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="title_main" name="title" maxlength="40" required="" aria-describedby="error-message-id-49" class="slds-input" aria-invalid="true" />
+                    </div>
+                </div>
+
+                <!-- First Name -->
+                <div class="slds-form-element form-element" id="first_name_parent">
+                    <label class="slds-form-element__label uppercase-label" for="first_name">*First Name</label>
+                    <div class="slds-form-element__control">
+                        <input
+                            type="text"
+                            id="first_name_main"
+                            name="first_name"
+                            onfocusout="validate('first_name')"
+                            maxlength="40"
+                            class="slds-input"
+                            required="required"
+                            aria-required="true"
+                        />
+                    </div>
+                    <div class="slds-form-element__help" id="first_name_error" style="display: none">Enter a value.</div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="slds-form-element form-element" id="last_name_parent">
+                    <label class="slds-form-element__label uppercase-label" for="last_name">*Last Name</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="last_name_main" name="last_name" onfocusout="validate('last_name')" maxlength="80" class="slds-input" />
+                    </div>
+                    <div class="slds-form-element__help" id="last_name_error" style="display: none">Enter a value.</div>
+                </div>
+
+                <!-- Company -->
+                <div class="slds-form-element form-element" id="company_parent">
+                    <label class="slds-form-element__label uppercase-label" for="company">*Company</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="company_main" name="company" onfocusout="validate('company')" maxlength="40" class="slds-input" />
+                    </div>
+                    <div class="slds-form-element__help" id="company_error" style="display: none">Enter a value.</div>
+                </div>
+
+                <!-- Phone -->
+                <div class="slds-form-element form-element" id="phone_parent">
+                    <label class="slds-form-element__label uppercase-label" for="phone">*Phone</label>
+                    <div class="slds-form-element__control">
+                        <input
+                            type="tel"
+                            id="phone_main"
+                            name="phone"
+                            onfocusout="validate('phone')"
+                            maxlength="40"
+                            class="slds-input"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        />
+                        <span style="font-style: italic">digits only</span>
+                    </div>
+                    <div class="slds-form-element__help" id="phone_error" style="display: none">Enter a value.</div>
+                </div>
+
+                <!-- Email -->
+                <div class="slds-form-element form-element" id="email_parent">
+                    <label class="slds-form-element__label uppercase-label" for="email">*Email</label>
+                    <div class="slds-form-element__control">
+                        <input type="email" id="email_main" name="email" onfocusout="validate('email')" maxlength="80" class="slds-input" />
+                    </div>
+                    <div class="slds-form-element__help" id="email_error" style="display: none">Enter a value.</div>
+                </div>
+
+                <!-- Fax -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="fax">Fax</label>
+                    <div class="slds-form-element__control">
+                        <input
+                            type="tel"
+                            id="fax"
+                            name="fax"
+                            maxlength="40"
+                            class="slds-input"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        />
+                    </div>
+                    <span style="font-style: italic">digits only</span>
+                </div>
+
+                <!-- Address -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="address">Address</label>
+                    <div class="slds-form-element__control">
+                        <textarea id="address" name="address" rows="3" class="slds-textarea"></textarea>
+                    </div>
+                </div>
+
+                <!-- City -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="city">City</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="city" name="city" maxlength="40" class="slds-input" />
+                    </div>
+                </div>
+
+                <!-- State -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="state">State</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="state" name="state" title="State">
+                            <option value="">--Please select one--</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="IA">Iowa</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VA">Virginia</option>
+                            <option value="VT">Vermont</option>
+                            <option value="WA">Washington</option>
+                            <option value="DC">Washington DC</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Zip -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="zip">Zip</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" id="zip" name="zip" maxlength="20" class="slds-input" />
+                    </div>
+                </div>
+
+                <!-- Website -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="website">Website</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="website" name="website" maxlength="80" class="slds-input" />
+                    </div>
+                </div>
+
+                <!-- Current annual sales volume -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="annualSalesVolume">Current annual sales volume:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="annualSalesVolume" name="annualSalesVolume">
+                            <option value="">--None--</option>
+                            <option value="Less than $250,000">Less than $250,000</option>
+                            <option value="$250,000 - $500,000">$250,000 - $500,000</option>
+                            <option value="$500,000 - $1,000,000">$500,000 - $1,000,000</option>
+                            <option value="$1,000,000 - $5,000,000">$1,000,000 - $5,000,000</option>
+                            <option value=">$5,000,000">>$5,000,000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Number of years in business -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="yearsInBusiness">Number of years in business:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="yearsInBusiness" name="yearsInBusiness">
+                            <option value="">--None--</option>
+                            <option value="Less than 1 year">Less than 1 year</option>
+                            <option value="1 to 2 years">1 to 2 years</option>
+                            <option value="2 to 5 years">2 to 5 years</option>
+                            <option value=">5 years">&gt;5 years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Ownership of property -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="rentYourProperty">Do you own or rent your property:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="rentYourProperty" name="rentYourProperty">
+                            <option value="">--None--</option>
+                            <option value="Own Property">Own Property</option>
+                            <option value="Rent Property">Rent Property</option>
+                            <option value="Looking for Property">Looking for Property</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Number of square feet of facility -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="facilitySize">Number of square feet of facility:</label>
+                    <div class="slds-form-element__control">
+                        <input type="number" id="facilitySize" name="facilitySize" class="slds-input" />
+                    </div>
+                </div>
+
+                <!-- Number of full-time employees -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="numberOfEmployees">Number of full-time employees:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="numberOfEmployees" name="numberOfEmployees">
+                            <option value="">--None--</option>
+                            <option value="1-2">1-2</option>
+                            <option value="3-4">3-4</option>
+                            <option value="5-10">5-10</option>
+                            <option value="11-20">11-20</option>
+                            <option value="21-50">21-50</option>
+                            <option value="50+">50+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Current floor plan provider -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="floorPlanProvider">Current floor plan provider:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="floorPlanProvider" name="floorPlanProvider">
+                            <option value="">--None--</option>
+                            <option value="TCF">TCF</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Checkbox for services offered -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="offeringServicesProductSold">Do you offer services for products sold?</label>
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox slds-checkbox_standalone">
+                            <apex:inputCheckbox id="offeringServicesProductSold" styleClass="slds-checkbox" />
+                            <span class="slds-checkbox_faux"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Checkboxes for Other Brands Carried -->
+                <div class="slds-form-element form-element">
+                    <fieldset class="slds-form-element form-element">
+                        <legend class="slds-form-element__legend slds-form-element__label uppercase-label">Other brands you carry (select all that apply):</legend>
+                        <div class="slds-form-element__control">
+                            <div class="slds-grid slds-wrap">
+                                <apex:repeat value="{!brands}" var="brand">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-checkbox">
+                                            <apex:inputCheckbox id="inputCheckbox" value="{!brandSelected[brand]}" styleClass="slds-checkbox other-brand-checkbox" />
+                                            <label class="slds-checkbox__label" for="{!$Component.inputCheckbox}">
+                                                <span class="slds-checkbox_faux"></span>
+                                                <span class="slds-form-element__label">{!brand}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Checkboxes for Types of Products Sold -->
+                <div class="slds-form-element form-element">
+                    <fieldset class="slds-form-element form-element">
+                        <legend class="slds-form-element__legend slds-form-element__label uppercase-label">Types of products you currently sell (select all that apply):</legend>
+                        <div class="slds-form-element__control">
+                            <div class="slds-grid slds-wrap">
+                                <apex:repeat value="{!otherProducts}" var="op">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-checkbox">
+                                            <apex:inputCheckbox id="inputCheckbox" value="{!otherProductsSelected[op]}" styleClass="slds-checkbox other-product-checkbox" />
+                                            <label class="slds-checkbox__label" for="{!$Component.inputCheckbox}">
+                                                <span class="slds-checkbox_faux"></span>
+                                                <span class="slds-form-element__label">{!op}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Checkbox for Display Area -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a display area?</label>
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox slds-checkbox_standalone">
+                            <apex:inputCheckbox id="displayArea" styleClass="slds-checkbox" value="{!valueMap['displayArea']}" />
+                            <span class="slds-checkbox_faux"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Checkbox for Service Area -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a service area?</label>
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox slds-checkbox_standalone">
+                            <apex:inputCheckbox id="serviceArea" styleClass="slds-checkbox" value="{!valueMap['serviceArea']}" />
+                            <span class="slds-checkbox_faux"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Checkbox for Parts Area -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a parts area?</label>
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox slds-checkbox_standalone">
+                            <apex:inputCheckbox id="partsArea" styleClass="slds-checkbox" value="{!valueMap['partsArea']}" />
+                            <span class="slds-checkbox_faux"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Comment Text Field -->
+                <div class="slds-form-element form-element">
+                    <label class="slds-form-element__label uppercase-label" for="freeTextField">COMMENTS/ADDITIONAL INFORMATION:</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputTextarea id="comment" rows="3" styleClass="slds-input" value="{!comment}" />
+                    </div>
+                </div>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <!-- <apex:commandLink value="Submit" styleClass="slds-button slds-button_brand" action="{!submit}" style="background-color: black; border-color: black; text-transform: uppercase;"></apex:commandLink> -->
+                    <apex:commandLink
+                        value="Submit"
+                        styleClass="slds-button slds-button_brand"
+                        onclick="submit(); return false;"
+                        style="background-color: black; border-color: black; text-transform: uppercase"
+                    ></apex:commandLink>
+                </div>
+            </apex:form>
+        </body>
+        <script>
+            function validate(elementId) {
+                var errorClass = "slds-has-error";
+                var element = document.querySelector(`[id*='${elementId}_main']`);
+                var element_parent = document.querySelector(`[id*='${elementId}_parent']`);
+                var element_error = document.querySelector(`[id*='${elementId}_error']`);
+                if (element.value) {
+                    if (element_parent.classList.contains(errorClass)) {
+                        element_parent.classList.remove(errorClass);
+                        element_error.style.display = "none";
+                    }
+                } else {
+                    if (!element_parent.classList.contains(errorClass)) {
+                        element_parent.classList.add(errorClass);
+                        element_error.style.display = "";
+                    }
+                }
+            }
+
+            function submit() {
+                console.log("SUBMIT EXE");
+                var formElements = {};
+                formElements["typeOfBusiness"] = document.querySelector(`[id*='typeOfBusiness']`).value;
+                formElements["title"] = document.querySelector(`[id*='title_main']`).value;
+                formElements["first_name"] = document.querySelector(`[id*='first_name_main']`).value;
+                formElements["last_name"] = document.querySelector(`[id*='last_name_main']`).value;
+                formElements["company"] = document.querySelector(`[id*='company_main']`).value;
+                formElements["phone"] = document.querySelector(`[id*='phone_main']`).value;
+                formElements["email"] = document.querySelector(`[id*='email_main']`).value;
+                formElements["fax"] = document.querySelector(`[id*='fax']`).value;
+                formElements["address"] = document.querySelector(`[id*='address']`).value;
+                formElements["city"] = document.querySelector(`[id*='city']`).value;
+                formElements["state"] = document.querySelector(`[id*='state']`).value;
+                formElements["zip"] = document.querySelector(`[id*='zip']`).value;
+                formElements["website"] = document.querySelector(`[id*='website']`).value;
+                formElements["annualSalesVolume"] = document.querySelector(`[id*='annualSalesVolume']`).value;
+                formElements["yearsInBusiness"] = document.querySelector(`[id*='yearsInBusiness']`).value;
+                formElements["rentYourProperty"] = document.querySelector(`[id*='rentYourProperty']`).value;
+                formElements["facilitySize"] = document.querySelector(`[id*='facilitySize']`).value;
+                formElements["numberOfEmployees"] = document.querySelector(`[id*='numberOfEmployees']`).value;
+                formElements["floorPlanProvider"] = document.querySelector(`[id*='floorPlanProvider']`).value;
+                formElements["offeringServicesProductSold"] = document.querySelector(`[id*='offeringServicesProductSold']`).checked;
+                formElements["displayArea"] = document.querySelector(`[id*='displayArea']`).checked;
+                formElements["serviceArea"] = document.querySelector(`[id*='serviceArea']`).checked;
+                formElements["partsArea"] = document.querySelector(`[id*='partsArea']`).checked;
+                formElements["comment"] = document.querySelector(`[id*='comment']`).value;
+
+                var selectedOtherBrands = [];
+                var checkboxes = document.querySelectorAll(".other-brand-checkbox");
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedOtherBrands.push(checkbox.nextElementSibling.textContent.trim());
+                    }
+                });
+                formElements["selectedOtherBrands"] = selectedOtherBrands;
+
+                var selectedOtherProducts = [];
+                var checkboxes = document.querySelectorAll(".other-product-checkbox");
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedOtherProducts.push(checkbox.nextElementSibling.textContent.trim());
+                    }
+                });
+                formElements["selectedOtherProducts"] = selectedOtherProducts;
+
+                console.log(formElements);
+            }
+        </script>
+    </html>
+</apex:page>
