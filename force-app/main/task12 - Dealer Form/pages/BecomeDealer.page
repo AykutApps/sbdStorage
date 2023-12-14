@@ -1,20 +1,24 @@
-<apex:page controller="BecomeDealerCtrl" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<apex:page controller="BecomeDealerCtrl" showHeader="false" sidebar="false">
+    <apex:slds />
+    <style type="text/css">
+        .uppercase-label {
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.75rem !important;
+            font-family: Aaux Pro, Arial, sans-serif;
+            color: black !important;
+        }
+
+        .form-element {
+            padding-bottom: 16px;
+        }
+    </style>
+
     <html>
-        <!-- <style>
-            .uppercase-label {
-                text-transform: uppercase;
-                font-weight: 700;
-                font-size: 0.75rem;
-                font-family: Aaux Pro, Arial, sans-serif;
-            }
-
-            .form-element {
-                padding-bottom: 16px;
-            }
-        </style> -->
-
         <body>
-            <apex:slds />
+            <div id="afterSubmit" style="margin-top: 50px; margin-left: 20px; font-size: 1.25rem; color: #000; display: none">
+                <p>Thank you for your interest in being a Hustler Turf partner. We will review your details and reach out accordingly.</p>
+            </div>
             <apex:form id="form" styleClass="slds-scope" style="max-width: 500px; padding: 20px; color: #000 !important">
                 <div style="font-family: Aaux Pro, Arial, sans-serif; font-size: 0.875rem">
                     <p>Complete the brief survey below and receive more information from a member of our Independent Retail group.</p>
@@ -83,15 +87,7 @@
                 <div class="slds-form-element form-element" id="phone_parent">
                     <label class="slds-form-element__label uppercase-label" for="phone">*Phone</label>
                     <div class="slds-form-element__control">
-                        <input
-                            type="tel"
-                            id="phone_main"
-                            name="Phone"
-                            onfocusout="validateField('phone')"
-                            maxlength="40"
-                            class="slds-input"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
-                        />
+                        <input type="tel" id="phone_main" name="Phone" onfocusout="validateField('phone')" maxlength="40" class="slds-input" />
                         <span style="font-style: italic">digits only</span>
                     </div>
                     <div class="slds-form-element__help" id="phone_error" style="display: none">Enter a value.</div>
@@ -103,21 +99,14 @@
                     <div class="slds-form-element__control">
                         <input type="email" id="email_main" name="Email" onfocusout="validateField('email')" maxlength="80" class="slds-input" />
                     </div>
-                    <div class="slds-form-element__help" id="email_error" style="display: none">Enter a value.</div>
+                    <div class="slds-form-element__help" id="email_error" style="display: none">Enter a valid email.</div>
                 </div>
 
                 <!-- Fax -->
                 <div class="slds-form-element form-element">
                     <label class="slds-form-element__label uppercase-label" for="fax">Fax</label>
                     <div class="slds-form-element__control">
-                        <input
-                            type="tel"
-                            id="fax"
-                            name="fax"
-                            maxlength="40"
-                            class="slds-input"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
-                        />
+                        <input type="tel" id="fax" name="fax" maxlength="40" class="slds-input" />
                     </div>
                     <span style="font-style: italic">digits only</span>
                 </div>
@@ -314,7 +303,7 @@
                                 <apex:repeat value="{!brands}" var="brand">
                                     <div class="slds-col slds-size_1-of-2">
                                         <div class="slds-checkbox">
-                                            <apex:inputCheckbox id="inputCheckbox" value="{!brandSelected[brand]}" styleClass="slds-checkbox other-brand-checkbox" />
+                                            <apex:inputCheckbox id="inputCheckbox" styleClass="slds-checkbox other-brand-checkbox" />
                                             <label class="slds-checkbox__label" for="{!$Component.inputCheckbox}">
                                                 <span class="slds-checkbox_faux"></span>
                                                 <span class="slds-form-element__label">{!brand}</span>
@@ -336,7 +325,7 @@
                                 <apex:repeat value="{!otherProducts}" var="op">
                                     <div class="slds-col slds-size_1-of-2">
                                         <div class="slds-checkbox">
-                                            <apex:inputCheckbox id="inputCheckbox" value="{!otherProductsSelected[op]}" styleClass="slds-checkbox other-product-checkbox" />
+                                            <apex:inputCheckbox id="inputCheckbox" styleClass="slds-checkbox other-product-checkbox" />
                                             <label class="slds-checkbox__label" for="{!$Component.inputCheckbox}">
                                                 <span class="slds-checkbox_faux"></span>
                                                 <span class="slds-form-element__label">{!op}</span>
@@ -354,7 +343,7 @@
                     <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a display area?</label>
                     <div class="slds-form-element__control">
                         <span class="slds-checkbox slds-checkbox_standalone">
-                            <apex:inputCheckbox id="displayArea" styleClass="slds-checkbox" value="{!valueMap['displayArea']}" />
+                            <apex:inputCheckbox id="displayArea" styleClass="slds-checkbox" />
                             <span class="slds-checkbox_faux"></span>
                         </span>
                     </div>
@@ -365,7 +354,7 @@
                     <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a service area?</label>
                     <div class="slds-form-element__control">
                         <span class="slds-checkbox slds-checkbox_standalone">
-                            <apex:inputCheckbox id="serviceArea" styleClass="slds-checkbox" value="{!valueMap['serviceArea']}" />
+                            <apex:inputCheckbox id="serviceArea" styleClass="slds-checkbox" />
                             <span class="slds-checkbox_faux"></span>
                         </span>
                     </div>
@@ -376,7 +365,7 @@
                     <label class="slds-form-element__label uppercase-label" for="checkbox-unique-id-82">Do you have a parts area?</label>
                     <div class="slds-form-element__control">
                         <span class="slds-checkbox slds-checkbox_standalone">
-                            <apex:inputCheckbox id="partsArea" styleClass="slds-checkbox" value="{!valueMap['partsArea']}" />
+                            <apex:inputCheckbox id="partsArea" styleClass="slds-checkbox" />
                             <span class="slds-checkbox_faux"></span>
                         </span>
                     </div>
@@ -386,8 +375,14 @@
                 <div class="slds-form-element form-element">
                     <label class="slds-form-element__label uppercase-label" for="freeTextField">COMMENTS/ADDITIONAL INFORMATION:</label>
                     <div class="slds-form-element__control">
-                        <apex:inputTextarea id="comment" rows="3" styleClass="slds-input" value="{!comment}" />
+                        <apex:inputTextarea id="comment" rows="3" styleClass="slds-input" />
                     </div>
+                </div>
+
+                <div>
+                    <span>ReCaptcha</span>
+                    <iframe src="/apex/ProHubReCaptcha" name="captchaFrame" scrolling="no" frameborder="0" width="100%" height="90px"> </iframe>
+                    <div class="slds-form-element__help" id="recaptcha_error" style="color: red; display: none">ReCaptcha validation failed</div>
                 </div>
 
                 <div class="slds-modal__content slds-p-around_medium">
@@ -401,12 +396,35 @@
                 </div>
             </apex:form>
         </body>
+
+        <div class="slds-spinner_container slds-is-fixed slds-hide" id="sldsSpinner">
+            <div role="status" class="slds-spinner slds-spinner_medium">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+
         <script>
+            var captchaStatus;
             function validateField(elementId) {
+                console.log("VALIDATE FOR", elementId);
                 var errorClass = "slds-has-error";
                 var element = document.querySelector(`[id*='${elementId}_main']`);
                 var element_parent = document.querySelector(`[id*='${elementId}_parent']`);
                 var element_error = document.querySelector(`[id*='${elementId}_error']`);
+                if (elementId === "email" && element.value) {
+                    var emailRegex = /\S+@\S+\.\S+/;
+                    if (!emailRegex.test(element.value)) {
+                        if (!element_parent.classList.contains(errorClass)) {
+                            element_parent.classList.add(errorClass);
+                            element_error.style.display = "";
+                        }
+                        console.log("Email not Valid");
+                        return element;
+                    }
+                }
+
                 if (element.value) {
                     if (element_parent.classList.contains(errorClass)) {
                         element_parent.classList.remove(errorClass);
@@ -418,24 +436,34 @@
                         element_parent.classList.add(errorClass);
                         element_error.style.display = "";
                     }
-                    return element.name;
+                    return element;
                 }
             }
 
             function validateForm(formElements) {
+                console.log("VALIDATE FORM");
                 var requiredFormElements = ["first_name", "last_name", "company", "phone", "email"];
                 var missingFormElements = [];
+                var missingFormElementsName = [];
 
                 for (var re of requiredFormElements) {
-                    if (!formElements[re] || formElements[re].trim() === "") {
-                        var elementName = validateField(re);
-                        if (elementName) missingFormElements.push(elementName);
+                    if (!formElements[re] || formElements[re].trim() === "" || re === "email") {
+                        var element = validateField(re);
+                        if (element) {
+                            missingFormElements.push(element);
+                            missingFormElementsName.push(element.name);
+                        }
                     }
                 }
 
-                if (missingFormElements.length > 0) {
-                    alert("Missing Required Fields: " + missingFormElements.join(", "));
+                if (missingFormElementsName.length > 0) {
+                    missingFormElements[0].focus();
+                    missingFormElements[0].select();
+                    alert("Missing Required Fields: " + missingFormElementsName.join(", "));
+                    return false;
                 }
+
+                return true;
             }
 
             function getValue(idPattern, defaultValue = "") {
@@ -456,9 +484,47 @@
                 return selectedValues;
             }
 
+            function submitToServer(formElements) {
+                document.getElementById("sldsSpinner").classList.remove("slds-hide");
+                var leadPayload = JSON.stringify(formElements);
+                Visualforce.remoting.Manager.invokeAction(
+                    "{!$RemoteAction.BecomeDealerCtrl.submit}",
+                    leadPayload,
+                    function (result, event) {
+                        console.log(event.status);
+                        document.getElementById("sldsSpinner").classList.add("slds-hide");
+                        if (event.status) {
+                            document.querySelector(`[id*='afterSubmit']`).style.display = "";
+                            document.querySelector(`[id*='form']`).style.display = "none";
+                        } else {
+                            alert("Error: " + event.message);
+                        }
+                    },
+                    { escape: true }
+                );
+            }
+
+            function checkRecaptchaValidation() {
+                console.log("checkRecaptchaValidation");
+                let element = document.querySelector(`[id*='recaptcha_error']`);
+                if (captchaStatus != "unlock") {
+                    element.style.display = "";
+                    console.log("false");
+                    alert("ReCaptcha is required!");
+                    return false;
+                } else {
+                    element.style.display = "none";
+                    console.log("true");
+                    return true;
+                }
+            }
+
             function submit() {
-                console.log("SUBMIT EXE");
+                const urlParams = new URLSearchParams(window.location.search);
+                var brand = urlParams.get("brand");
+                brand = brand.charAt(0).toUpperCase() + brand.slice(1);
                 let formElements = {
+                    leadSourceOrigin: `${brand} Become Dealer Form`,
                     typeOfBusiness: getValue("typeOfBusiness"),
                     title: getValue("title_main"),
                     first_name: getValue("first_name_main"),
@@ -483,13 +549,37 @@
                     serviceArea: getValue("serviceArea"),
                     partsArea: getValue("partsArea"),
                     comment: getValue("comment"),
-                    selectedOtherBrands: getCheckedValues("other-brand-checkbox"),
-                    selectedOtherProducts: getCheckedValues("other-product-checkbox")
+                    selectedOtherBrands: getCheckedValues("other-brand-checkbox").join(";"),
+                    selectedOtherProducts: getCheckedValues("other-product-checkbox").join(";")
                 };
-
                 console.log(formElements);
-                validateForm(formElements);
+
+                if (checkRecaptchaValidation() && validateForm(formElements)) {
+                    submitToServer(formElements);
+                }
             }
+
+            window.addEventListener("message", (message) => {
+                console.log("CAPTCHAN !!!");
+                console.log("{!$Label.site.thank_you_for_registering}");
+                if (message !== undefined && message.origin === window.location.origin) {
+                    if (message.data.captchaVisible) {
+                        if (message.data.captchaVisible === "visible") {
+                            console.log("CAPTCHAN VISIBLE");
+                            captchaStatus = "visible";
+                        }
+                    }
+                    if (message.data.action) {
+                        if (message.data.action === "unlock") {
+                            console.log("CAPTCHAN unlock");
+                            captchaStatus = "unlock";
+                        } else if (message.data.action === "lock") {
+                            console.log("CAPTCHAN lock");
+                            captchaStatus = "lock";
+                        }
+                    }
+                }
+            });
         </script>
     </html>
 </apex:page>
