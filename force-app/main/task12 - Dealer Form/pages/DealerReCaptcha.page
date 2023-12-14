@@ -1,0 +1,36 @@
+<apex:page>
+    <head>
+        <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
+        <style>
+            #wrapper {
+                margin-left: 20px;
+                margin-top: 20px;
+            }
+        </style>
+        <script>
+            function submitJS() {
+                console.log("ReCaptcha Restult ", grecaptcha.getResponse());
+                if (!grecaptcha.getResponse()) {
+                    document.getElementById("error").style.display = "block";
+                }
+            }
+        </script>
+    </head>
+    <apex:form>
+        <div id="wrapper">
+            First Name:
+            <apex:inputText id="idFirstName" />
+            <br />
+            <br /> Last Name:
+            <apex:inputText id="idLastName" />
+            <br />
+            <br />
+            <div class="g-recaptcha" data-sitekey="6LfyUzEpAAAAAD34L052zkoVKHxxB2TaPBXXHUCA"></div>
+            <br />
+            <div id="error" style="color: red; display: none">Please verify that you are not a Robot.</div>
+            <br />
+            <apex:commandButton value="Submit" onclick="submitJS()" rerender="dummyPanel" />
+            <apex:outputPanel id="dummyPanel"></apex:outputPanel>
+        </div>
+    </apex:form>
+</apex:page>
