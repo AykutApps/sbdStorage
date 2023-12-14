@@ -379,12 +379,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <span>ReCaptcha</span>
-                    <iframe src="/apex/ProHubReCaptcha" name="captchaFrame" scrolling="no" frameborder="0" width="100%" height="90px"> </iframe>
-                    <div class="slds-form-element__help" id="recaptcha_error" style="color: red; display: none">ReCaptcha validation failed</div>
-                </div>
-
                 <div class="slds-modal__content slds-p-around_medium">
                     <!-- <apex:commandLink value="Submit" styleClass="slds-button slds-button_brand" action="{!submit}" style="background-color: black; border-color: black; text-transform: uppercase;"></apex:commandLink> -->
                     <apex:commandLink
@@ -406,7 +400,6 @@
         </div>
 
         <script>
-            var captchaStatus;
             function validateField(elementId) {
                 console.log("VALIDATE FOR", elementId);
                 var errorClass = "slds-has-error";
@@ -504,27 +497,12 @@
                 );
             }
 
-            function checkRecaptchaValidation() {
-                console.log("checkRecaptchaValidation");
-                let element = document.querySelector(`[id*='recaptcha_error']`);
-                if (captchaStatus != "unlock") {
-                    element.style.display = "";
-                    console.log("false");
-                    alert("ReCaptcha is required!");
-                    return false;
-                } else {
-                    element.style.display = "none";
-                    console.log("true");
-                    return true;
-                }
-            }
-
             function submit() {
                 const urlParams = new URLSearchParams(window.location.search);
                 var brand = urlParams.get("brand");
-                brand = brand.charAt(0).toUpperCase() + brand.slice(1);
+                if (brand) brand = brand.charAt(0).toUpperCase() + brand.slice(1);
                 let formElements = {
-                    leadSourceOrigin: `${brand} Become Dealer Form`,
+                    leadSourceOrigin: `${brand} Become A Dealer Form`,
                     typeOfBusiness: getValue("typeOfBusiness"),
                     title: getValue("title_main"),
                     first_name: getValue("first_name_main"),
@@ -553,33 +531,10 @@
                     selectedOtherProducts: getCheckedValues("other-product-checkbox").join(";")
                 };
                 console.log(formElements);
-
-                if (checkRecaptchaValidation() && validateForm(formElements)) {
+                if (validateForm(formElements)) {
                     submitToServer(formElements);
                 }
             }
-
-            window.addEventListener("message", (message) => {
-                console.log("CAPTCHAN !!!");
-                console.log("{!$Label.site.thank_you_for_registering}");
-                if (message !== undefined && message.origin === window.location.origin) {
-                    if (message.data.captchaVisible) {
-                        if (message.data.captchaVisible === "visible") {
-                            console.log("CAPTCHAN VISIBLE");
-                            captchaStatus = "visible";
-                        }
-                    }
-                    if (message.data.action) {
-                        if (message.data.action === "unlock") {
-                            console.log("CAPTCHAN unlock");
-                            captchaStatus = "unlock";
-                        } else if (message.data.action === "lock") {
-                            console.log("CAPTCHAN lock");
-                            captchaStatus = "lock";
-                        }
-                    }
-                }
-            });
         </script>
     </html>
 </apex:page>
