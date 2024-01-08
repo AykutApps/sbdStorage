@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
-    <active>false</active>
+    <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
         <type>owner</type>
@@ -77,6 +77,12 @@
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Final_Approval_and_payment_for_LDA</name>
+                <type>Alert</type>
+            </action>
+        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>heather.kaesgen@mtdproducts.com</name>
@@ -89,6 +95,12 @@
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Final_LDA_Rejection</name>
+                <type>Alert</type>
+            </action>
+        </rejectionActions>
     </approvalStep>
     <emailTemplate>unfiled$public/New_Dealer_LDA_Approval_Request</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
@@ -128,7 +140,7 @@
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
         <userHierarchyField>Manager</userHierarchyField>
     </nextAutomatedApprover>
-    <processOrder>2</processOrder>
+    <processOrder>1</processOrder>
     <recallActions>
         <action>
             <name>LDA_status_blank</name>

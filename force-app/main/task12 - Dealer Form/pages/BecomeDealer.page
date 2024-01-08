@@ -13,6 +13,7 @@
             padding-bottom: 16px;
         }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
 
     <html>
         <body>
@@ -378,6 +379,12 @@
                         <apex:inputTextarea id="comment" rows="3" styleClass="slds-input" />
                     </div>
                 </div>
+                <!-- ReCaptcha -->
+                <div>
+                    <div class="g-recaptcha" data-sitekey="6Ldz1jEpAAAAAGE6tXD65USl8eqkCoWB4VinOGOk"></div>
+                    <br />
+                    <div id="recaptcha_error" style="color: red; display: none">ReCaptcha validation failed.</div>
+                </div>
 
                 <div class="slds-modal__content slds-p-around_medium">
                     <!-- <apex:commandLink value="Submit" styleClass="slds-button slds-button_brand" action="{!submit}" style="background-color: black; border-color: black; text-transform: uppercase;"></apex:commandLink> -->
@@ -400,8 +407,9 @@
         </div>
 
         <script>
+            var captchaStatus;
+
             function validateField(elementId) {
-                console.log("VALIDATE FOR", elementId);
                 var errorClass = "slds-has-error";
                 var element = document.querySelector(`[id*='${elementId}_main']`);
                 var element_parent = document.querySelector(`[id*='${elementId}_parent']`);
@@ -413,7 +421,6 @@
                             element_parent.classList.add(errorClass);
                             element_error.style.display = "";
                         }
-                        console.log("Email not Valid");
                         return element;
                     }
                 }
@@ -434,7 +441,6 @@
             }
 
             function validateForm(formElements) {
-                console.log("VALIDATE FORM");
                 var requiredFormElements = ["first_name", "last_name", "company", "phone", "email"];
                 var missingFormElements = [];
                 var missingFormElementsName = [];
@@ -477,15 +483,16 @@
                 return selectedValues;
             }
 
-            function submitToServer(formElements) {
+            function submitToServer(formElements, recaptchaResponse) {
                 document.getElementById("sldsSpinner").classList.remove("slds-hide");
                 var leadPayload = JSON.stringify(formElements);
                 Visualforce.remoting.Manager.invokeAction(
                     "{!$RemoteAction.BecomeDealerCtrl.submit}",
                     leadPayload,
+                    recaptchaResponse,
                     function (result, event) {
-                        console.log(event.status);
                         document.getElementById("sldsSpinner").classList.add("slds-hide");
+                        grecaptcha.reset();
                         if (event.status) {
                             document.querySelector(`[id*='afterSubmit']`).style.display = "";
                             document.querySelector(`[id*='form']`).style.display = "none";
@@ -495,6 +502,17 @@
                     },
                     { escape: true }
                 );
+            }
+
+            function checkRecaptchaValidation() {
+                let element = document.querySelector(`[id*='recaptcha_error']`);
+                if (!grecaptcha.getResponse()) {
+                    element.style.display = "";
+                    return false;
+                } else {
+                    element.style.display = "none";
+                    return grecaptcha.getResponse();
+                }
             }
 
             function submit() {
@@ -531,8 +549,9 @@
                     selectedOtherProducts: getCheckedValues("other-product-checkbox").join(";")
                 };
                 console.log(formElements);
-                if (validateForm(formElements)) {
-                    submitToServer(formElements);
+                var recaptchaResponse = checkRecaptchaValidation();
+                if (validateForm(formElements) && recaptchaResponse) {
+                    submitToServer(formElements, recaptchaResponse);
                 }
             }
         </script>

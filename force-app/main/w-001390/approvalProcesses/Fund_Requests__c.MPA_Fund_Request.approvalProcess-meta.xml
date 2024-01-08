@@ -124,7 +124,7 @@
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
         <userHierarchyField>Manager</userHierarchyField>
     </nextAutomatedApprover>
-    <processOrder>2</processOrder>
+    <processOrder>3</processOrder>
     <recallActions>
         <action>
             <name>LDA_status_blank</name>
