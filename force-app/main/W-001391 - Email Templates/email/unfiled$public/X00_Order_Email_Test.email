@@ -1,0 +1,645 @@
+<messaging:emailTemplate subject="New Cub Cadet Commerce Order {!relatedTo.Order_Number__c}" recipientType="Contact" relatedToType="Consumer_Order__c">
+    <messaging:htmlEmailBody>
+        <table border="0px" cellspacing="0" cellpadding="0" style="max-width: 600px">
+            <tr style="height: 65px">
+                <td colspan="4" style="padding: 20px 25px; text-align: left; background-color: #ffc20f">
+                    <a href="http://www.cubcadet.com"
+                        ><img
+                            height="23"
+                            style="
+                                border: 0;
+                                font-family: Helvetica, Arial, sans-serif;
+                                font-weight: 400;
+                                font-size: 14px;
+                                color: #333333;
+                                display: block;
+                                width: 165px !important;
+                                height: 23px !important;
+                            "
+                            src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+                    /></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <a href="http://www.cubcadet.com"
+                        ><img
+                            width="600"
+                            style="border: 0px currentColor; border-image: none; height: auto; display: block; max-width: 600px"
+                            src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3V&oid=00DA0000000hHew&lastMod=1705506291000"
+                        />
+                    </a>
+                </td>
+            </tr>
+
+            <!-- Header -->
+            <tr>
+                <td colspan="4" style="padding: 15px">
+                    <h2
+                        style="
+                            margin: 18px 0px 14px 0px;
+                            text-align: left;
+                            color: rgb(51, 51, 51);
+                            line-height: 23px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            font-size: 19px;
+                            font-weight: 700;
+                        "
+                    >
+                        Order Confirmation
+                    </h2>
+                    <p
+                        style="
+                            margin: 10px 0px 0px;
+                            padding: 0px;
+                            text-align: left;
+                            color: rgb(51, 51, 51);
+                            line-height: 24px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            font-size: 14px;
+                            font-weight: 400;
+                        "
+                    >
+                        <!-- Mail Content Heade -->
+                        <span>Hello {!relatedTo.Shipping_Name__c}, </span>
+                        <br />
+                        <span>
+                            Thank you for your order - we appreciate your business. Your preferred dealer will contact you shortly regarding your order for
+                            {!relatedTo.Fulfillment_Type__c}. If you have questions regarding your order, please contact the dealer (see details below).</span
+                        >
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 0px 15px 0px 15px">
+                    <h2
+                        style="
+                            margin: 18px 0px 14px 0px;
+                            text-align: left;
+                            color: rgb(51, 51, 51);
+                            line-height: 23px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            font-size: 19px;
+                            font-weight: 700;
+                        "
+                    >
+                        Order Details
+                    </h2>
+                </td>
+            </tr>
+            <!-- Order&Dealer Information -->
+            <tr>
+                <td colspan="2">
+                    <h5
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 0 0 0 0;
+                            font-weight: 700;
+                            font-size: 15px;
+                            line-height: 19px;
+                        "
+                    >
+                        Order Information
+                    </h5>
+                    <p
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 10px 0 0;
+                            font-weight: 400;
+                            font-size: 14px;
+                            mso-line-height-rule: exactly;
+                            line-height: 24px;
+                        "
+                    >
+                        Order Number: {!relatedTo.Order_Number__c} <br />
+                        Order Date:
+                        <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                            <apex:param value="{!relatedTo.Order_Date__c}" />
+                        </apex:outputText>
+                        <br /> Fulfillment Method: {!relatedTo.Fulfillment_Type__c}<br />
+                    </p>
+                </td>
+                <td colspan="2">
+                    <h5
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 0 0 0 0;
+                            font-weight: 700;
+                            font-size: 15px;
+                            line-height: 19px;
+                        "
+                    >
+                        Dealer Information
+                    </h5>
+                    <p
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 10px 0 0;
+                            font-weight: 400;
+                            font-size: 14px;
+                            mso-line-height-rule: exactly;
+                            line-height: 24px;
+                        "
+                    >
+                        {!relatedTo.Dealer__r.Name} <br /> {!relatedTo.Dealer__r.BillingStreet} <br /> {!relatedTo.Dealer__r.BillingCity}, {!relatedTo.Dealer__r.BillingState}
+                        {!relatedTo.Dealer__r.BillingPostalCode} <br /> {!relatedTo.Dealer__r.Phone} <br />
+                    </p>
+                </td>
+            </tr>
+            <tr style="height: 30px;"></tr>
+            <!-- Customer Information -->
+            <tr>
+                <td colspan="2">
+                    <h5
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 0 0 0 0;
+                            font-weight: 700;
+                            font-size: 15px;
+                            line-height: 19px;
+                        "
+                    >
+                        Customer Information
+                    </h5>
+                    <p
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 10px 0 0;
+                            font-weight: 400;
+                            font-size: 14px;
+                            mso-line-height-rule: exactly;
+                            line-height: 24px;
+                        "
+                    >
+                        {!relatedTo.Shipping_Name__c} <br /> {!relatedTo.Shipping_Address_1__c} {!relatedTo.Shipping_Address_2__c} {!relatedTo.Shipping_Address_3__c}
+                        <br /> {!relatedTo.Shipping_City__c}, {!relatedTo.Shipping_State__c} {!relatedTo.Shipping_Postal_Code__c} <br />
+                    </p>
+                </td>
+                <td colspan="2">
+                    <h5
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 0 0 0 0;
+                            font-weight: 700;
+                            font-size: 15px;
+                            line-height: 19px;
+                        "
+                    >
+                        Billing Information
+                    </h5>
+                    <p
+                        style="
+                            padding: 0px 15px 0px 15px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            text-align: left;
+                            margin: 10px 0 0;
+                            font-weight: 400;
+                            font-size: 14px;
+                            mso-line-height-rule: exactly;
+                            line-height: 24px;
+                        "
+                    >
+                        {!relatedTo.Billing_Name__c} <br /> {!relatedTo.Billing_Address_1__c} {!relatedTo.Billing_Address_2__c} {!relatedTo.Billing_Address_3__c}
+                        <br /> {!relatedTo.Billing_City__c}, {!relatedTo.Billing_State__c} {!relatedTo.Billing_Postal_Code__c} <br />
+                    </p>
+                </td>
+            </tr>
+            <tr style="height: 15px"></tr>
+            <!-- Addtional Information -->
+            <tr style="padding: 25px 0px 0px 0px">
+                <td
+                    colspan="4"
+                    align="center"
+                    style="
+                        background-color: #dddddd;
+                        padding: 15px 10px 20px;
+                        font-family: Helvetica, Arial, sans-serif;
+                        color: #333333;
+                        text-align: center;
+                        margin: 5px 0 0;
+                        font-weight: 400;
+                        font-size: 12px;
+                        mso-line-height-rule: exactly;
+                        line-height: 18px;
+                    "
+                >
+                    <p>
+                        Order additional items on <a href="https://www.cubcadet.com">cubcadet.com</a>.<br />
+                        For information on returns, view our
+                        <a href="https://www.cubcadet.com/en_US/online-store-policies.html">returns policy</a>.
+                    </p>
+                </td>
+            </tr>
+            <!-- Order Summary Header -->
+            <tr>
+                <td colspan="4" style="padding: 0px 15px 0px 15px">
+                    <h2
+                        style="
+                            margin: 18px 0px 14px 0px;
+                            text-align: left;
+                            color: rgb(51, 51, 51);
+                            line-height: 23px;
+                            font-family: Helvetica, Arial, sans-serif;
+                            font-size: 19px;
+                            font-weight: 700;
+                        "
+                    >
+                        Order Summary
+                    </h2>
+                </td>
+            </tr>
+            <!-- Promotion Code -->
+            <tr>
+                <td colspan="4" style="padding: 0px 15px 0px 15px">
+                    <h5
+                        style="
+                            font-family: Helvetica, Arial, sans-serif;
+                            margin: 0px 0px 0px 0px;
+                            color: #333333;
+                            text-align: left;
+                            font-weight: 700;
+                            font-size: 15px;
+                            line-height: 19px;
+                        "
+                    >
+                        <apex:outputPanel rendered="{!relatedTo.Promo_Codes__c != null}">
+                        Promotion Code: <span style="font-weight: normal">{!relatedTo.Promo_Codes__c}</span>
+                        </apex:outputPanel>
+                    </h5>
+                </td>
+            </tr>
+            <!-- Order Summary -->
+            <apex:repeat var="cx" value="{!relatedTo.Consumer_Order_Items__r}">
+                <tr>
+                    <td colspan="4" height="65" style="padding-top: 20px">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td class="mobile-hide" align="center" valign="middle" width="65" style="padding: 0 20px 0 0">
+                                        <img
+                                            src="{!cx.Product__r.Image_Primary__c}"
+                                            alt="{!cx.Product__r.Detail_SKU__c}"
+                                            align="center"
+                                            border="0"
+                                            width="65"
+                                            height="65"
+                                            style="
+                                                height: auto;
+                                                border: 0;
+                                                font-family: Helvetica, Arial, sans-serif;
+                                                font-weight: 400;
+                                                font-size: 14px;
+                                                color: #333333;
+                                                display: block;
+                                                width: 65px;
+                                                height: 65px;
+                                            "
+                                        />
+                                    </td>
+
+                                    <td valign="middle" style="padding: 0 10px 0 0">
+                                        <p
+                                            style="
+                                                font-family: Helvetica, Arial, sans-serif;
+                                                color: #333333;
+                                                text-align: left;
+                                                margin: 0;
+                                                padding: 0;
+                                                font-weight: 400;
+                                                font-size: 14px;
+                                                mso-line-height-rule: exactly;
+                                                line-height: 24px;
+                                            "
+                                        >
+                                            {!cx.Product__r.Name} - {!cx.Item_Description__c}
+                                        </p>
+                                        <p
+                                            class="details"
+                                            style="
+                                                font-family: Helvetica, Arial, sans-serif;
+                                                color: #333333;
+                                                text-align: left;
+                                                margin: 0;
+                                                padding: 0;
+                                                font-weight: 400;
+                                                font-size: 12px;
+                                                mso-line-height-rule: exactly;
+                                                line-height: 18px;
+                                            "
+                                        >
+                                            <em>
+                                                Quantity
+                                                <apex:outputText value="{0, number, integer}">
+                                                    <apex:param value="{!cx.Quantity__c}" />
+                                                </apex:outputText>
+
+                                                – Unit Price $
+                                                <apex:outputText value="{0,number,###,###,##0.00}">
+                                                    <apex:param value="{!cx.Price__c}" />
+                                                </apex:outputText>
+                                            </em>
+                                        </p>
+                                    </td>
+                                    <td width="85" style="padding: 0">
+                                        <p
+                                            valign="middle"
+                                            style="
+                                                font-family: Helvetica, Arial, sans-serif;
+                                                color: #333333;
+                                                text-align: right;
+                                                margin: 0;
+                                                padding: 0;
+                                                font-weight: 400;
+                                                font-size: 14px;
+                                                mso-line-height-rule: exactly;
+                                                line-height: 24px;
+                                            "
+                                        >
+                                            <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!cx.Line_Total__c}" /> </apex:outputText>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </apex:repeat>
+            <!-- Totals -->
+            <tr>
+                <td colspan="4" style="padding-top: 20px">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <p
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        Subtotal
+                                    </p>
+                                </td>
+                                <td width="125" style="padding: 0">
+                                    <p
+                                        valign="middle"
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Wholegoods_Total__c}" /> </apex:outputText>
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <!--  -->
+                            <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <p
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        Discount
+                                    </p>
+                                </td>
+                                <td width="125" style="padding: 0">
+                                    <p
+                                        valign="middle"
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        (<apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Discount__c}" /> </apex:outputText>)
+                                    </p>
+                                </td>
+                            </tr>
+                            <!--  -->
+
+                            <!--  -->
+                            <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <p
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        Shipping
+                                    </p>
+                                </td>
+                                <td width="125" style="padding: 0">
+                                    <p
+                                        valign="middle"
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Delivery_Total__c}" /> </apex:outputText>
+                                    </p>
+                                </td>
+                            </tr>
+                            <!--  -->
+
+                            <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <p
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        Estimated Sales Tax
+                                    </p>
+                                </td>
+                                <td width="125" style="padding: 0">
+                                    <p
+                                        valign="middle"
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Tax_Total__c}" /> </apex:outputText>
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <h5
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 18px 0 0 0;
+                                            font-weight: 700;
+                                            font-size: 15px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 19px;
+                                        "
+                                    >
+                                        Total
+                                    </h5>
+                                </td>
+                                <td width="125" style="padding: 0">
+                                    <h5
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 18px 0 0 0;
+                                            font-weight: 700;
+                                            font-size: 15px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 19px;
+                                        "
+                                    >
+                                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Order_Total__c}" /> </apex:outputText>
+                                    </h5>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <!-- Footer -->
+            <tr style="height: 40px"></tr>
+            <tr bgcolor="ffc20f" style="height: 70px; margin-top: 20px">
+                <td colspan="2">
+                    <a href="http://www.cubcadet.com" style="display: inline; padding-left: 30px"
+                        ><img
+                            height="25px"
+                            src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+                    /></a>
+                    <br />
+                </td>
+                <td colspan="2" style="text-align: right; margin-bottom: 20px">
+                    <a href="https://www.facebook.com/cubcadet/" style="display: inline; padding-right: 30px"
+                        ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3a&oid=00DA0000000hHew&lastMod=1705507431000"
+                    /></a>
+                    <a href="https://twitter.com/CubCadet_USA" style="display: inline; padding-right: 30px"
+                        ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3k&oid=00DA0000000hHew&lastMod=1705508798000"
+                    /></a>
+                    <a href="https://www.instagram.com/cubcadet_usa/" style="display: inline; padding-right: 30px"
+                        ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3f&oid=00DA0000000hHew&lastMod=1705508690000"
+                    /></a>
+                    <a href="https://www.youtube.com/user/CubCadetRidingMowers" style="display: inline; padding-right: 30px"
+                        ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3p&oid=00DA0000000hHew&lastMod=1705508939000"
+                    /></a>
+                </td>
+            </tr>
+            <tr bgcolor="ffc20f">
+                <td colspan="4" style="text-align: center; font-size: 12px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px">
+                    <p
+                        style="
+                            font-family: Helvetica, Arial, sans-serif;
+                            text-align: left;
+                            margin: 10px 0 0;
+                            padding: 0;
+                            font-weight: 400;
+                            color: #333333;
+                            font-size: 10px;
+                            mso-line-height-rule: exactly;
+                            line-height: 16px;
+                            text-align: center;
+                        "
+                    >
+                        Changes made to any order after the order is placed may cause a delay in processing/fulfillment and/or order cancellation. <br />
+
+                        This email was sent to {!relatedTo.Consumer_Contact__r.email}. To ensure delivery of future email, please add @cubcadet.com to your safe senders list. This
+                        order confirmation acknowledges that your order has been received. It does not mean that your order has been accepted or that availability of an item has
+                        been confirmed. This email was sent for notification only. Please do not reply to this message. For questions or assistance, please contact your dealer.
+                        <br />
+
+                        © 2024 Cub Cadet. All rights reserved. The Cub Cadet logo and all products denoted with ® or ™ are registered trademarks or trademarks of Cub Cadet. <br />
+
+                        5903 Grafton Rd., Valley City, OH 44280
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>
