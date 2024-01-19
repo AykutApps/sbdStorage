@@ -1,0 +1,231 @@
+<messaging:emailTemplate
+    subject="Item(s) You Recently Purchased | Order {!relatedTo.Order_Number__c}"
+    recipientType="Contact"
+    relatedToType="Consumer_Order__c"
+>
+    <messaging:htmlEmailBody>
+        <style>
+            @media (max-width: 768px) {
+                .mbl-width {
+                    width: 100% !important;
+                }
+            }
+            .main-style {
+                font-family: Helvetica, Arial, sans-serif;
+                color: #333333;
+                font-size: 14px;
+            }
+
+            .main-text {
+                font-family: Helvetica, Arial, sans-serif;
+                color: #333333;
+                text-align: left;
+                margin: 10px 0 0;
+                padding: 0;
+                font-weight: 400;
+                font-size: 14px;
+                mso-line-height-rule: exactly;
+                line-height: 24px;
+            }
+            .header1 {
+                text-align: left;
+                margin: 18px 0 0 0;
+                font-weight: 700;
+                font-size: 19px;
+                mso-line-height-rule: exactly;
+                line-height: 23px;
+                padding-bottom: 10px;
+                color: #333333;
+            }
+
+            .header2 {
+                text-align: left;
+                margin: 18px 0 0 0;
+                font-weight: 700;
+                font-size: 16px;
+                mso-line-height-rule: exactly;
+                line-height: 23px;
+                padding-bottom: 10px;
+                color: #333333;
+            }
+            .addtional-information {
+                background-color: lightgray;
+                text-align: center;
+                margin-top: 20px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <div style="height: 1600px; width: 700px" class="main-style">
+            <table cellspacing="0" cellpadding="0">
+                <tr class="main-text" bgcolor="fbc40e" style="height: 70px">
+                    <td colspan="4">
+                        <a href="http://www.cubcadet.com"
+                            ><img
+                                height="40px"
+                                style="padding-left: 20px"
+                                src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+                        /></a>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <a href="http://www.cubcadet.com">
+                            <img
+                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3V&oid=00DA0000000hHew&lastMod=1705506291000"
+                                width="100%"
+                                style="display: block; width: 100%"
+                            />
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="header1">Order Details</h2>
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="2">
+                        <h3 class="header2">Order Information</h3>
+                        Order Number: {!relatedTo.Order_Number__c} <br />
+
+                        Order Date:
+                        <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                            <apex:param value="{!relatedTo.Order_Date__c}" />
+                        </apex:outputText>
+
+                        <br /> Fulfillment Method: {!relatedTo.Fulfillment_Type__c}<br />
+                    </td>
+                    <td colspan="2">
+                        <h3 class="header2">Dealer Information</h3>
+                        {!relatedTo.Dealer__r.Name} <br /> {!relatedTo.Dealer__r.BillingStreet} <br /> {!relatedTo.Dealer__r.BillingCity}, {!relatedTo.Dealer__r.BillingState}
+                        {!relatedTo.Dealer__r.BillingPostalCode} <br /> {!relatedTo.Dealer__r.Phone} <br />
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="2">
+                        <h3 class="header2">Customer Information</h3>
+                        {!relatedTo.Shipping_Name__c} <br /> {!relatedTo.Shipping_Address_1__c} {!relatedTo.Shipping_Address_2__c} {!relatedTo.Shipping_Address_3__c}
+                        <br /> {!relatedTo.Shipping_City__c}, {!relatedTo.Shipping_State__c} {!relatedTo.Shipping_Postal_Code__c} <br />
+                    </td>
+                    <td colspan="2">
+                        <h3 class="header2">Billing Information</h3>
+                        {!relatedTo.Billing_Name__c} <br /> {!relatedTo.Billing_Address_1__c} {!relatedTo.Billing_Address_2__c} {!relatedTo.Billing_Address_3__c}
+                        <br /> {!relatedTo.Billing_City__c}, {!relatedTo.Billing_State__c} {!relatedTo.Billing_Postal_Code__c} <br />
+                    </td>
+                </tr>
+                <tr style="height: 30px"></tr>
+                <tr class="main-text">
+                    <td colspan="4" class="addtional-information">
+                        Order additional items on <a href="https://www.cubcadet.com">cubcadet.com</a>.<br />
+                        For information on returns, view our
+                        <a href="https://www.cubcadet.com/en_US/online-store-policies.html">returns policy</a>.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="header1">Order Summary</h2>
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="4">
+                        <apex:outputPanel rendered="{!relatedTo.Promo_Codes__c != null}"> Promotion Code: {!relatedTo.Promo_Codes__c} </apex:outputPanel>
+                    </td>
+                </tr>
+                <apex:repeat var="cx" value="{!relatedTo.Consumer_Order_Items__r}">
+                    <tr class="main-text">
+                        <td style="width: 20%">
+                            <apex:outputPanel rendered="{!cx.Product__r.Image_Primary__c != null}">
+                                <img src="{!cx.Product__r.Image_Primary__c}" width="70%" alt="{!cx.Product__r.Detail_SKU__c}" />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!cx.Product__r.Image_Primary__c = null}"> {!cx.Product__r.Detail_SKU__c} </apex:outputPanel>
+                        </td>
+                        <td colspan="2">
+                            {!cx.Product__r.Name} - {!cx.Item_Description__c} <br />
+                            <span style="font-size: 10px">Quantity {!cx.Quantity__c} – Unit Price ${!cx.Price__c} </span>
+                        </td>
+                        <td style="text-align: right">
+                            <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!cx.Line_Total__c}" /> </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                <tr class="main-text">
+                    <td colspan="2"></td>
+                    <td style="text-align: right">SubTotal</td>
+                    <td style="text-align: right">
+                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Wholegoods_Total__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="2"></td>
+                    <td style="text-align: right">Discount</td>
+                    <td style="text-align: right">
+                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Discount__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="2"></td>
+                    <td style="text-align: right">Shipping</td>
+                    <td style="text-align: right">
+                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Delivery_Total__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="main-text">
+                    <td colspan="2"></td>
+                    <td style="text-align: right">Estimated Sales Tax</td>
+                    <td style="text-align: right">
+                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Tax_Total__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr style="height: 40px"></tr>
+                <tr class="main-text" style="text-align: right; font-weight: bold">
+                    <td colspan="2"></td>
+                    <td>Total</td>
+                    <td style="text-align: right">
+                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Order_Total__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr style="height: 40px"></tr>
+                <tr class="main-text" bgcolor="fbc40e" style="height: 70px; margin-top: 20px">
+                    <td colspan="2">
+                        <a href="http://www.cubcadet.com" style="display: inline; padding-left: 30px"
+                            ><img
+                                height="25px"
+                                src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+                        /></a>
+                        <br />
+                    </td>
+                    <td colspan="2" style="text-align: right; margin-bottom: 20px">
+                        <a href="https://www.facebook.com/cubcadet/" style="display: inline; padding-right: 30px"
+                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3a&oid=00DA0000000hHew&lastMod=1705507431000"
+                        /></a>
+                        <a href="https://twitter.com/CubCadet_USA" style="display: inline; padding-right: 30px"
+                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3k&oid=00DA0000000hHew&lastMod=1705508798000"
+                        /></a>
+                        <a href="https://www.instagram.com/cubcadet_usa/" style="display: inline; padding-right: 30px"
+                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3f&oid=00DA0000000hHew&lastMod=1705508690000"
+                        /></a>
+                        <a href="https://www.youtube.com/user/CubCadetRidingMowers" style="display: inline; padding-right: 30px"
+                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3p&oid=00DA0000000hHew&lastMod=1705508939000"
+                        /></a>
+                    </td>
+                </tr>
+                <tr class="main-text" bgcolor="fbc40e">
+                    <td colspan="4" style="text-align: center; font-size: 12px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px">
+                        Changes made to any order after the order is placed may cause a delay in processing/fulfillment and/or order cancellation. <br />
+
+                        This email was sent to {!relatedTo.Consumer_Contact__r.email}. To ensure delivery of future email, please add @cubcadet.com to your safe senders list. This
+                        order confirmation acknowledges that your order has been received. It does not mean that your order has been accepted or that availability of an item has
+                        been confirmed. This email was sent for notification only. Please do not reply to this message. For questions or assistance, please contact your dealer.
+                        <br />
+
+                        © 2024 Cub Cadet. All rights reserved. The Cub Cadet logo and all products denoted with ® or ™ are registered trademarks or trademarks of Cub Cadet. <br />
+
+                        5903 Grafton Rd., Valley City, OH 44280
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

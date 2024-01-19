@@ -1,261 +1,855 @@
-<messaging:emailTemplate subject="We're processing your order cancellation | Order {!relatedTo.Consumer_Order__r.Order_Number__c}"
-    recipientType="Contact"
-    relatedToType="Consumer_Order_Item__c"
+<messaging:emailTemplate
+  subject="We're processing your order cancellation | Order {!relatedTo.Consumer_Order__r.Order_Number__c}"
+  recipientType="Contact"
+  relatedToType="Consumer_Order_Item__c"
 >
-    <messaging:htmlEmailBody >
-        <style>
-            @media (max-width: 768px) {
-                .mbl-width {
-                    width: 100% !important;
-                }
-            }
-            .main-style {
-                font-family: Helvetica, Arial, sans-serif;
-                color: #333333;
-                font-size: 14px;
-            }
+  <messaging:htmlEmailBody>
+    <table border="0px" cellspacing="0" cellpadding="0" style="max-width: 600px">
+      <!-- Header Image -->
+      <tr style="height: 65px">
+        <td colspan="4" style="padding: 20px 25px; text-align: left; background-color: #ffc20f">
+          <a href="http://www.cubcadet.com"
+            ><img
+              height="23"
+              style="border: 0; display: block; width: 165px !important; height: 23px !important"
+              src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+          /></a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <a href="http://www.cubcadet.com"
+            ><img
+              width="600"
+              style="border: 0px currentColor; border-image: none; height: auto; display: block; max-width: 600px"
+              src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3V&oid=00DA0000000hHew&lastMod=1705506291000"
+            />
+          </a>
+        </td>
+      </tr>
 
-            .main-text {
+      <!-- Header -->
+      <tr>
+        <td colspan="4">
+          <h2
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              text-align: left;
+              color: rgb(51, 51, 51);
+              line-height: 23px;
+              font-family: Helvetica, Arial, sans-serif;
+              font-size: 19px;
+              font-weight: 700;
+            "
+          >
+            We've Processed Your Request
+          </h2>
+          <p
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              text-align: left;
+              color: rgb(51, 51, 51);
+              line-height: 24px;
+              font-family: Helvetica, Arial, sans-serif;
+              font-size: 14px;
+              font-weight: 400;
+            "
+          >
+            <!-- Mail Content Heade -->
+            <span>
+              {!relatedTo.Consumer_Order__r.Dealer__r.Name} has processed your request. Please allow 7-10 business days
+              for your cancellation to be processed. Please see below for details:
+              <br />
+              <br />
+              Request:
+              <apex:outputPanel rendered="{!relatedTo.Disposition_Code__c != 'Other'}">
+                {!relatedTo.Disposition_Code__c}
+              </apex:outputPanel>
+              <apex:outputPanel rendered="{!relatedTo.Disposition_Code__c = 'Other'}">
+                {!relatedTo.Disposition_Other_Reason__c}
+              </apex:outputPanel>
+            </span>
+          </p>
+        </td>
+      </tr>
+
+      <!-- Order&Dealer Information -->
+      <tr>
+        <td colspan="4">
+          <h2
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              text-align: left;
+              color: rgb(51, 51, 51);
+              line-height: 23px;
+              font-family: Helvetica, Arial, sans-serif;
+              font-size: 19px;
+              font-weight: 700;
+            "
+          >
+            Order Details
+          </h2>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <h5
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 700;
+              font-size: 15px;
+              line-height: 19px;
+            "
+          >
+            Order Information
+          </h5>
+          <p
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+
+              font-weight: 400;
+              font-size: 14px;
+              mso-line-height-rule: exactly;
+              line-height: 24px;
+            "
+          >
+            Order Number: {!relatedTo.Consumer_Order__r.Order_Number__c} <br />
+            Order Date:
+            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+              <apex:param value="{!relatedTo.Consumer_Order__r.Order_Date__c}" />
+            </apex:outputText>
+            <br /> Fulfillment Method: {!relatedTo.Consumer_Order__r.Fulfillment_Type__c}<br />
+          </p>
+        </td>
+        <td colspan="2">
+          <h5
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+
+              font-weight: 700;
+              font-size: 15px;
+              line-height: 19px;
+            "
+          >
+            Dealer Information
+          </h5>
+          <p
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+
+              font-weight: 400;
+              font-size: 14px;
+              mso-line-height-rule: exactly;
+              line-height: 24px;
+            "
+          >
+            {!relatedTo.Consumer_Order__r.Dealer__r.Name} <br /> {!relatedTo.Consumer_Order__r.Dealer__r.BillingStreet}
+            <br /> {!relatedTo.Consumer_Order__r.Dealer__r.BillingCity},
+            {!relatedTo.Consumer_Order__r.Dealer__r.BillingState}
+            {!relatedTo.Consumer_Order__r.Dealer__r.BillingPostalCode}
+            <br /> {!relatedTo.Consumer_Order__r.Dealer__r.Phone} <br />
+          </p>
+        </td>
+      </tr>
+
+      <!-- Customer Information -->
+      <tr>
+        <td colspan="2">
+          <h5
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 700;
+              font-size: 15px;
+              line-height: 19px;
+            "
+          >
+            Customer Information
+          </h5>
+          <p
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 400;
+              font-size: 14px;
+              mso-line-height-rule: exactly;
+              line-height: 24px;
+            "
+          >
+            {!relatedTo.Consumer_Order__r.Shipping_Name__c} <br /> {!relatedTo.Consumer_Order__r.Shipping_Address_1__c}
+            {!relatedTo.Consumer_Order__r.Shipping_Address_2__c} {!relatedTo.Consumer_Order__r.Shipping_Address_3__c}
+            <br /> {!relatedTo.Consumer_Order__r.Shipping_City__c}, {!relatedTo.Consumer_Order__r.Shipping_State__c}
+            {!relatedTo.Consumer_Order__r.Shipping_Postal_Code__c} <br />
+          </p>
+        </td>
+        <td colspan="2">
+          <h5
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 700;
+              font-size: 15px;
+              line-height: 19px;
+            "
+          >
+            Billing Information
+          </h5>
+          <p
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 400;
+              font-size: 14px;
+              mso-line-height-rule: exactly;
+              line-height: 24px;
+            "
+          >
+            {!relatedTo.Consumer_Order__r.Billing_Name__c} <br /> {!relatedTo.Consumer_Order__r.Billing_Address_1__c}
+            {!relatedTo.Consumer_Order__r.Billing_Address_2__c} {!relatedTo.Consumer_Order__r.Billing_Address_3__c}
+            <br /> {!relatedTo.Consumer_Order__r.Billing_City__c}, {!relatedTo.Consumer_Order__r.Billing_State__c}
+            {!relatedTo.Consumer_Order__r.Billing_Postal_Code__c} <br />
+          </p>
+        </td>
+      </tr>
+      <tr style="height: 15px"></tr>
+      <!-- Addtional Information -->
+      <tr style="padding: 25px 0px 0px 0px">
+        <td
+          colspan="4"
+          align="center"
+          style="
+            background-color: #dddddd;
+            padding: 15px 10px 20px;
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333333;
+            text-align: center;
+            margin: 5px 0 0;
+            font-weight: 400;
+            font-size: 12px;
+            mso-line-height-rule: exactly;
+            line-height: 18px;
+          "
+        >
+          <p>
+            Order additional items on <a href="https://www.cubcadet.com">cubcadet.com</a>.<br />
+            For information on returns, view our
+            <a href="https://www.cubcadet.com/en_US/online-store-policies.html">returns policy</a>.
+          </p>
+        </td>
+      </tr>
+      <!-- Order Summary Header -->
+      <tr>
+        <td colspan="4">
+          <h2
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              text-align: left;
+              color: rgb(51, 51, 51);
+              line-height: 23px;
+              font-family: Helvetica, Arial, sans-serif;
+              font-size: 19px;
+              font-weight: 700;
+            "
+          >
+            Order Summary
+          </h2>
+        </td>
+      </tr>
+      <!-- Promotion Code -->
+      <tr>
+        <td colspan="4">
+          <h5
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              font-weight: 700;
+              font-size: 15px;
+              line-height: 19px;
+            "
+          >
+            <apex:outputPanel rendered="{!relatedTo.Consumer_Order__r.Promo_Codes__c != null}">
+              Promotion Code: <span style="font-weight: normal">{!relatedTo.Consumer_Order__r.Promo_Codes__c}</span>
+            </apex:outputPanel>
+          </h5>
+        </td>
+      </tr>
+      <!-- Order Summary -->
+      <tr>
+        <td colspan="4" height="65">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+              <tr>
+                <td class="mobile-hide" align="center" valign="middle" width="65" style="padding: 0 20px 0 15px">
+                  <img
+                    src="{!relatedTo.Product__r.Image_Primary__c}"
+                    alt="{!relatedTo.Product__r.Detail_SKU__c}"
+                    align="center"
+                    border="0"
+                    width="65"
+                    height="65"
+                    style="height: auto; border: 0; color: #333333; display: block; width: 65px; height: 65px"
+                  />
+                </td>
+
+                <td valign="middle" style="padding: 0 10px 0 0">
+                  <p
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: left;
+                      margin: 0;
+                      padding: 0;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                    "
+                  >
+                    {!relatedTo.Product__r.Name} - {!relatedTo.Item_Description__c}
+                  </p>
+                  <p
+                    class="details"
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: left;
+                      margin: 0;
+                      padding: 0;
+                      font-weight: 400;
+                      font-size: 12px;
+                      mso-line-height-rule: exactly;
+                      line-height: 18px;
+                    "
+                  >
+                    <em>
+                      Quantity
+                      <apex:outputText value="{0, number, integer}">
+                        <apex:param value="{!relatedTo.Quantity__c}" />
+                      </apex:outputText>
+
+                      – Unit Price $
+                      <apex:outputText value="{0,number,###,###,##0.00}">
+                        <apex:param value="{!relatedTo.Price__c}" />
+                      </apex:outputText>
+                    </em>
+                  </p>
+                </td>
+                <td width="85" style="padding: 0 20px 0 0">
+                  <p
+                    valign="middle"
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      margin: 0;
+                      padding: 0;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                    "
+                  >
+                    <apex:outputText value="{0,number,###,###,##0.00}">
+                      $<apex:param value="{!relatedTo.Line_Total__c}" />
+                    </apex:outputText>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Totals -->
+      <tr>
+        <td colspan="4">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+              <tr>
+                <td valign="middle" style="padding: 0 10px 0 0">
+                  <p
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                      margin: 0;
+                    "
+                  >
+                    Subtotal
+                  </p>
+                </td>
+                <td width="125" style="padding: 0 15px 0 0">
+                  <p
+                    valign="middle"
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      font-weight: 400;
+                      margin: 0;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                    "
+                  >
+                    <apex:outputText value="{0,number,###,###,##0.00}">
+                      $<apex:param
+                        value="{!relatedTo.Line_Total__c  - (relatedTo.Delivery_Total__c+relatedTo.Tax_Amount__c)}"
+                      />
+                    </apex:outputText>
+                  </p>
+                </td>
+              </tr>
+
+              <!-- Discount  -->
+              <!-- <tr>
+                                <td valign="middle" style="padding: 0 10px 0 0">
+                                    <p
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            margin: 0;
+                                            padding: 0;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                        "
+                                    >
+                                        Discount
+                                    </p>
+                                </td>
+                                <td width="125" style="padding: 0 15px 0 0">
+                                    <p
+                                        valign="middle"
+                                        style="
+                                            font-family: Helvetica, Arial, sans-serif;
+                                            color: #333333;
+                                            text-align: right;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                            mso-line-height-rule: exactly;
+                                            line-height: 24px;
+                                            margin: 0;
+                                        "
+                                    >
+                                        (<apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!0-relatedTo.Discount__c}" /> </apex:outputText>)
+                                    </p>
+                                </td>
+                            </tr> -->
+
+              <!--  -->
+              <tr>
+                <td valign="middle" style="padding: 0 10px 0 0">
+                  <p
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      margin: 0;
+                      padding: 0;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                    "
+                  >
+                    Shipping
+                  </p>
+                </td>
+                <td width="125" style="padding: 0 15px 0 0">
+                  <p
+                    valign="middle"
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                      margin: 0;
+                    "
+                  >
+                    <apex:outputText value="{0,number,###,###,##0.00}">
+                      $<apex:param value="{!relatedTo.Delivery_Total__c}" />
+                    </apex:outputText>
+                  </p>
+                </td>
+              </tr>
+              <!--  -->
+
+              <tr>
+                <td valign="middle" style="padding: 0 10px 0 0">
+                  <p
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      margin: 0;
+                      padding: 0;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                    "
+                  >
+                    Estimated Sales Tax
+                  </p>
+                </td>
+                <td width="125" style="padding: 0 15px 0 0">
+                  <p
+                    valign="middle"
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      font-weight: 400;
+                      font-size: 14px;
+                      mso-line-height-rule: exactly;
+                      line-height: 24px;
+                      margin: 0;
+                    "
+                  >
+                    <apex:outputText value="{0,number,###,###,##0.00}">
+                      $<apex:param value="{!relatedTo.Tax_Amount__c}" />
+                    </apex:outputText>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="middle" style="padding: 0 10px 0 0">
+                  <h5
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      margin: 18px 0 0 0;
+                      font-weight: 700;
+                      font-size: 15px;
+                      mso-line-height-rule: exactly;
+                      line-height: 19px;
+                      margin: 0;
+                    "
+                  >
+                    Total
+                  </h5>
+                </td>
+                <td width="125" style="padding: 0 15px 0 0">
+                  <h5
+                    style="
+                      font-family: Helvetica, Arial, sans-serif;
+                      color: #333333;
+                      text-align: right;
+                      margin: 0;
+                      font-weight: 700;
+                      font-size: 15px;
+                      mso-line-height-rule: exactly;
+                      line-height: 19px;
+                    "
+                  >
+                    <apex:outputText value="{0,number,###,###,##0.00}">
+                      $<apex:param value="{!relatedTo.Line_Total__c}" />
+                    </apex:outputText>
+                  </h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Contact Us -->
+      <tr>
+        <td colspan="4">
+          <h2
+            style="
+              padding: 0px 15px 0px 15px;
+              margin: 18px 0px 14px 0px;
+              text-align: left;
+              color: rgb(51, 51, 51);
+              line-height: 23px;
+              font-family: Helvetica, Arial, sans-serif;
+              font-size: 19px;
+              font-weight: 700;
+            "
+          >
+            Contact Us
+          </h2>
+          <p
+            style="
+              font-family: Helvetica, Arial, sans-serif;
+              color: #333333;
+              text-align: left;
+              margin: 10px 0 0;
+              padding: 0px 15px 0px 15px;
+              font-weight: 400;
+              font-size: 14px;
+              mso-line-height-rule: exactly;
+              line-height: 24px;
+            "
+          >
+            If you have questions, please call
+            <a
+              href="tel:18774282349"
+              target="_blank"
+              style="text-decoration: none; color: #333333; text-decoration: none"
+              >1-877-428-2349</a
+            >. We're available from 8 AM to 8 PM EST Mon.-Fri. and 9 AM to 8 PM EST Sat.-Sun.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr style="height: 40px"></tr>
+      <tr bgcolor="ffc20f" style="height: 70px; margin-top: 20px">
+        <td colspan="2" style="padding: 0 0 0 20px">
+          <a href="http://www.cubcadet.com" style="display: inline; padding-left: 30px">
+            <img
+              src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
+              alt="Cub Cadet"
+              border="0"
+              width="135"
+              height="19"
+              style="
+                border: 0;
                 font-family: Helvetica, Arial, sans-serif;
-                color: #333333;
-                text-align: left;
-                margin: 10px 0 0;
-                padding: 0;
                 font-weight: 400;
                 font-size: 14px;
-                mso-line-height-rule: exactly;
-                line-height: 24px;
-            }
-            .header1 {
-                text-align: left;
-                margin: 18px 0 0 0;
-                font-weight: 700;
-                font-size: 19px;
-                mso-line-height-rule: exactly;
-                line-height: 23px;
-                padding-bottom: 10px;
                 color: #333333;
-            }
-
-            .header2 {
-                text-align: left;
-                margin: 18px 0 0 0;
-                font-weight: 700;
-                font-size: 16px;
-                mso-line-height-rule: exactly;
-                line-height: 23px;
-                padding-bottom: 10px;
-                color: #333333;
-            }
-            .addtional-information {
-                background-color: lightgray;
-                text-align: center;
-                margin-top: 20px;
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <div style="height: 1600px; width: 700px" class="main-style">
-            <table cellspacing="0" cellpadding="0">
-                <tr class="main-text" bgcolor="fbc40e" style="height: 70px">
-                    <td colspan="4">
-                        <a href="http://www.cubcadet.com"
-                            ><img
-                                height="40px"
-                                style="padding-left: 20px"
-                                src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
-                        /></a>
-                        <br />
-                    </td>
-                </tr>
+                display: block;
+                width: 135px !important;
+                height: 19px !important;
+              "
+            />
+          </a>
+          <br />
+        </td>
+        <td colspan="2" style="text-align: right; margin-bottom: 20px">
+          <div
+            class="column"
+            style="display: inline-block; margin: 0 -2px; width: 100%; max-width: 217px; vertical-align: top"
+          >
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
                 <tr>
-                    <td colspan="4">
-                        <a href="http://www.cubcadet.com">
-                            <img
-                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3V&oid=00DA0000000hHew&lastMod=1705506291000"
-                                width="100%"
-                                style="display: block; width: 100%"
-                            />
-                        </a>
-                    </td>
+                  <td class="social" style="padding: 0 10px 20px; text-align: center">
+                    <table class="icons" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td class="icon first" width="16" style="padding: 0 10px; padding-left: 0">
+                            <a
+                              href="https://www.facebook.com/cubcadet/"
+                              target="_blank"
+                              style="
+                                text-decoration: none;
+                                color: #333333;
+                                font-size: 10px;
+                                mso-line-height-rule: exactly;
+                                line-height: 16px;
+                                text-align: center;
+                              "
+                            >
+                              <img
+                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3a&oid=00DA0000000hHew&lastMod=1705507431000"
+                                alt="FB"
+                                border="0"
+                                width="16"
+                                height="30"
+                                style="
+                                  order: 0;
+                                  font-family: Helvetica, Arial, sans-serif;
+                                  display: block;
+                                  width: 16px !important;
+                                  height: 30px !important;
+                                "
+                              />
+                            </a>
+                          </td>
+                          <td class="icon" width="30" style="padding: 0 15px">
+                            <a
+                              href="https://twitter.com/CubCadet_USA"
+                              target="_blank"
+                              style="
+                                text-decoration: none;
+                                color: #333333;
+                                font-size: 10px;
+                                mso-line-height-rule: exactly;
+                                line-height: 16px;
+                                text-align: center;
+                              "
+                            >
+                              <img
+                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3k&oid=00DA0000000hHew&lastMod=1705508798000"
+                                alt="TW"
+                                border="0"
+                                width="30"
+                                height="25"
+                                style="
+                                  border: 0;
+                                  font-family: Helvetica, Arial, sans-serif;
+                                  font-weight: 400;
+                                  font-size: 14px;
+                                  color: #333333;
+                                  display: block;
+                                  width: 30px !important;
+                                  height: 25px !important;
+                                "
+                              />
+                            </a>
+                          </td>
+                          <td class="icon" width="30" style="padding: 0 15px">
+                            <a
+                              href="https://www.instagram.com/cubcadet_usa/"
+                              target="_blank"
+                              style="
+                                text-decoration: none;
+                                color: #333333;
+                                font-size: 10px;
+                                mso-line-height-rule: exactly;
+                                line-height: 16px;
+                                text-align: center;
+                              "
+                            >
+                              <img
+                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3f&oid=00DA0000000hHew&lastMod=1705508690000"
+                                alt="IG"
+                                border="0"
+                                width="30"
+                                height="30"
+                                style="
+                                  border: 0;
+                                  font-family: Helvetica, Arial, sans-serif;
+                                  font-weight: 400;
+                                  font-size: 14px;
+                                  color: #333333;
+                                  display: block;
+                                  width: 30px !important;
+                                  height: 30px !important;
+                                "
+                              />
+                            </a>
+                          </td>
+                          <td class="icon last" width="31" style="padding: 0 15px; padding-right: 0">
+                            <a
+                              href="https://www.youtube.com/user/CubCadetRidingMowers"
+                              target="_blank"
+                              style="
+                                text-decoration: none;
+                                color: #333333;
+                                font-size: 10px;
+                                mso-line-height-rule: exactly;
+                                line-height: 16px;
+                                text-align: center;
+                              "
+                            >
+                              <img
+                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3p&oid=00DA0000000hHew&lastMod=1705508939000"
+                                alt="YT"
+                                border="0"
+                                width="31"
+                                height="30"
+                                style="
+                                  border: 0;
+                                  font-family: Helvetica, Arial, sans-serif;
+                                  font-weight: 400;
+                                  font-size: 14px;
+                                  color: #333333;
+                                  display: block;
+                                  width: 31px !important;
+                                  height: 30px !important;
+                                "
+                              />
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
                 </tr>
-                <tr>
-                    <td colspan="4">
-                        <h2 class="header1">We've Processed Your Request</h2>
-                    </td>
-                </tr>
-                <tr class="main-text">
-                    <td colspan="4">
-                        <span>Hello {!relatedTo.Consumer_Order__r.Shipping_Name__c}, </span>
-                        <br />
-                        <br />
-                        <span>
-                            {!relatedTo.Consumer_Order__r.Dealer__r.Name} has processed your request. 
-                            Please allow 7-10 business days for your cancellation to be processed. Please see below for details:
-                            <br/>
-                            <br/>
-                            Request: 
-                            <apex:outputPanel rendered="{!relatedTo.Disposition_Code__c != 'Other'}"> 
-                                {!relatedTo.Disposition_Code__c}
-                            </apex:outputPanel>
-                            <apex:outputPanel rendered="{!relatedTo.Disposition_Code__c = 'Other'}"> 
-                                {!relatedTo.Disposition_Other_Reason__c}
-                            </apex:outputPanel>
-
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <h2 class="header1">Order Details</h2>
-                    </td>
-               </tr>
-                <tr class="main-text">
-                    <td colspan="2">
-                        <h3 class="header2">Order Information</h3>
-                        Order Number: {!relatedTo.Consumer_Order__r.Order_Number__c} <br />
-
-                        Order Date:
-                        <apex:outputText value="{0, date, MMMM d','  yyyy}">
-                            <apex:param value="{!relatedTo.Consumer_Order__r.Order_Date__c}" />
-                        </apex:outputText>
-
-                        <br /> Fulfillment Method: {!relatedTo.Consumer_Order__r.Fulfillment_Type__c}<br />
-                    </td>
-                    <td colspan="2">
-                        <h3 class="header2">Dealer Information</h3>
-                        {!relatedTo.Consumer_Order__r.Dealer__r.Name} <br /> {!relatedTo.Consumer_Order__r.Dealer__r.BillingStreet} <br /> 
-                        {!relatedTo.Consumer_Order__r.Dealer__r.BillingCity}, {!relatedTo.Consumer_Order__r.Dealer__r.BillingState}
-                        {!relatedTo.Consumer_Order__r.Dealer__r.BillingPostalCode} <br /> {!relatedTo.Consumer_Order__r.Dealer__r.Phone} <br />
-                    </td>
-                </tr>
-                <tr class="main-text">
-                    <td colspan="2">
-                        <h3 class="header2">Customer Information</h3>
-                        {!relatedTo.Consumer_Order__r.Shipping_Name__c} <br /> {!relatedTo.Consumer_Order__r.Shipping_Address_1__c} {!relatedTo.Consumer_Order__r.Shipping_Address_2__c} 
-                        {!relatedTo.Consumer_Order__r.Shipping_Address_3__c}
-                        <br /> {!relatedTo.Consumer_Order__r.Shipping_City__c}, {!relatedTo.Consumer_Order__r.Shipping_State__c} {!relatedTo.Consumer_Order__r.Shipping_Postal_Code__c} <br />
-                    </td>
-                    <td colspan="2">
-                        <h3 class="header2">Billing Information</h3>
-                        {!relatedTo.Consumer_Order__r.Billing_Name__c} <br /> {!relatedTo.Consumer_Order__r.Billing_Address_1__c} 
-                        {!relatedTo.Consumer_Order__r.Billing_Address_2__c} {!relatedTo.Consumer_Order__r.Billing_Address_3__c}
-                        <br /> {!relatedTo.Consumer_Order__r.Billing_City__c}, {!relatedTo.Consumer_Order__r.Billing_State__c} {!relatedTo.Consumer_Order__r.Billing_Postal_Code__c} <br />
-                    </td>
-                </tr>
-                <tr style="height: 30px"></tr>
-                <tr class="main-text">
-                    <td colspan="4" class="addtional-information">
-                        Order additional items on <a href="https://www.cubcadet.com">cubcadet.com</a>.<br />
-                        For information on returns, view our
-                        <a href="https://www.cubcadet.com/en_US/online-store-policies.html">returns policy</a>.
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <h2 class="header1">Order Summary</h2>
-                    </td>
-                </tr>
-                <tr class="main-text">
-                    <td colspan="4">
-                        <apex:outputPanel rendered="{!relatedTo.Consumer_Order__r.Promo_Codes__c != null}"> Promotion Code: {!relatedTo.Consumer_Order__r.Promo_Codes__c} </apex:outputPanel>
-                    </td>
-                </tr>
-
-                <tr class="main-text">
-                    <td style="width: 20%">
-                        <apex:outputPanel rendered="{!relatedTo.Product__r.Image_Primary__c != null}">
-                            <img src="{!relatedTo.Product__r.Image_Primary__c}" width="70%" alt="{!relatedTo.Product__r.Detail_SKU__c}" />
-                        </apex:outputPanel>
-                        <apex:outputPanel rendered="{!relatedTo.Product__r.Image_Primary__c = null}"> {!relatedTo.Product__r.Detail_SKU__c} </apex:outputPanel>
-                    </td>
-                    <td colspan="2">
-                        {!relatedTo.Product__r.Name} - {!relatedTo.Item_Description__c} <br />
-                        <span style="font-size: 10px">Quantity {!relatedTo.Quantity__c} – Unit Price ${!relatedTo.Price__c} </span>
-                    </td>
-                    <td style="text-align: right">
-                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Line_Total__c}" /> </apex:outputText>
-                    </td>
-                </tr>
-                <!-- <tr class="main-text">
-                    <td colspan="2"></td>
-                    <td style="text-align: right">Discount</td>
-                    <td style="text-align: right">
-                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Discount__c}" /> </apex:outputText>
-                    </td>
-                </tr>
-                <tr class="main-text">
-                    <td colspan="2"></td>
-                    <td style="text-align: right">Shipping</td>
-                    <td style="text-align: right">
-                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Delivery_Total__c}" /> </apex:outputText>
-                    </td>
-                </tr> 
-                <tr class="main-text">
-                    <td colspan="2"></td>
-                    <td style="text-align: right">Estimated Sales Tax</td>
-                    <td style="text-align: right">
-                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Tax_Amount__c}" /> </apex:outputText>
-                    </td>
-                </tr>-->
-                <tr style="height: 40px"></tr>
-                <tr class="main-text" style="text-align: right; font-weight: bold">
-                    <td colspan="2"></td>
-                    <td>Total</td>
-                    <td style="text-align: right">
-                        <apex:outputText value="{0,number,###,###,##0.00}"> $<apex:param value="{!relatedTo.Line_Total__c}" /> </apex:outputText>
-                    </td>
-                </tr> 
-                <tr>
-                    <td colspan="4">
-                        <h2 class="header1">Contact Us</h2>
-                    </td>
-                </tr>
-                <tr class="main-text">
-                    <td colspan="4">
-                        If you have questions, please call 1-877-428-2349. We're available from 8 AM to 8 PM EST Mon.-Fri. and 9 AM to 8 PM EST Sat.-Sun.
-                    </td>
-                </tr>
-                <tr style="height: 40px"></tr>
-                <tr class="main-text" bgcolor="fbc40e" style="height: 70px; margin-top: 20px">
-                    <td colspan="2">
-                        <a href="http://www.cubcadet.com" style="display: inline; padding-left: 30px"
-                            ><img
-                                height="25px"
-                                src="https://mtdproducts--sit.sandbox.file.force.com/servlet/servlet.ImageServer?id=015D1000000GdzW&oid=00D2g0000000r3b&lastMod=1705476898000"
-                        /></a>
-                        <br />
-                    </td>
-                    <td colspan="2" style="text-align: right; margin-bottom: 20px">
-                        <a href="https://www.facebook.com/cubcadet/" style="display: inline; padding-right: 30px"
-                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3a&oid=00DA0000000hHew&lastMod=1705507431000"
-                        /></a>
-                        <a href="https://twitter.com/CubCadet_USA" style="display: inline; padding-right: 30px"
-                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3k&oid=00DA0000000hHew&lastMod=1705508798000"
-                        /></a>
-                        <a href="https://www.instagram.com/cubcadet_usa/" style="display: inline; padding-right: 30px"
-                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3f&oid=00DA0000000hHew&lastMod=1705508690000"
-                        /></a>
-                        <a href="https://www.youtube.com/user/CubCadetRidingMowers" style="display: inline; padding-right: 30px"
-                            ><img height="30px" src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3p&oid=00DA0000000hHew&lastMod=1705508939000"
-                        /></a>
-                    </td>
-                </tr>
-                <tr class="main-text" bgcolor="fbc40e">
-                    <td colspan="4" style="text-align: center; font-size: 12px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px">
-                        Changes made to any order after the order is placed may cause a delay in processing/fulfillment and/or order cancellation. <br />
-
-                        This email was sent to {!relatedTo.Consumer_Contact__r.email}. To ensure delivery of future email, please add @cubcadet.com to your safe senders list. This
-                        order confirmation acknowledges that your order has been received. It does not mean that your order has been accepted or that availability of an item has
-                        been confirmed. This email was sent for notification only. Please do not reply to this message. For questions or assistance, please contact your dealer.
-                        <br />
-
-                        © 2024 Cub Cadet. All rights reserved. The Cub Cadet logo and all products denoted with ® or ™ are registered trademarks or trademarks of Cub Cadet. <br />
-
-                        5903 Grafton Rd., Valley City, OH 44280
-                    </td>
-                </tr> 
+              </tbody>
             </table>
-        </div>
-    </messaging:htmlEmailBody>
+          </div>
+        </td>
+      </tr>
+      <tr bgcolor="ffc20f">
+        <td
+          colspan="4"
+          style="text-align: center; font-size: 12px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px"
+        >
+          <p
+            style="
+              font-family: Helvetica, Arial, sans-serif;
+              text-align: left;
+              margin: 10px 0 0;
+              padding: 0;
+              font-weight: 400;
+              color: #333333;
+              font-size: 10px;
+              mso-line-height-rule: exactly;
+              line-height: 16px;
+              text-align: center;
+            "
+          >
+            Changes made to any order after the order is placed may cause a delay in processing/fulfillment and/or order
+            cancellation. <br />
+
+            This email was sent to {!relatedTo.Consumer_Order__r.Consumer_Contact__r.email}. To ensure delivery of
+            future email, please add @cubcadet.com to your safe senders list. This order confirmation acknowledges that
+            your order has been received. It does not mean that your order has been accepted or that availability of an
+            item has been confirmed. This email was sent for notification only. Please do not reply to this message. For
+            questions or assistance, please contact your dealer.
+            <br />
+
+            © 2024 Cub Cadet. All rights reserved. The Cub Cadet logo and all products denoted with ® or ™ are
+            registered trademarks or trademarks of Cub Cadet. <br />
+
+            5903 Grafton Rd., Valley City, OH 44280
+          </p>
+        </td>
+      </tr>
+    </table>
+  </messaging:htmlEmailBody>
 </messaging:emailTemplate>
