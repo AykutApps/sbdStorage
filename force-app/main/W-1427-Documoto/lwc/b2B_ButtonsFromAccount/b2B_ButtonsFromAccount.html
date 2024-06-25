@@ -1,10 +1,12 @@
 <template>
-    <!-- <template if:true={accountDetails.Cub_Active__c}>
-        <button class="slds-button slds-button_brand" onclick={handleCubRedirect}>PartSmart Product Lookup</button>
-    </template>
-    <template if:true={accountDetails.Hustler_Active__c}>
-        <button class="slds-button slds-button_brand" onclick={handleHustlerRedirect}>Documoto Product Lookup</button>
-    </template> -->
-    <button class="slds-button slds-button_brand" onclick={handleCubRedirect}>PartSmart Product Lookup</button>
-    <button class="slds-button slds-button_brand" onclick={handleHustlerRedirect}>Documoto Product Lookup</button>
+    <div class="sbd-plp-button-section">
+        <section lwc:if={isParts}>
+            <template if:true={accountDetails.Cub_Active__c}>
+                <button class="slds-button slds-button_brand" onclick={handleCubRedirect}>PartSmart Product Lookup</button>
+            </template>
+            <template if:true={accountDetails.Hustler_Active__c}>
+                <button class="slds-button slds-button_brand" onclick={handleHustlerRedirect}>Documoto Product Lookup</button>
+            </template>
+        </section>
+    </div>
 </template>

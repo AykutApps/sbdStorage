@@ -49,24 +49,21 @@ export default class B2B_ButtonsFromAccount extends NavigationMixin(LightningEle
     }
     handleHustlerRedirect(event) {
         let documotoLinkRefined;
-        if(this.accountDetails.Hustler_Parts_Account__c){
-            documotoLinkRefined = DocumotoLink
-            .replace("<WGAccountNumber>", this.accountDetails.Hustler_WG_Account__c)
-            .replace("<PartAccountNumber>",this.accountDetails.Hustler_Parts_Account__c)
-            .replace("<DealerDomainName>",'hustlerturf');
-        } else if(this.accountDetails.BigDog_Parts_Account__c){
-            documotoLinkRefined = DocumotoLink
-            .replace("<WGAccountNumber>", this.accountDetails.BigDog_WG_Account__c)
-            .replace("<PartAccountNumber>",this.accountDetails.BigDog_Parts_Account__c)
-            .replace("<DealerDomainName>",'bigdogmowers');
-        } 
-
-        if (documotoLinkRefined){
-            this.redirectHandler(documotoLinkRefined);
-        } else{
-            alert('Error: Your account is missing a Hustler or BigDog Mower Co. Part Number!');
+        if (this.accountDetails.Hustler_Parts_Account__c) {
+            documotoLinkRefined = DocumotoLink.replace("<WGAccountNumber>", this.accountDetails.Hustler_WG_Account__c)
+                .replace("<PartAccountNumber>", this.accountDetails.Hustler_Parts_Account__c)
+                .replace("<DealerDomainName>", "hustlerturf");
+        } else if (this.accountDetails.BigDog_Parts_Account__c) {
+            documotoLinkRefined = DocumotoLink.replace("<WGAccountNumber>", this.accountDetails.BigDog_WG_Account__c)
+                .replace("<PartAccountNumber>", this.accountDetails.BigDog_Parts_Account__c)
+                .replace("<DealerDomainName>", "bigdogmowers");
         }
-        
+
+        if (documotoLinkRefined) {
+            this.redirectHandler(documotoLinkRefined);
+        } else {
+            alert("Error: Your account is missing a Hustler or BigDog Mower Co. Part Number!");
+        }
     }
     redirectHandler(link) {
         this[NavigationMixin.GenerateUrl]({
