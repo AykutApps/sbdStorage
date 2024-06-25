@@ -25,7 +25,7 @@
             <apex:inputText id="idLastName" />
             <br />
             <br />
-            <div class="g-recaptcha" data-sitekey="6LfyUzEpAAAAAD34L052zkoVKHxxB2TaPBXXHUCA"></div>
+            <div class="g-recaptcha" data-sitekey="6Ldz1jEpAAAAAGE6tXD65USl8eqkCoWB4VinOGOk"></div>
             <br />
             <div id="error" style="color: red; display: none">Please verify that you are not a Robot.</div>
             <br />

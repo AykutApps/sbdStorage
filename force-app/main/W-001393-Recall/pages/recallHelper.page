@@ -1,0 +1,60 @@
+<!-- 
+?actionType=sendSingleEmail&recordId=2131231
+?actionType=sendRecallBatchEmails&recordId=2131231
+?actionType=createRecallRelatedRecords&recordId=2131231
+ -->
+
+<apex:page controller="RecallHelper" showHeader="true" sidebar="true">
+    <apex:slds />
+    <div style="margin:40px">
+        <h1>Job is submitted!</h1>
+        <br/>
+        <div id="jobMessage"></div>
+    </div>
+
+    <script>
+        function parseParameters(paramString) {
+            const params = {};
+            const paramArray = String(paramString).split('&');
+
+            for (const param of paramArray) {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            }
+
+            return params;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const params = parseParameters(urlParams);
+        console.log(params.recordId);
+        console.log(params.actionType);
+
+        let diplayText = '';
+
+        if (params.actionType === 'sendSingleEmail') {
+            diplayText = 'An email is currently being sent. You can monitor the sending status in the Recall Account activity History.';
+        } else if (params.actionType === 'createRecallRelatedRecords') {
+            diplayText = 'A batch job is currently running to update or insert related records. It should be completed shortly.';
+        } else if (params.actionType === 'sendRecallBatchEmails') {
+            diplayText = 'A batch job is currently running to send emails. It should be completed shortly.';
+        }
+
+        Visualforce.remoting.Manager.invokeAction(
+            "{!$RemoteAction.RecallHelper.handleUIAction}",
+            params.actionType,
+            params.recordId,
+            function (result, event) {
+                if (event.status) {
+                    console.log('SUCESSS');
+                    document.getElementById('jobMessage').innerHTML = diplayText;
+                } else {
+                    console.log('ERROR');
+                    console.log("Error: " + event.message);
+                }
+            },
+            { escape: true }
+        );
+    </script>
+
+</apex:page>

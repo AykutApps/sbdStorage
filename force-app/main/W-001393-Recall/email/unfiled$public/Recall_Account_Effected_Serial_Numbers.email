@@ -1,0 +1,48 @@
+<messaging:emailTemplate subject="Kawasaki Stop Sale affected Model/Serial numbers" recipientType="Contact" relatedToType="Recall_Account__c">
+    <messaging:htmlEmailBody>
+        <p>Valued Dealer,</p>
+
+        <p><b>Please find below a list of units affected by the Kawasaki Stop Sale/Stop Use shipped to your dealership.</b></p>
+
+        Stanley Black &amp; Decker retains a high level of safety as a priority for our customers and as such will not jeopardize safety to implement a corrective action before it
+        is approved and ready.
+
+        <p>
+            Yesterday SBD posted to the dealer portals service advisories for the affected Cub Cadet, Hustler and Big Dog mowers. You should review and follow the advisory
+            applicable to you.<b> Cub Cadet Service Advisory CC-1147, Hustler, Service Advisory 39 rev. A. Big Dog Service Advisory 9 rev. A.</b>
+        </p>
+
+        <p>
+            Kawasaki and other mower manufacturers are sending out dealer communications and will continue to do so. To avoid confusion and to ensure that the proper actions are
+            taken for the affected units sent to your dealership, you must follow the advisories that come from the SBD Service Department and ignore any other advisory. This is
+            very important for the safety of your customers.
+        </p>
+
+        <p>We are working with Kawasaki on a resolution and will communicate updates when available.</p>
+
+        <p>
+            We are sending all registered consumers a Stop Use letter which will be mailed out shortly and we will be asking dealers to send in dealer inventory transfers or
+            registrations for any customers that haven’t been registered yet.
+        </p>
+
+        <br /> <br />
+        <table border="1px" cellspacing="0" cellpadding="0" style="font-family: monospace, monospace; width: 600px; max-width: 800px; border: 1px solid black">
+            <tr style="border: 1px solid black">
+                <td style="padding: 0 10px 0 10px; text-align: left; border: 1px solid black">Model</td>
+                <td style="padding: 0 10px 0 10px; text-align: left; border: 1px solid black">Serial Numbers</td>
+            </tr>
+            <apex:repeat var="model" value="{!relatedTo.Recall_Models__r}">
+                <tr>
+                    <td style="padding: 0 10px 0 10px; text-align: left; border: 1px solid black">{!model.Factory_Model_Number__c}</td>
+                    <td style="padding: 0 10px 0 10px; text-align: left; border: 1px solid black">{!model.Item_Serial_Numbers__c}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+
+        <br /> <br />
+        If you have any questions regarding the Kawasaki STOP SALE / STOP USE, please contact SBD Service.
+
+        <br /> <br />
+        
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,244 @@
+<apex:page controller="ProductRegistration" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" doctype="HTML-5.0" readOnly="false" language="{!IF(ISNULL(language),'en_US',language)}">
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>Product Registration</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"/>
+
+    <style>
+        header {
+            margin-top:15px;
+        }
+
+        .form-group.required .control-label:after {
+            content:" *";
+            color:#d74c3b;
+        }
+
+        .errorMsg {
+            color:#d74c3b;
+        }
+        input[type=radio]{
+            margin: 0px 20px;
+        }
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: 400;
+            color: #373a3c;
+            text-align: inherit;
+            white-space: nowrap;
+            background: 0 0;
+            border: 0;
+        }
+        .model-plate{
+            margin: 0 auto;
+        }
+        .please-read{
+            background: #d3d3d3;
+            padding: 5px 5px 5px 5px;
+        }
+        .pr-verbage{
+            font-size: xx-small;
+        }
+        .div-bottom-border{
+            border-bottom: 2px solid grey;
+        }
+
+        .cb-td-height td { 
+            height: 35px;
+        }
+
+        .optionStyle{
+            background:#d3d3d3;
+        }
+
+        .hideAD{
+            display:none;
+        }
+
+        .agreeDisagree{
+            font-weight:normal;
+        }
+
+        .agreeDisagree tr{
+            font-weight:normal;
+            vertical-align:top;
+        }
+
+        .bConsider td{
+            width: 50% !important;
+            float:left;
+            padding-left:20px !important;
+        }
+
+        @media screen and (max-width: 699px) and (min-width: 320px) {
+            .bConsider label{
+                margin-top:-20px !important;
+                margin-left: 15px;
+            }
+        }
+
+        
+    </style>
+
+<apex:outputPanel rendered="{!brandFriendly == 'cub-cadet'}">
+    <style>
+        .btn-default {
+            background: #ffca15;
+            color:#000;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background:#ffca15;
+            color:#000;
+        }
+    </style>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!brandFriendly == 'rover'}">
+    <style>
+        .btn-default {
+            background: #E00022 ;
+            color:#fff;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background:#E00022 ;
+            color:#fff;
+        }
+    </style>
+</apex:outputPanel>    
+<apex:outputPanel rendered="{!brandFriendly == 'mtd'}">
+    <style>
+        .btn-default {
+            background: #00a851;
+            color:#fff;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background:#00a851;
+            color:#fff;
+        }
+    </style>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!brandFriendly == 'columbia'}">
+    <style>
+        .btn-default {
+            background: #e87722;
+            color:#000;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background:#e87722;
+            color:#000;
+        }
+    </style>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!brandFriendly == 'remington'}">
+    <style>
+        .btn-default {
+            background: #E4521D;
+            color:#fff;
+            text-shadow: none;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background:#F16428;
+            color:#fff;
+        }
+    </style>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!brandFriendly == 'troy-bilt'}">
+    <style>
+        .btn-default {
+            background: #bb241e;
+            color:#fff;
+            text-shadow: none;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background-color:#a8201b;
+            color:#fff;
+        }
+    </style>
+</apex:outputPanel>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <style>
+        html, body { overflow-x: hidden; }
+        </style>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/soap/ajax/36.0/connection.js"></script>
+    <script src="/soap/ajax/36.0/apex.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 header-right">
+                        <!--client requested that this not be rendered ever, brand switch is available on parent page-->
+                        <apex:outputPanel rendered="false">
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <span class="caret"></span>
+                                  </a>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" id="lang_en" href="#">English</a>
+                                    <a class="dropdown-item" id="lang_fr" href="#">French</a>
+                                  </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.topbar-->
+        <div class="black-bar">
+        </div>
+    </header>
+
+    <div class="container">
+        <c:ProductRegistration />
+    </div>
+
+    <script type="text/javascript">
+        $("#lang_fr").click(function () {
+            var curRef = window.location.href;
+            if(curRef.indexOf("language=") < 0){
+                window.location.href = curRef + "&language=fr_CA";
+            } else if(curRef.indexOf("en_US") > 0){
+                window.location.href = curRef.replace("en_US", "fr_CA");
+            }          
+        });
+        $("#lang_en").click(function () {
+            var curRef = window.location.href;
+            if(curRef.indexOf("language=") < 0){
+                window.location.href = curRef + "&language=en_US";
+            } else if(curRef.indexOf("fr_CA") > 0){
+                window.location.href = curRef.replace("fr_CA", "en_US");
+            }  
+        });
+    </script>
+
+</body>
+</html>
+</apex:page>

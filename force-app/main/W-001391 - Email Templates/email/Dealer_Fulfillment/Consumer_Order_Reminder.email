@@ -308,7 +308,7 @@
                                 <tr>
                                     <td class="mobile-hide" align="center" valign="middle" width="65" style="padding: 0 20px 0 15px">
                                         <img
-                                            src="{!cx.Product__r.Image_Primary__c}"
+                                            src="{!IF(ISBLANK(cx.Product__r.Image_Primary__c),'https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3z&oid=00DA0000000hHew&lastMod=1706197994000',cx.Product__r.Image_Primary__c)}"
                                             alt="{!cx.Product__r.Detail_SKU__c}"
                                             align="center"
                                             border="0"
@@ -332,7 +332,7 @@
                                                 line-height: 24px;
                                             "
                                         >
-                                            {!cx.Product__r.Name} - {!cx.Item_Description__c}
+                                            {!IF( ISBLANK(cx.Product__c), cx.Item_Description__c, cx.Product__r.Name + ' - ' +cx.Item_Description__c )}
                                         </p>
                                         <p
                                             class="details"
@@ -645,38 +645,7 @@
                                                             />
                                                         </a>
                                                     </td>
-                                                    <td class="icon" width="30" style="padding: 0 15px">
-                                                        <a
-                                                            href="https://twitter.com/CubCadet_USA"
-                                                            target="_blank"
-                                                            style="
-                                                                text-decoration: none;
-                                                                color: #333333;
-                                                                font-size: 10px;
-                                                                mso-line-height-rule: exactly;
-                                                                line-height: 16px;
-                                                                text-align: center;
-                                                            "
-                                                        >
-                                                            <img
-                                                                src="https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3k&oid=00DA0000000hHew&lastMod=1705508798000"
-                                                                alt="TW"
-                                                                border="0"
-                                                                width="30"
-                                                                height="25"
-                                                                style="
-                                                                    border: 0;
-                                                                    font-family: Helvetica, Arial, sans-serif;
-                                                                    font-weight: 400;
-                                                                    font-size: 14px;
-                                                                    color: #333333;
-                                                                    display: block;
-                                                                    width: 30px !important;
-                                                                    height: 25px !important;
-                                                                "
-                                                            />
-                                                        </a>
-                                                    </td>
+                                                    
                                                     <td class="icon" width="30" style="padding: 0 15px">
                                                         <a
                                                             href="https://www.instagram.com/cubcadet_usa/"

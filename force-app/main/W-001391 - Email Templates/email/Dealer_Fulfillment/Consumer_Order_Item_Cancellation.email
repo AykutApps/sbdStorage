@@ -316,7 +316,7 @@
               <tr>
                 <td class="mobile-hide" align="center" valign="middle" width="65" style="padding: 0 20px 0 15px">
                   <img
-                    src="{!relatedTo.Product__r.Image_Primary__c}"
+                    src="{!IF(ISBLANK(relatedTo.Product__r.Image_Primary__c),'https://mtdproducts.file.force.com/servlet/servlet.ImageServer?id=0152G0000099Y3z&oid=00DA0000000hHew&lastMod=1706197994000',relatedTo.Product__r.Image_Primary__c)}"
                     alt="{!relatedTo.Product__r.Detail_SKU__c}"
                     align="center"
                     border="0"
@@ -340,7 +340,7 @@
                       line-height: 24px;
                     "
                   >
-                    {!relatedTo.Product__r.Name} - {!relatedTo.Item_Description__c}
+                    {!IF( ISBLANK(relatedTo.Product__c), relatedTo.Item_Description__c, relatedTo.Product__r.Name + ' - ' +relatedTo.Item_Description__c )}
                   </p>
                   <p
                     class="details"
@@ -635,7 +635,7 @@
               target="_blank"
               style="text-decoration: none; color: #333333; text-decoration: none"
               >1-877-428-2349</a
-            >. We're available from 8 AM to 8 PM EST Mon.-Fri. and 9 AM to 8 PM EST Sat.-Sun.
+            >. We're available from 8:30 AM to 5:00 PM EST Mon.-Fri.
           </p>
         </td>
       </tr>

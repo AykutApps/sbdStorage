@@ -34,6 +34,8 @@ public with sharing class SYS_DelegateGroupServiceHelper {
         if (response != null && response.getStatusCode() == 200) {
             String responseBody = response.getBody();
             DelegateGroupMemberResponse dgmr = (DelegateGroupMemberResponse) JSON.deserialize(responseBody, DelegateGroupMemberResponse.class);
+            system.debug('dgmr');
+            system.debug(dgmr);
             if (dgmr.records != null && !dgmr.records.isEmpty()) {
                 dgms = dgmr.records;
             }

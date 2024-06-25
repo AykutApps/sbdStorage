@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Add New Item" icon-name="custom:custom61">
+        <div class="slds-form-element">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-input type="text" label="Cart Name" value={cartName} onchange={handleChange} data-field="cartName"></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-input type="text" label="Item Number" value={itemCode} onchange={handleChange} data-field="itemCode"></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-input type="text" label="Account Number" value={accountNumber} onchange={handleChange} data-field="accountNumber"></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-input type="number" label="Quantity" value={quantity} onchange={handleChange} data-field="quantity"></lightning-input>
+                </div>
+                <div class="slds-col slds-p-horizontal_small">
+                    <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+    
+
+
+    <lightning-card title="Webcart List" icon-name="custom:custom60">
+        <div class="slds-m-around_medium">
+            <lightning-datatable key-field="id" data={webcarts} columns={columns} max-row-selection={maxRowSelection} onrowselection={handleRowSelection} onrowaction={handleRowAction}> </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <!-- Modal section -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Header -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Webcart Details</h2>
+                </header>
+                <!-- Modal/Popup Content -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p><b>Webcart Name:</b> {selectedRow.Name}</p>
+                    <div class="slds-m-around_medium">
+                        <lightning-datatable key-field="id" data={webcartItems} columns={columnsItems} hide-checkbox-column	 > </lightning-datatable>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Close" title="Close" onclick={closeModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

@@ -1,0 +1,79 @@
+<apex:page controller="PartSmartInjectorCtl">
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" style="position: fixed; top: 20px; left: 16px; z-index: 1500; ;min-width: 400px;min-height: 20px;border-radius: 8px;"></div>
+
+    <!-- <h1>User Name: {!loggedInUser}</h1> -->
+    <div id="toastContainer" style="position: fixed; top: 5px; left: 16px; z-index: 1500; ;min-width: 400px;min-height: 20px;border-radius: 8px;">
+        User Name: {!loggedInUser}
+    </div>
+
+    <!-- External Script -->
+    <script src="{!scriptUrl}"></script>
+
+    <!-- Container for the PartSmart content -->
+    <div id="partSmartContent"></div>
+
+    <!-- Modal HTML for Processing Display -->
+    <div id="processingModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: white;">
+            Processing your request...
+        </div>
+    </div>
+
+    <script>
+        // console.log("{!scriptUrl}");
+        document.getElementById('ari-convergence-container').style.height = '800px';
+
+        function showProcessingModal(show) {
+            document.getElementById('processingModal').style.display = show ? 'block' : 'none';
+        }
+
+        function showToast(message, isError) {
+            var toast = document.createElement('div');
+            toast.style.background = isError ? '#f44336' : '#4CAF50'; // Red for error, green for success
+            toast.style.color = 'white';
+            toast.style.padding = '10px';
+            toast.style.marginTop = '10px';
+            toast.style.borderRadius = '8px';
+            toast.style.paddingLeft = '20px';
+            toast.innerText = message;
+            var container = document.getElementById('toastContainer');
+            container.appendChild(toast);
+            let toastTime = (isError)? 8000: 2000;
+            setTimeout(function () {
+                container.removeChild(toast);
+            }, toastTime);
+        }
+
+        function addToCart(data) {
+            showProcessingModal(true);
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.PartSmartInjectorCtl.addToCart}',
+                data,
+                function (result, event) {
+                    console.log('result', result);
+                    showProcessingModal(false);
+                    console.log('event', event);
+                    if (result === null || result.includes('Error')) {
+                        showToast(result, true);
+                    } else {
+                        showToast('Product added to cart!', false);
+                    }
+                },
+                { escape: true }
+            );
+        }
+
+        window.addEventListener("message", (event) => {
+            if (event.origin === "https://www.partsmart.net" && JSON.parse(event.data).params.args) {
+                console.log("Add to cart: " + event.data);
+                addToCart(event.data);
+                return;
+            } else {
+                console.debug("Not Relevant Event: ", event);
+            }
+        }, false);
+    </script>
+
+</apex:page>

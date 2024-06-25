@@ -213,6 +213,7 @@
 
 @RestResource(urlMapping='/ir-erp-order-helper/logerror')
 global class ORS_OrderHelperLogErrorRestService implements RESTHostedMTDEndpoint {
+
     // Member properties
     global static RESTHostedMTDEndpointHelper endpointHelper;
     private static final String PAYLOAD_TYPE = 'sbd-outdoor-json-erp-order-helper/logerror';
@@ -330,9 +331,6 @@ global class ORS_OrderHelperLogErrorRestService implements RESTHostedMTDEndpoint
     public class OrderRequestPayload {
         public Failure failure;
         public List<Order> orders;
-        // public String data;
-        // "transactionId": "xx-aa123-edf",
-        // "uniqueId": "38_1923400",
     }
 
     public class Failure {

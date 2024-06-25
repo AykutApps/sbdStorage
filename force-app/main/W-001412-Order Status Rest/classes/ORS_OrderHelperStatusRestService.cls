@@ -5,41 +5,23 @@
   Method: POST
  
   Sample Request Body:
-  {
-      "order": {
-          "sfOrderId": "801A0000000Z4cLIAS",
-          "transactionId": "xx-aa123-edf",
-          "customerNumber": 288801,
-          "orderNumber": "1923400",
-          "companyCode": 38,
-          "uniqueId": "38_1923400",
-          "orderDate": "2023-11-17",
-          "requestedDate": "2023-11-21",
-          "poNumber": "CC23-32_2",
-          "externalOrderNumber": "02151179"
-      }
-  }
  
   Sample Response:
-  {
-      "status": "SUCCESS",
-      "faultDescription": "",
-      "data": {
-          "uniqueId": "38_1923400",
-          "transactionId": "xx-aa123-edf",
-          "status": "complete",
-          "retryCount": 1
-      },
-      "countryCode": "US"
-  }
  */
+
+/*
+    ERROR Codes: 
+    SBD_OUT_B2B_ORDER_STATUS_MISSING_ENTITY_ID
+    SBD_OUT_B2B_ORDER_STATUS_MISSING_SF_ORDER_ID
+    SBD_OUT_B2B_ORDER_STATUS_MISSING_ORDER_SUMMARY_ID
+*/
 
 @RestResource(urlMapping='/ir-erp-order-helper/status')
 global class ORS_OrderHelperStatusRestService implements RESTHostedMTDEndpoint {
     // Member properties
     global static RESTHostedMTDEndpointHelper endpointHelper;
     private static final String PAYLOAD_TYPE = 'sbd-outdoor-json-erp-order-helper-status';
-    private static final String ERROR_CODE = 'sbd-outdoor-json-erp-order-helper-status-error';
+    private static final String GENERIC_ERROR_CODE = 'SBD_OUT_B2B_UPDATE_ORDER_STATUS_ERROR';
     private static final String BASE_REST_ENDPOINT = '/ir-erp-order-helper/status';
     private static final Integer MIN_PAYLOAD_SIZE = 44;
     private static final Integer MAX_PAYLOAD_FIELD_SIZE = 5000;
@@ -47,7 +29,7 @@ global class ORS_OrderHelperStatusRestService implements RESTHostedMTDEndpoint {
     private static final String BASE_SOBJECT_API_NAME = 'Order';
 
     // Call Varaiables
-    private static Response2 response = new Response2();
+    public static Response2 response = new Response2();
     private static ResponsePayload responsePayload = new ResponsePayload();
     private static OrderRequestPayload orderRequestPayload;
     private static Agora_Transaction__c agoraTransaction;
@@ -120,14 +102,16 @@ global class ORS_OrderHelperStatusRestService implements RESTHostedMTDEndpoint {
 
     //private static SharedModels.RESTResponse createErrorResponse(Integer htmlStatusCode, List<String> errs, Integer defaultStatusCode) {
     private static void createErrorResponse(Integer htmlStatusCode, Integer defaultStatusCode) {
-        RestContext.response.statusCode = (htmlStatusCode == null || htmlStatusCode < 200 || htmlStatusCode > 503) ? defaultStatusCode : htmlStatusCode;
+        RestContext.response.statusCode = 400;
         response.status = SharedModels.ResponseStatus.FAILURE;
+        response.action = 'Error';
+        response.countryCode = 'US';
         response.faultDescription = (errs == null || errs.isEmpty()) ? '[MTD returnFailure - Error not specified]' : JSON.serialize(errs);
 
         Failure failure = new Failure();
         failure.relatedId = orderRequestPayload.order.sfOrderId;
         failure.objectName = 'Order';
-        failure.errorCode = ERROR_CODE;
+        failure.errorCode = GENERIC_ERROR_CODE;
         if (exps.size() > 0) {
             failure.errorStack = exps[0].getStackTraceString();
             failure.errorMessage = exps[0].getMessage();
@@ -137,7 +121,20 @@ global class ORS_OrderHelperStatusRestService implements RESTHostedMTDEndpoint {
     }
 
     // Helper methods
+
+    /*
+    ERROR Codes: 
+        SBD_OUT_B2B_ORDER_STATUS_MISSING_ENTITY_ID
+        SBD_OUT_B2B_ORDER_STATUS_MISSING_SF_ORDER_ID
+        SBD_OUT_B2B_ORDER_STATUS_MISSING_ORDER_SUMMARY_ID
+    */
     private static void validateRequest() {
+        if (String.isBlank(orderRequestPayload.order.sfOrderId)) {
+            errs.add('Missing sfOrderId.');
+        }
+        if ([SELECT Id FROM Order WHERE id = :orderRequestPayload.order.sfOrderId].size() == 0) {
+            errs.add('There is no order witht sfOrderId.');
+        }
     }
 
     private static void logRequest() {
@@ -211,23 +208,29 @@ global class ORS_OrderHelperStatusRestService implements RESTHostedMTDEndpoint {
     private static Response2 generateResponse() {
         try {
             orderRequestPayload = (OrderRequestPayload) JSON.deserialize(RestContext.request.requestBody.toString(), OrderRequestPayload.class);
-            // upsert AgoraTransaction
-            agoraTransaction = upsertAgoraTransaction();
 
-            // create Response Payload
-            responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
-            responsePayload.transactionId = orderRequestPayload.order.transactionId;
-            responsePayload.order = orderRequestPayload.order;
-            responsePayload.orderSummaryId = orderSummary?.Id;
-            responsePayload.orderId = orderRequestPayload.order.sfOrderId;
-            responsePayload.orderItemSummaries = generateOrderItemSummaries();
+            // validate request
+            validateRequest();
 
-            // Setup the response
-            response.countryCode = 'US';
-            response.status = SharedModels.ResponseStatus.SUCCESS;
-            response.data = responsePayload;
-            response.reTryCount = agoraTransaction.Retry_Count__c;
-            response.action = agoraTransaction.Order_Summary_Process_Status__c;
+            if (errs.size() == 0) {
+                // upsert AgoraTransaction
+                agoraTransaction = upsertAgoraTransaction();
+
+                // create Response Payload
+                responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
+                responsePayload.transactionId = orderRequestPayload.order.transactionId;
+                responsePayload.order = orderRequestPayload.order;
+                responsePayload.orderSummaryId = orderSummary?.Id;
+                responsePayload.orderId = orderRequestPayload.order.sfOrderId;
+                responsePayload.orderItemSummaries = generateOrderItemSummaries();
+
+                // Setup the response
+                response.countryCode = 'US';
+                response.status = SharedModels.ResponseStatus.SUCCESS;
+                response.data = responsePayload;
+                response.reTryCount = agoraTransaction.Retry_Count__c;
+                response.action = agoraTransaction.Order_Summary_Process_Status__c;
+            }
         } catch (Exception ex) {
             errs.add(ex.getMessage());
             errs.add(ex.getStackTraceString());

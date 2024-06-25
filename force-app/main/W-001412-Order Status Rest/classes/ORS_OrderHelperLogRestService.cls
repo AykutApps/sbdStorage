@@ -100,9 +100,9 @@ global class ORS_OrderHelperLogRestService implements RESTHostedMTDEndpoint {
 
     // Helper methods
     private static void validateRequest(OrderRequestPayload orderRequestPayload) {
-        if (String.isBlank(orderRequestPayload.uniqueId)) {
-            errs.add('Invalid uniqueId');
-        }
+        // if (String.isBlank(orderRequestPayload.uniqueId)) {
+        //     errs.add('Invalid uniqueId');
+        // }
         if (String.isBlank(orderRequestPayload.transactionId)) {
             errs.add('Invalid transactionId');
         }
@@ -137,7 +137,9 @@ global class ORS_OrderHelperLogRestService implements RESTHostedMTDEndpoint {
         restInboundPayload.SObject_Label__c = orderRequestPayload.failure?.objectName;
         restInboundPayload.Payload_Type__c = PAYLOAD_TYPE;
         restInboundPayload.Status__c = (orderRequestPayload.type == 'Success') ? 'Processed' : 'Error';
-        restInboundPayload.SObject_ID__c = orderRequestPayload.failure?.relatedId.left(18);
+        restInboundPayload.SObject_ID__c = orderRequestPayload.failure?.relatedId;
+        restInboundPayload.Payload_Transaction_Id__c = orderRequestPayload.transactionId;
+        restInboundPayload.Payload_Unique_Id__c = orderRequestPayload.uniqueId;
         // Code: ..., Message:... , Stack: ....
         String errorDetails =
             'Error Code: ' +

@@ -1,0 +1,18 @@
+<apex:page>
+    <br/>
+<input id="message" type="text"/>
+<button onclick="sendToLWC()">Send to LWC</button>
+
+<script>
+    var lexOrigin="https://mtdproducts--devagora--c.sandbox.vf.force.com"
+    function sendToLWC() {
+        var payload = document.getElementById("message").value;
+        var message = {
+            name:"SampleVFToLWCMessage",
+            payload:payload
+        };
+        parent.postMessage(message,lexOrigin);
+    }
+    
+</script>
+</apex:page>

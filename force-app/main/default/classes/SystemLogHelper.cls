@@ -1,5 +1,5 @@
 public without sharing class SystemLogHelper {
-    /*  MTD uses SObject System_Log_Helper__c for loggin purposes.  Use this helper class to create log records.
+/*  MTD uses SObject System_Log_Helper__c for loggin purposes.  Use this helper class to create log records.
     - 6 static helper methods
     - 3 variants
     - each variant has 2 signatures: 1 for a string dump (32,768 characters) & 1 for an Apex Exception dump
@@ -42,7 +42,7 @@ public without sharing class SystemLogHelper {
         return insertSystemLog(logItemSource, codeIdentifier, loggedInUser, descriptionPrefix, ex);
     }
     public static System_Log__c insertSystemLog(String logItemSource, String codeIdentifier, String loggedInUser, String descriptionPrefix, Exception ex) {
-        string description = descriptionPrefix + ': Line' + ('00000' + String.valueOf(ex.getLineNumber())).right(5) + ' ' + ex.getMessage();
+        string description = descriptionPrefix + ': Line' + ( '00000' + String.valueOf(ex.getLineNumber()) ).right(5) + ' ' + ex.getMessage();
         string extendedInformation = 'TYPE: ' + ex.getTypeName() + '  CAUSE: ' + ex.getCause() + '  STACKTRACE: ' + ex.getStackTraceString() + '  MESSAGE: ' + ex.getMessage();
         return insertSystemLog(logItemSource, codeIdentifier, loggedInUser, description, extendedInformation);
     }
@@ -54,9 +54,9 @@ public without sharing class SystemLogHelper {
     }
     public static System_Log__c insertSystemLog(String logItemSource, String codeIdentifier, String loggedInUser, String description, String extendedInformation) {
         logSort++;
-        description = String.valueOf(logSort).leftPad(2, '0') + ' ' + ((description == null) ? '' : description.trim());
+        description = String.valueOf(logSort).leftPad(2,'0') + ' ' + ( (description == null) ? '' : description.trim() );
 
-        if (description != null && description.length() > 255) {
+        if (description != null && description.length() > 255){
             description = description.substring(0, 255);
         }
 
@@ -71,56 +71,54 @@ public without sharing class SystemLogHelper {
         sysLog.Extended_Information__c = extendedInformation;
         sysLog.Log_Item_Source__c = logItemSource;
         sysLog.Logged_In_User__c = loggedInUser;
-        //system.debug('xxx-SystemLogHelper.shouldInsert normal syslog BEFORE IF -'+SystemLogHelper.shouldInsert);
+//system.debug('xxx-SystemLogHelper.shouldInsert normal syslog BEFORE IF -'+SystemLogHelper.shouldInsert);
         if (shouldInsert) {
-            //system.debug('xxx-SystemLogHelper.shouldInsert normal syslog IN IF -'+SystemLogHelper.shouldInsert);
+//system.debug('xxx-SystemLogHelper.shouldInsert normal syslog IN IF -'+SystemLogHelper.shouldInsert);
             insert sysLog;
         }
         return sysLog;
     }
-
+    
     public static System_Log_Event__e insertSystemLogEvent(String logItemSource, String codeIdentifier, String loggedInUser, String descriptionPrefix, Exception ex) {
         string description = descriptionPrefix + ': ' + ex.getLineNumber() + ' ' + ex.getMessage();
         string extendedInformation = ex.getTypeName() + ' ' + ex.getCause() + ' ' + ex.getStackTraceString();
         return insertSystemLogEvent(logItemSource, codeIdentifier, loggedInUser, description, extendedInformation);
     }
-
-    public static System_Log_Event__e insertSystemLogEvent(String logItemSource, String codeIdentifier, String loggedInUser, String description, String extendedInformation) {
+    
+    public static System_Log_Event__e insertSystemLogEvent(String logItemSource, String codeIdentifier, String loggedInUser, String description, String extendedInformation) { 
         logSort++;
-        description = String.valueOf(logSort).leftPad(2, '0') + ' ' + ((description == null) ? '' : description.trim());
+        description = String.valueOf(logSort).leftPad(2,'0') + ' ' + ( (description == null) ? '' : description.trim() );
 
-        if (description != null && description.length() > 255) {
+        if (description != null && description.length() > 255){
             description = description.substring(0, 255);
         }
 
         if (extendedInformation != null && extendedInformation.length() > 32768) {
             extendedInformation = extendedInformation.substring(0, 32768);
         }
-
+      
         System_Log_Event__e sysLog = new System_Log_Event__e();
         sysLog.Code_Identifier__c = codeIdentifier;
         sysLog.Description__c = description;
         sysLog.Extended_Information__c = extendedInformation;
         sysLog.Log_Item_Source__c = logItemSource;
         sysLog.Logged_In_User__c = loggedInUser;
-        system.debug('xxx-SystemLogHelper.shouldInsert event syslog BEFORE IF -' + SystemLogHelper.shouldInsert);
+system.debug('xxx-SystemLogHelper.shouldInsert event syslog BEFORE IF -'+SystemLogHelper.shouldInsert);
         if (shouldInsert) {
-            system.debug('xxx-SystemLogHelper.shouldInsert event syslog IN IF -' + SystemLogHelper.shouldInsert);
+system.debug('xxx-SystemLogHelper.shouldInsert event syslog IN IF -'+SystemLogHelper.shouldInsert);
             EventBus.publish(sysLog);
         }
         return sysLog;
     }
 
-    public static void insertSystemLogEvent(System_Log_Event__e systemLogEvent) {
-        //ToFuture: change method name to publishSystemLogEvent(...)
-        List<System_Log_Event__e> logs = new List<System_Log_Event__e>{ systemLogEvent };
+    public static void insertSystemLogEvent(System_Log_Event__e systemLogEvent) { //ToFuture: change method name to publishSystemLogEvent(...)
+        List<System_Log_Event__e> logs = new List<System_Log_Event__e>{systemLogEvent};
         SystemLogHelper.insertSystemLogEvents(logs);
     }
-    public static void insertSystemLogEvents(List<System_Log_Event__e> systemLogEvents) {
-        //ToFuture: change method name to publishSystemLogEvents(...)
-        //EventBus.publish(systemLogEvents); //mburr.2019-12-19 if more than 1, randomly threw "Duplicate id in list: e03xx0000000001AAA"
+    public static void insertSystemLogEvents(List<System_Log_Event__e> systemLogEvents) { //ToFuture: change method name to publishSystemLogEvents(...)
+        //EventBus.publish(systemLogEvents); //mburr.2019-12-19 if more than 1, randomly threw "Duplicate id in list: e03xx0000000001AAA" 
         for (System_Log_Event__e sle : systemLogEvents) {
-            system.debug('xxx - sle:' + sle);
+            system.debug('xxx - sle:' + sle);   
             EventBus.publish(sle);
         }
     }
@@ -128,19 +126,19 @@ public without sharing class SystemLogHelper {
     /**
      * This method creates a System_log__c record for the given inputs. Records are saved in the System_Log__c object.
      * @param String LogItemSource - This is the apex class, etc that is creating the log message
-     * @param String CodeIdentifier - This is a unique string recorded with the log item that can be used to search
-     *        the code for where the log item was generated from.
-     * @param String LoggedInUser - This represents the user that was logged in when the log item was generated.
-     * @param String description - description of the log item.
+     * @param String CodeIdentifier - This is a unique string recorded with the log item that can be used to search 
+     *        the code for where the log item was generated from. 
+     * @param String LoggedInUser - This represents the user that was logged in when the log item was generated. 
+     * @param String description - description of the log item. 
      * @param String ExtendedInformation - This is a large text container (32768 characters) that can be used to store any additional information (such
-     *        as a stack trace or the value of variables at the time the log item was generated).
+     *        as a stack trace or the value of variables at the time the log item was generated). 
      * @return void
      **/
-    public static void insertSystemLogFuture(String logItemSource, String codeIdentifier, String loggedInUser, String description, String extendedInformation) {
+    public static void insertSystemLogFuture(String logItemSource,String  codeIdentifier, String loggedInUser, String description, String extendedInformation) {
         logSort++;
-        description = String.valueOf(logSort).leftPad(2, '0') + ' ' + ((description == null) ? '' : description.trim());
+        description = String.valueOf(logSort).leftPad(2,'0') + ' ' + ( (description == null) ? '' : description.trim() );
 
-        if (description != null && description.length() > 255) {
+        if (description != null && description.length() > 255){
             description = description.substring(0, 255);
         }
 
@@ -159,11 +157,11 @@ public without sharing class SystemLogHelper {
             Database.insert(sysLog, false);
         }
     }
-
-    private static string fetchFormatedDatetime() {
+    
+    private static string fetchFormatedDatetime(){
         Datetime dt = Datetime.now();
-        string out = DateUtilities.formatDateTimeToString(dt, 'yyyy-MM-dd');
-        out += ' ' + DatetimeHelper.paddedTime(dt);
+        string out = DateUtilities.formatDateTimeToString(dt,'yyyy-MM-dd');
+        out+= ' ' + DatetimeHelper.paddedTime(dt);
         return out;
     }
 }

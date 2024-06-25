@@ -1,0 +1,18 @@
+<apex:page>
+<input id="message" type="text"/>
+<button onclick="sendToLC()">Send to LC</button>
+
+<script>
+    
+    var lexOrigin = "https://mtdproducts--devagora--c.sandbox.vf.force.com";
+    
+    function sendToLC() {
+        
+        var message = document.getElementById("message").value;
+        console.log('message VF:', message);
+        parent.postMessage(message, lexOrigin);
+    }
+    
+</script>
+
+</apex:page>

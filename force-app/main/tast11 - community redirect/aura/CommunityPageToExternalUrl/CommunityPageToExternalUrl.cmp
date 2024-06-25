@@ -1,6 +1,6 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="AcceptableUsePolicyCtl">
-    <aura:attribute name="externalUrl" type="String" />
-    <aura:attribute name="loadInExistingWindow" type="Boolean" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="externalUrl" type="String"/>
+    <aura:attribute name="loadInExistingWindow" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     {!$Label.c.LtngComp_CommunityPageToExternalUrl_Redirecting}...
 </aura:component>

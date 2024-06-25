@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title="B2B Draft Order (CartItems)" icon-name="custom:custom60">
+        
+        <div class="slds-m-around_medium">
+            <lightning-button label="Refresh" onclick={refreshData}></lightning-button>
+            <lightning-datatable key-field="id" data={webcartItems} columns={columnsItems}> </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

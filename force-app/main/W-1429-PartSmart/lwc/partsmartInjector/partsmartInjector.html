@@ -1,0 +1,10 @@
+<template> 
+    <!-- <iframe src="/apex/PartSmartInjector" width="100%" height="800px" title="Embedded Content" onload={iframeLoaded}></iframe> -->
+    <!-- <iframe width="100%" height="800px" src="https://mtdproducts--devagora.sandbox.my.salesforce-sites.com/dealerservice/PartSmartTest?scriptUrl=https%3A%2F%2Fwww.partsmart.net%2Fstream.js%3Faccess_token%3Db64a0d10eeb293c13050e29a4f0d6a5bfbb71785d18884d5e64d3b92e70c2222%26refresh_token%3Dee5f439157764e9a280d9f307a254708737e055daca1a5406c36ab27908d5aa7%26expires_in%3D10800"></iframe> -->
+    <div></div>
+    <p>Welcome {loggedInUser}</p>
+    <h1>Option 1:  Internal VF Page</h1>
+     <iframe src="/apex/PartSmartInjector" width="100%" height="800px" title="Embedded Content" onload={iframeLoaded}></iframe>
+    <h1>Option 3:  LWC references Public Site on MTD Salescloud</h1>
+    <!-- <iframe width="100%" height="800px" src={scriptURL}></iframe> -->
+</template>

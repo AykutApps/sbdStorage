@@ -193,7 +193,7 @@ public without sharing class OrderingEventsPricingMatrixCtl {
                     item.ProductCode.containsIgnoreCase(filterText) ||
                     item.DetailSKU.containsIgnoreCase(filterText) ||
                     item.MasterSKU.containsIgnoreCase(filterText) ||
-                    (item.Description != null && item.Description.containsIgnoreCase(filterText))
+                    item.Description.containsIgnoreCase(filterText)
                 ) {
                     tempProductList.add(item);
                 }

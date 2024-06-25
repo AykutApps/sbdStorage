@@ -1,6 +1,7 @@
 global with sharing class SYS_GenericDeleteBatchHelper {
-    public static String JOB_EXECUTE_PERMISSION_NAME = 'Data_Retention_Batch_Job_Run';
 
+    public static String JOB_EXECUTE_PERMISSION_NAME = 'Data_Retention_Batch_Job_Run';
+    
     // These variables are used for UI initiated jobs
     public Id dataRetentionPolicyId { get; set; }
     public Data_Retention_Policy__c dataRetentionPolicy { get; set; }
@@ -46,7 +47,7 @@ global with sharing class SYS_GenericDeleteBatchHelper {
     }
 
     public static void runBatchJob(Data_Retention_Policy__c drp, Integer batchSize) {
-        if (!FeatureManagement.checkPermission(JOB_EXECUTE_PERMISSION_NAME)) {
+        if (!FeatureManagement.checkPermission(JOB_EXECUTE_PERMISSION_NAME)){
             throw new CustomException('You do not have permission to execute this job');
         }
 
@@ -59,6 +60,6 @@ global with sharing class SYS_GenericDeleteBatchHelper {
         }
     }
 
-    public class CustomException extends Exception {
-    }
+    public class CustomException extends Exception {}
+
 }

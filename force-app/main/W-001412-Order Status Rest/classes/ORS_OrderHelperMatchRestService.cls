@@ -232,6 +232,9 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
     private static final Integer MAX_PAYLOAD_SIZE = MAX_PAYLOAD_FIELD_SIZE;
     private static final String BASE_SOBJECT_API_NAME = 'OrderSummary';
 
+    private static List<String> errs = new List<String>();
+    public static ResponsePayload responsePayload = new ResponsePayload();
+
     // Main method
     @HTTPPost
     global static SharedModels.RESTResponse doPost() {
@@ -300,47 +303,73 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
     }
 
     private static SharedModels.RESTResponse generateResponse() {
-        List<String> errs = new List<String>();
         OrderRequestPayload orderRequestPayload = new OrderRequestPayload();
         SharedModels.RESTResponse response = new SharedModels.RESTResponse();
-        ResponsePayload responsePayload = new ResponsePayload();
 
         try {
             orderRequestPayload = (OrderRequestPayload) JSON.deserialize(RestContext.request.requestBody.toString(), OrderRequestPayload.class);
+
+            //validate payload
+            validateRequestPayload(orderRequestPayload);
+
             // Response Logic
-            FulfillmentOrder[] fulfilmentOrdersBasedOnUniqueId = [
-                SELECT
-                    Id,
-                    ERP_UniqueId__c,
-                    OrderId,
-                    OrderSummary.OriginalOrderId,
-                    OrderSummaryId,
-                    External_Key__c,
-                    Status,
-                    (SELECT Id, FulfillmentOrderLineItemNumber, Quantity, OriginalQuantity, External_Key__c, Product2.Product_Code_External_ID__c FROM FulfillmentOrderLineItems)
-                FROM FulfillmentOrder
-                WHERE Status = 'Allocated' AND ERP_UniqueId__c = :orderRequestPayload.order.uniqueId
-            ];
+            FulfillmentOrder[] fulfilmentOrdersBasedOnUniqueId = (String.isBlank(orderRequestPayload.order.uniqueId))
+                ? new List<FulfillmentOrder>()
+                : [
+                      SELECT
+                          Id,
+                          ERP_UniqueId__c,
+                          OrderId,
+                          OrderSummary.OriginalOrderId,
+                          OrderSummaryId,
+                          External_Key__c,
+                          Status,
+                          (
+                              SELECT Id, FulfillmentOrderLineItemNumber, Quantity, OriginalQuantity, External_Key__c, Product2.Product_Code_External_ID__c
+                              FROM FulfillmentOrderLineItems
+                          )
+                      FROM FulfillmentOrder
+                      WHERE Status != 'Cancelled' AND ERP_UniqueId__c = :orderRequestPayload.order.uniqueId
+                      LIMIT 1
+                  ];
 
-            FulfillmentOrder[] fulfilmentOrdersBasedOnExOrdNumb = [
-                SELECT
-                    Id,
-                    ERP_UniqueId__c,
-                    OrderId,
-                    OrderSummary.OriginalOrderId,
-                    OrderSummaryId,
-                    External_Key__c,
-                    Status,
-                    (SELECT Id, FulfillmentOrderLineItemNumber, Quantity, OriginalQuantity, External_Key__c, Product2.Product_Code_External_ID__c FROM FulfillmentOrderLineItems)
-                FROM FulfillmentOrder
-                WHERE Status = 'Allocated' AND ERP_UniqueId__c = :orderRequestPayload.order.externalOrderNumber
-            ];
+            OrderSummary[] orderSummaries = (String.isBlank(orderRequestPayload.order.externalOrderNumber))
+                ? new List<OrderSummary>()
+                : [
+                      SELECT Id, OrderNumber, OriginalOrderId
+                      FROM OrderSummary
+                      WHERE OrderNumber = :orderRequestPayload.order.externalOrderNumber
+                      LIMIT 1
+                  ];
 
-            OrderSummary[] orderSummaries = [
-                SELECT Id, OrderNumber, OriginalOrderId
-                FROM OrderSummary
-                WHERE OrderNumber = :orderRequestPayload.order.externalOrderNumber
-            ];
+            FulfillmentOrder[] fulfilmentOrdersBasedOnExOrdNumb = (String.isBlank(orderRequestPayload.order.externalOrderNumber))
+                ? new List<FulfillmentOrder>()
+                : [
+                      SELECT
+                          Id,
+                          ERP_UniqueId__c,
+                          OrderId,
+                          OrderSummary.OriginalOrderId,
+                          OrderSummaryId,
+                          External_Key__c,
+                          Status,
+                          (
+                              SELECT Id, FulfillmentOrderLineItemNumber, Quantity, OriginalQuantity, External_Key__c, Product2.Product_Code_External_ID__c
+                              FROM FulfillmentOrderLineItems
+                          )
+                      FROM FulfillmentOrder
+                      WHERE Status != 'Cancelled' AND ERP_UniqueId__c = :orderRequestPayload.order.externalOrderNumber
+                      LIMIT 1
+                  ];
+
+            OrderSummary[] orderSummariesBasedOnExternalKey = (String.isBlank(orderRequestPayload.order.uniqueId))
+                ? new List<OrderSummary>()
+                : [
+                      SELECT Id, OrderNumber, OriginalOrderId
+                      FROM OrderSummary
+                      WHERE OriginalOrder.External_Key__c = :orderRequestPayload.order.uniqueId
+                      LIMIT 1
+                  ];
 
             if (!fulfilmentOrdersBasedOnUniqueId.isEmpty()) {
                 responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
@@ -348,6 +377,7 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
                 responsePayload.orderSummaryId = fulfilmentOrdersBasedOnUniqueId[0].OrderSummaryId;
                 responsePayload.orderItemSummaries = getOrderItemSummariesPayload(fulfilmentOrdersBasedOnUniqueId[0].OrderSummaryId);
                 responsePayload.fulfillmentOrder = getFulfillmentPayload(fulfilmentOrdersBasedOnUniqueId[0]);
+                responsePayload.fulfillmentOrderId = fulfilmentOrdersBasedOnUniqueId[0].Id;
                 responsePayload.newOrders = 'no';
             } else if (!orderSummaries.isEmpty()) {
                 responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
@@ -360,8 +390,16 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
                 responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
                 responsePayload.orderId = fulfilmentOrdersBasedOnExOrdNumb[0].OrderId;
                 responsePayload.orderSummaryId = fulfilmentOrdersBasedOnExOrdNumb[0].OrderSummaryId;
+                responsePayload.fulfillmentOrderId = fulfilmentOrdersBasedOnExOrdNumb[0].Id;
                 responsePayload.orderItemSummaries = getOrderItemSummariesPayload(fulfilmentOrdersBasedOnExOrdNumb[0].OrderSummaryId);
                 responsePayload.fulfillmentOrder = getFulfillmentPayload(fulfilmentOrdersBasedOnExOrdNumb[0]);
+                responsePayload.newOrders = 'no';
+            } else if (!orderSummariesBasedOnExternalKey.isEmpty()) {
+                responsePayload.uniqueId = orderRequestPayload.order.uniqueId;
+                responsePayload.orderId = orderSummariesBasedOnExternalKey[0].OriginalOrderId;
+                responsePayload.orderSummaryId = orderSummariesBasedOnExternalKey[0].Id;
+                responsePayload.orderItemSummaries = getOrderItemSummariesPayload(orderSummariesBasedOnExternalKey[0].Id);
+                responsePayload.fulfillmentOrderId = null;
                 responsePayload.newOrders = 'no';
             } else {
                 responsePayload.orderId = null;
@@ -408,6 +446,21 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
         return orderItemSummaries;
     }
 
+    private static void validateRequestPayload(OrderRequestPayload orderRequestPayload) {
+        if (String.isBlank(orderRequestPayload.order.uniqueId) && String.isBlank(orderRequestPayload.order.externalOrderNumber)) {
+            errs.add('Missing uniqueId or externalOrderNumber.');
+        }
+
+        if (orderRequestPayload.order == null) {
+            errs.add('Missing payload.');
+        }
+
+        // if (!String.isBlank(orderRequestPayload.order.externalOrderNumber)) {
+        //     if (Integer.valueOf(orderRequestPayload.order.externalOrderNumber) > 2900000 || Integer.valueOf(orderRequestPayload.order.externalOrderNumber) < 2000000)
+        //         errs.add('externalOrderNumber must be within the range 2,000,000 and 2,900,000.');
+        // }
+    }
+
     // Error Methods
     private static SharedModels.RESTResponse returnFailure(Integer htmlStatusCode, List<String> errs) {
         return createErrorResponse(htmlStatusCode, errs, 400);
@@ -423,10 +476,14 @@ global class ORS_OrderHelperMatchRestService implements RESTHostedMTDEndpoint {
 
         SharedModels.RESTResponse out = new SharedModels.RESTResponse();
         out.status = SharedModels.ResponseStatus.FAILURE;
+        out.countryCode = 'US';
         out.data = null;
         out.faultDescription = (errs == null || errs.isEmpty()) ? '[MTD returnFailure - Error not specified]' : JSON.serialize(errs);
 
         return out;
+    }
+
+    public class CustomException extends Exception {
     }
 
     // Data Models
