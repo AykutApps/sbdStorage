@@ -1,0 +1,948 @@
+<apex:component controller="UserCtl">
+    <apex:attribute name="positionAttr" assignTo="{!position}" type="String" description="position" />
+    <apex:outputText value="{!ComponentHeaderHtml}" escape="false" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.css" />
+    <style>
+        .users-list .siteAccessLabel {
+            margin-top: 4px;
+        }
+        .users-list .bootstrap-table {
+            padding: 0px;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.js"></script>
+    <div class="users-list">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <select class="available-accounts form-control">
+                        <apex:repeat value="{!availableAccounts}" var="option">
+                            <option data-name="{!option.name}" value="{!option.id}">{!option.nameWithNumberOfUsers}</option>
+                        </apex:repeat>
+                    </select>
+                    <div class="pull-right">
+                        <button id="addNewUserBtn" type="button" class="btn btn-default btn-blue" data-add-type="new">Add New User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="margin-top: 10px; margin-bottom: 10px" />
+        <div class="panel panel-default">
+            <h3 class="panel-title">View Or Edit Users</h3>
+            <div id="userTableContainer">
+                <table class="table col-xs-12" data-pagination="true" data-query-params="true" id="table" data-search="true" data-search-align="left">
+                    <thead>
+                        <tr>
+                            <th data-formatter="Web.UsersList.HyperlinkFormatterEdit" data-search-formatter="false"></th>
+                            <th data-field="federationIdentifier" data-sortable="true" data-search-formatter="false" data-formatter="Web.UsersList.HyperlinkFormatterView">
+                                Username
+                            </th>
+                            <th data-field="firstName" data-sortable="true" data-search-formatter="false" data-formatter="Web.UsersList.HyperlinkFormatterView">First Name</th>
+                            <th data-field="lastName" data-sortable="true" data-search-formatter="false" data-formatter="Web.UsersList.HyperlinkFormatterView">Last Name</th>
+                            <th data-formatter="Web.UsersList.CheckFormatter" data-search-formatter="false" data-field="isActive" data-sortable="true">Active</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function () {
+            window.Web = window.Web || {};
+            window.Web.UsersList = {
+                Initialize: initialize,
+                ReloadUsers: reloadUsers,
+                HyperlinkFormatterEdit: hyperlinkFormatterEdit,
+                HyperlinkFormatterView: hyperlinkFormatterView,
+                CheckFormatter: checkFormatter
+            };
+
+            var controller = null;
+            var context = null;
+            var page = null;
+            var currentAccount = null;
+            var usersMap = {};
+
+            var aLaCartePermissionSetOptions = null;
+            var roleAtAccountOptions = null;
+            var recordTypeId = "{!ContactRecordType}";
+
+            sforce.connection.sessionId = "{!$Api.Session_ID}";
+            var layout, recordTypeMap;
+            FinalResult = new Array();
+            layout = sforce.connection.describeLayout("Contact");
+            recordTypeMap = layout.recordTypeMappings;
+
+            //To remove the extra record type mapping for Master, not useful for usual case.
+            recordTypeMap.pop();
+
+            recordTypeMap.forEach(function (obj) {
+                var recordTypeObj = {};
+
+                if (obj.recordTypeId == recordTypeId) {
+                    obj.picklistsForRecordType.forEach(function (pl) {
+                        if ((pl.picklistName = "Role_At_The_Account__c")) {
+                            recordTypeObj[pl.picklistName] = pl.picklistValues;
+                        }
+                    });
+                    FinalResult.push(recordTypeObj);
+                }
+            });
+
+            var validateObj = {
+                rules: {
+                    userFirstName: "required",
+                    userLastName: "required",
+                    userEmail: {
+                        required: true,
+                        email: true
+                    },
+                    userRoleAtAccount: "required"
+                },
+                messages: {
+                    userFirstName: "Please enter first name",
+                    userLastName: "Please enter last name",
+                    userEmail: "Please enter a valid email address",
+                    userRoleAtAccount: "Please enter user's role"
+                }
+            };
+
+            var validateEditObj = {
+                rules: {
+                    userFirstName: "required",
+                    userLastName: "required",
+                    userRoleAtAccount: "required"
+                },
+                messages: {
+                    userFirstName: "Please enter first name",
+                    userLastName: "Please enter last name",
+                    userRoleAtAccount: "Please enter user's role"
+                }
+            };
+
+            function initialize() {
+                Visualforce.remoting.timeout = 120000;
+
+                controller = UserCtl;
+
+                context = $(".users-list");
+
+                var selectors = {
+                    // UpdateButton: '.update-button'
+                    // SearchButton: '#searchOrdersBtn'
+                };
+
+                page = {
+                    UserInfo: $(".user-info"),
+                    AvailableAccounts: context.find(".available-accounts"),
+                    Modal: $("#modal")
+                };
+
+                getRolesList(FinalResult[0].Role_At_The_Account__c);
+
+                context.on("change", ".available-accounts", function () {
+                    currentAccount = $(this).val();
+                    getPermissionSetOptions(currentAccount);
+                    getUsers(true);
+                });
+                currentAccount = page.UserInfo.data("account-id");
+
+                getPermissionSetOptions(currentAccount);
+
+                if (page.AvailableAccounts.children("option").size() <= 1) {
+                    page.AvailableAccounts.hide();
+                }
+
+                $("#userTableContainer").on("click", "a.edit-user", function () {
+                    var userId = $(this).data("user-id");
+                    var accountName = page.AvailableAccounts.children(":selected").data("name");
+                    var isCurrentUser = page.UserInfo.data("id") == userId;
+                    var editUserTemplate = Handlebars.compile($("#edit-user-template").html());
+                    var html = editUserTemplate({
+                        accountName: accountName,
+                        user: usersMap[userId],
+                        aLaCartePermissionSetOptions: aLaCartePermissionSetOptions,
+                        roleAtAccount: roleAtAccountOptions
+                    });
+                    Global.Common.ShowModalWithHtml(html);
+                    checkPermissionSets(usersMap[userId]);
+
+                    if (usersMap[userId].Contact.Role_at_the_Account__c in roleAtAccountOptions) {
+                        $("#userRoleAtAccount").val(usersMap[userId].Contact.Role_at_the_Account__c);
+                    } else {
+                        $("#userRoleAtAccount").val(null);
+                    }
+
+                    $("#userIsActive").prop("checked", usersMap[userId].IsActive);
+
+                    //dont let them edit permissions or change details if the user isnt active
+                    if ($("#userIsActive").prop("checked")) {
+                        $("#permissionSetsEditSection").show();
+                        $("#userFirstName").prop("disabled", false);
+                        $("#userLastName").prop("disabled", false);
+                        $("#userDeskPhone").prop("disabled", false);
+                        $("#userMobilePhone").prop("disabled", false);
+                        $("#userRoleAtAccount").prop("disabled", false);
+                        $("#userEmail").prop("disabled", false);
+                    } else {
+                        $("#permissionSetsEditSection").hide();
+                        $("#userFirstName").prop("disabled", true);
+                        $("#userLastName").prop("disabled", true);
+                        $("#userDeskPhone").prop("disabled", true);
+                        $("#userMobilePhone").prop("disabled", true);
+                        $("#userRoleAtAccount").prop("disabled", true);
+                        $("#userEmail").prop("disabled", true);
+                    }
+
+                    //set up form validation
+                    $("#editUserForm").validate(validateEditObj);
+                });
+
+                //Used to select correct item from drop down within template
+                window.Handlebars.registerHelper("select", function (value, options) {
+                    var $el = $("<select />").html(options.fn(this));
+                    $el.find('[value="' + value + '"]').attr({ selected: "selected" });
+                    return $el.html();
+                });
+
+                function checkPermissionSets(user, selectedRole) {
+                    $(".permission-set-checkbox").each(function (index) {
+                        $(this).prop("checked", false);
+                        var permissionSetId = $(this).val();
+                        for (var i = 0; i < user.PermissionSetAssignments.length; i++) {
+                            if (user.PermissionSetAssignments[i].PermissionSetId == permissionSetId) {
+                                $(this).prop("checked", true);
+                                break;
+                            }
+                        }
+                    });
+                }
+
+                $("#userTableContainer").on("click", "a.view-user", function () {
+                    var userId = $(this).data("user-id");
+
+                    var permissionSets = [];
+                    for (var i = 0; i < usersMap[userId].PermissionSetAssignments.length; i++) {
+                        if (aLaCartePermissionSetOptions.hasOwnProperty(usersMap[userId].PermissionSetAssignments[i].PermissionSetId)) {
+                            permissionSets.push(aLaCartePermissionSetOptions[usersMap[userId].PermissionSetAssignments[i].PermissionSetId]);
+                        }
+                    }
+                    var template = Handlebars.compile($("#view-user-template").html());
+                    var html = template({ editMode: false, user: usersMap[userId], permissionSets: permissionSets });
+                    Global.Common.ShowModalWithHtml(html);
+                });
+
+                context.on("click", "#addNewUserBtn", function () {
+                    var addType = $(this).attr("data-add-type");
+                    var accountName = page.AvailableAccounts.children(":selected").data("name");
+                    var createUserTemplate = Handlebars.compile($("#create-user-template").html());
+                    var html = createUserTemplate({
+                        accountName: accountName,
+                        aLaCartePermissionSetOptions: aLaCartePermissionSetOptions,
+                        roleAtAccount: roleAtAccountOptions,
+                        firstName: "",
+                        lastName: "",
+                        recordId: "",
+                        addType: addType,
+                        phone: "",
+                        mobilePhone: "",
+                        email: "",
+                        selectedRoleAtAccount: ""
+                    });
+                    Global.Common.ShowModalWithHtml(html);
+                    //setup validation after modal created
+                    $("#createUserForm").validate(validateObj);
+                });
+
+                //Adds new user based off of a contact in list that has no associated user record
+                context.on("click", ".add-new-user-from-contact", function () {
+                    var addType = $(this).attr("data-add-type");
+                    var firstName = $(this).attr("data-f-name");
+                    var lastName = $(this).attr("data-l-name");
+                    var recordId = $(this).attr("data-record-id");
+                    var phone = $(this).attr("data-phone");
+                    var mobilePhone = $(this).attr("data-mobile-phone");
+                    var email = $(this).attr("data-email");
+                    var role = $(this).attr("data-role");
+                    var accountName = page.AvailableAccounts.children(":selected").data("name");
+                    var createUserTemplate = Handlebars.compile($("#create-user-template").html());
+                    var html = createUserTemplate({
+                        accountName: accountName,
+                        aLaCartePermissionSetOptions: aLaCartePermissionSetOptions,
+                        roleAtAccount: roleAtAccountOptions,
+                        firstName: firstName,
+                        lastName: lastName,
+                        recordId: recordId,
+                        addType: addType,
+                        phone: phone,
+                        mobilePhone: mobilePhone,
+                        email: email,
+                        selectedRoleAtAccount: role
+                    });
+                    Global.Common.ShowModalWithHtml(html);
+                    //setup validation after modal created
+                    $("#createUserForm").validate(validateObj);
+                });
+
+                //hide the permission sets and disabled controls if the user is being set to inactive
+                page.Modal.on("change", "#userIsActive", function () {
+                    if ($(this).prop("checked")) {
+                        $("#permissionSetsEditSection").show();
+                        $("#userFirstName").prop("disabled", false);
+                        $("#userLastName").prop("disabled", false);
+                        $("#userDeskPhone").prop("disabled", false);
+                        $("#userMobilePhone").prop("disabled", false);
+                        $("#userRoleAtAccount").prop("disabled", false);
+                        $("#userEmail").prop("disabled", false);
+                    } else {
+                        $("#permissionSetsEditSection").hide();
+                        $("#userFirstName").prop("disabled", true);
+                        $("#userLastName").prop("disabled", true);
+                        $("#userDeskPhone").prop("disabled", true);
+                        $("#userMobilePhone").prop("disabled", true);
+                        $("#userRoleAtAccount").prop("disabled", true);
+                        $("#userEmail").prop("disabled", true);
+                    }
+                });
+
+                page.Modal.on("click", "#createUser", function () {
+                    if ($("#createUserForm").valid()) {
+                        createUser(this);
+                    }
+                });
+
+                /*hit save on edit user modal dialog */
+                page.Modal.on("click", "#saveUser", function () {
+                    //make sure the form data is valid before we update anything
+                    if (!$("#editUserForm").valid()) {
+                        return;
+                    }
+
+                    //set up the spinner to show the update is happening.
+                    var spinner = $(" > i.fa-spin", $("#saveUser"));
+                    var modalMessage = $(".edit-user-message");
+                    spinner.show();
+                    modalMessage.text("Saving changes. It can take up to 1 minute.");
+
+                    var selectedPermissionSets = [];
+                    $("#editUserForm .permission-set-checkbox").each(function (index) {
+                        if ($(this).prop("checked")) {
+                            selectedPermissionSets.push($(this).val());
+                        }
+                    });
+                    var federationIdentifier = $("#FederationIdentifier").val();
+                    var salesforceUserId = $("#sfUserId").val();
+                    var salesforcecontactID = $("#sfContactId").val();
+                    console.log(federationIdentifier);
+                    console.log(selectedPermissionSets);
+                    console.log(salesforcecontactID);
+
+                    //make the user and contact active or inactive
+                    var userIsActive = false;
+                    if ($("#userIsActive:checked").val() == "on") {
+                        userIsActive = true;
+                    }
+
+                    //update the contact in salesforce
+                    var contact = {};
+                    var firstName = $("#userFirstName").val();
+                    var lastName = $("#userLastName").val();
+                    var email = $("#userEmail").val();
+                    var phone = $("#userDeskPhone").val();
+                    var mobile = $("#userMobilePhone").val();
+                    var role = $("#userRoleAtAccount").val();
+                    contact = {
+                        Id: salesforcecontactID,
+                        FirstName: firstName,
+                        LastName: lastName,
+                        AccountId: currentAccount,
+                        Phone: phone,
+                        MobilePhone: mobile,
+                        Role_At_The_Account__c: role,
+                        Email: email
+                    };
+
+                    Global.Common.Log(contact);
+
+                    controller.updateContact(contact, function (resultUpdateContact, eventUpdateContact) {
+                        Global.Common.Log(resultUpdateContact);
+                        Global.Common.Log(eventUpdateContact);
+
+                        if (eventUpdateContact.status) {
+                            if (resultUpdateContact.success) {
+                                console.log("contact updated");
+                                //call the provisioning service
+                                controller.updateUser(
+                                    contact,
+                                    salesforceUserId,
+                                    federationIdentifier,
+                                    selectedPermissionSets,
+                                    userIsActive,
+                                    function (resultUpdateUser, eventUpdateUser) {
+                                        Global.Common.Log(resultUpdateUser);
+                                        Global.Common.Log(eventUpdateUser);
+                                        modalMessage.text("");
+                                        if (eventUpdateUser.status) {
+                                            if (resultUpdateUser.success) {
+                                                spinner.hide();
+                                                Global.Common.HideModal();
+                                                getUsers(true);
+                                                bootbox.alert("User has been updated successfully.");
+                                            } else {
+                                                spinner.hide();
+                                                bootbox.alert("Error: " + resultUpdateUser.message);
+                                            }
+                                        } else {
+                                            spinner.hide();
+                                            bootbox.alert("Error: " + eventUpdateUser.message);
+                                        }
+                                    }
+                                );
+                            } else {
+                                spinner.hide();
+                                bootbox.alert(resultUpdateContact.exceptionType + " error: " + resultUpdateContact.message + "\n" + resultUpdateContact.stackTrace);
+                            }
+                        } else {
+                            spinner.hide();
+                            bootbox.alert("Error: " + eventUpdateContact.message);
+                        }
+                    });
+                });
+
+                getUsers(false);
+            }
+
+            function getUsers(isUpdate) {
+                controller.getUsers(currentAccount, function (result, event) {
+                    Global.Common.Log(result);
+                    Global.Common.Log(event);
+                    if (event.status) {
+                        if (result.success) {
+                            //TODO: remove these logs when done
+                            console.log("TEST NEW WRAPPER LIST");
+                            console.log(result.payloadMap.userContactWrapperList);
+                            console.log("list of fetched users:");
+                            for (var i = 0; i < result.payloadMap.userRecords.length; i++) {
+                                console.log(result.payloadMap.userRecords[i]);
+
+                                usersMap[result.payloadMap.userRecords[i].Id] = result.payloadMap.userRecords[i];
+                            }
+                            //loadTable(result.payloadMap.userRecords, isUpdate);
+                            loadTable(result.payloadMap.userContactWrapperList, isUpdate);
+                        } else {
+                            loadTable([], isUpdate);
+                            alert(result.exceptionType + " error: " + result.message + "\n" + result.stackTrace);
+                        }
+                    } else {
+                        loadTable([], isUpdate);
+                        alert("Error: " + event.message);
+                    }
+                });
+            }
+
+            function getPermissionSetOptions(accountId, callback) {
+                controller.getPermissionSetOptions(
+                    accountId,
+                    function (result, event) {
+                        Global.Common.Log(result);
+                        Global.Common.Log(event);
+                        if (event.status) {
+                            aLaCartePermissionSetOptions = result;
+                        } else {
+                            alert("Error: " + event.message);
+                        }
+                    },
+                    { escape: false }
+                );
+            }
+
+            function getRolesList(listByRecordId) {
+                controller.getRolesList(
+                    listByRecordId,
+                    function (result, event) {
+                        Global.Common.Log(result);
+                        Global.Common.Log(event);
+                        if (event.status) {
+                            roleAtAccountOptions = JSON.parse(result);
+                        } else {
+                            alert("Error: " + event.message);
+                        }
+                    },
+                    { escape: false }
+                );
+            }
+
+            function loadTable(records, isUpdate) {
+                if (isUpdate) {
+                    $("#table").bootstrapTable("load", records);
+                } else {
+                    $("#table").bootstrapTable({
+                        data: records
+                    });
+                }
+            }
+
+            function reloadUsers() {
+                getUsers(true);
+            }
+
+            function hyperlinkFormatterEdit(value, rowData) {
+                if (rowData.recordType == "user") {
+                    return '<a data-user-id="' + rowData.recordId + '" class="edit-user"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
+                } else {
+                    return (
+                        '<a class="add-new-user-from-contact" data-add-type="fromContact" data-f-name="' +
+                        rowData.firstName +
+                        '" data-l-name="' +
+                        rowData.lastName +
+                        '" data-record-id="' +
+                        rowData.recordId +
+                        '" data-phone="' +
+                        rowData.phone +
+                        '" data-mobile-phone="' +
+                        rowData.mobilePhone +
+                        '" data-email="' +
+                        rowData.email +
+                        '" data-role="' +
+                        rowData.roleAtTheAccount +
+                        '"><i class="fa fa-pencil" aria-hidden="true"></i></a>'
+                    );
+                }
+            }
+
+            function hyperlinkFormatterView(value, rowData) {
+                if (rowData.recordType == "user") {
+                    return '<a data-user-id="' + rowData.recordId + '" class="view-user">' + value + "</a>";
+                } else {
+                    return value;
+                }
+            }
+
+            function checkFormatter(value, rowData) {
+                if (value) {
+                    return '<i class="fa fa-check" aria-hidden="true"></i>';
+                } else {
+                    return "";
+                }
+                //recordType user contact
+            }
+
+            function getContact() {
+                var contact = {};
+                var firstName = $("#userFirstName").val();
+                var lastName = $("#userLastName").val();
+                var email = $("#userEmail").val();
+                var phone = $("#userDeskPhone").val();
+                var mobile = $("#userMobilePhone").val();
+                var role = $("#userRoleAtAccount").val();
+                contact = { FirstName: firstName, LastName: lastName, Email: email, AccountId: currentAccount, Phone: phone, MobilePhone: mobile, Role_At_The_Account__c: role };
+
+                return contact;
+            }
+
+            //Create user object that we can send to service for creating user
+            function buildUserObject() {}
+
+            //create a new user
+            function createUser(fromButton) {
+                var addType = $("#hiddenAddType").val();
+                var selectedPermissionSets = [];
+                $(".permission-set-checkbox").each(function (index) {
+                    if ($(this).prop("checked")) {
+                        selectedPermissionSets.push($(this).val());
+                    }
+                });
+
+                var contact = getContact();
+                var userId = $("#hiddenUserId").val();
+                var spinner = $(" > i.fa-spin", fromButton);
+                var modalMessage = $(".create-user-message");
+                spinner.show();
+                modalMessage.text("The user creation request is being processed. It can take up to 1 minute.");
+
+                //Create new user based off of existing contact. This will also update contact information if the user changes it
+                console.log("xxx-addType", addType);
+                if (addType == "fromContact") {
+                    controller.createContact(contact, false, function (result, event) {
+                        Global.Common.Log(result);
+                        Global.Common.Log(event);
+                        if (event.status) {
+                            if (result.success) {
+                                //TODO: if result.dupeMergeRan then see if can use that to controll what happens in createUser
+                                controller.createUser(result.payloadMap.record, userId, selectedPermissionSets, result.payloadMap.dupeMergeRan, function (result2, event2) {
+                                    Global.Common.Log(result2);
+                                    Global.Common.Log(event2);
+                                    modalMessage.text("");
+                                    if (event2.status) {
+                                        if (result2.success) {
+                                            spinner.hide();
+                                            Global.Common.HideModal();
+                                            getUsers(true);
+                                            bootbox.alert("User has been created successfully. User will receive an email with information to set their password.");
+                                        } else {
+                                            spinner.hide();
+                                            bootbox.alert("Error: " + result2.message);
+                                        }
+                                    } else {
+                                        spinner.hide();
+                                        bootbox.alert("Error: " + event2.message);
+                                    }
+                                });
+                            } else {
+                                spinner.hide();
+                                bootbox.alert(result.exceptionType + " error: " + result.message + "\n" + result.stackTrace);
+                            }
+                        } else {
+                            spinner.hide();
+                            bootbox.alert("Error: " + event.message);
+                        }
+                    });
+                }
+                //Create new Contact and User
+                else {
+                    controller.createContact(contact, true, function (result, event) {
+                        Global.Common.Log(result);
+                        Global.Common.Log(event);
+                        if (event.status) {
+                            if (result.success) {
+                                console.log("result.payloadMap.record");
+                                console.log(result.payloadMap.record);
+                                console.log("userId" + userId);
+                                console.log("selectedPermissionSets:" + selectedPermissionSets);
+                                console.log("aLaCartePermissionSetOptions:" + aLaCartePermissionSetOptions);
+
+                                //controller.createUser(result.payloadMap.record, userId, selectedPermissionSets, aLaCartePermissionSetOptions, isActive, function(result2, event2){
+                                result.payloadMap.record.FirstName = Global.Common.DecodeString(result.payloadMap.record.FirstName);
+                                result.payloadMap.record.LastName = Global.Common.DecodeString(result.payloadMap.record.LastName);
+                                //TODO: if result.dupeMergeRan then see if can use that to controll what happens in createUser
+
+                                controller.createUser(result.payloadMap.record, userId, selectedPermissionSets, result.payloadMap.dupeMergeRan, function (result2, event2) {
+                                    Global.Common.Log(result2);
+                                    Global.Common.Log(event2);
+                                    modalMessage.text("");
+                                    if (event2.status) {
+                                        if (result2.success) {
+                                            spinner.hide();
+                                            Global.Common.HideModal();
+                                            getUsers(true);
+                                            bootbox.alert("User has been created successfully. User will receive an email with information to set their password.");
+                                        } else {
+                                            spinner.hide();
+                                            bootbox.alert("Error: " + result2.message);
+                                        }
+                                    } else {
+                                        spinner.hide();
+                                        bootbox.alert("Error: " + event2.message);
+                                    }
+                                });
+                            } else {
+                                spinner.hide();
+                                bootbox.alert(result.exceptionType + " error: " + result.message + "\n" + result.stackTrace);
+                            }
+                        } else {
+                            spinner.hide();
+                            bootbox.alert("Error: " + event.message);
+                        }
+                    });
+                }
+            }
+        })();
+
+        $(document).ready(function () {
+            Web.UsersList.Initialize();
+        });
+    </script>
+
+    <script id="create-user-template" type="text/x-handlebars-template">
+        <form id="createUserForm">
+            <input type="hidden" id="hiddenUserId" value="{{user.Id}}">
+            <input type="hidden" id="hiddenContactId" value="{{recordId}}">
+            <input type="hidden" id="hiddenAddType" value="{{addType}}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add New User</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form">
+                            <div class="row">
+                                <div class="col-sm-12" style="padding-bottom: 10px">
+                                    <div class="form-group">
+                                        <label class="control-label" style="font-size: larger;">Account: </label>
+                                        <span class="form-control-static" style="font-size: larger;">{{accountName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">First Name: </label>
+                                        <input id="userFirstName" class="form-control" value="{{firstName}}" name="userFirstName"></input>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name: </label>
+                                        <input id="userLastName" class="form-control" value="{{lastName}}" name="userLastName"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Desk Phone: <i>(optional)</i></label>
+                                        <input id="userDeskPhone" class="form-control" value="{{phone}}"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Mobile: <i>(optional)</i></label>
+                                        <input id="userMobilePhone" class="form-control" value="{{mobilePhone}}"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Email: </label>
+                                        <input id="userEmail" class="form-control" value="{{email}}" name="userEmail"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Role at the Account: {{selectedRoleAtAccount}} </label>
+                                        <select id="userRoleAtAccount" class="form-control" name="userRoleAtAccount">
+                                            {{#select selectedRoleAtAccount}}
+                                            {{#each roleAtAccount}}
+                                            <option value="{{@key}}">{{this}}</option>
+                                            {{/each}}
+                                            {{/select}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="permissionSetsEditSection">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label siteAccessLabel">Site Access:</label>
+                                            <p>All users are provided with base access which includes access to: Home Page, Registration, Product Information, News, Chatter, Ideas, My Customers, Assets, Marketplace, Resource Library.  If users require additional access to the site choose from the below options:</p>
+                                            <div class="col-sm-12">
+                                                {{#each aLaCartePermissionSetOptions}}
+                                                <div>
+                                                    <label>
+                                                        <input class="permission-set-checkbox" type="checkbox" checked="false" value="{{@key}}" /> {{this}}
+                                                    </label>
+                                                </div>
+                                                {{/each}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancel</button>
+                        <button id="createUser" type="button" class="btn btn-default">Create User <i class="fa fa-refresh fa-spin" style="display: none"></i></button>
+                        <div class="create-user-message" style="padding-top:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script id="edit-user-template" type="text/x-handlebars-template">
+        <form id="editUserForm">
+            <input type="hidden" id="FederationIdentifier" value="{{user.FederationIdentifier}}">
+            <input type="hidden" id="sfUserId" value="{{user.Id}}">
+            <input type="hidden" id="sfContactId" value="{{user.ContactId}}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit User - {{user.FirstName}} {{user.LastName}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form">
+                            <div class="row">
+                                <div class="col-sm-12" style="padding-bottom: 10px">
+                                    <div class="form-group">
+                                        <label class="control-label" style="font-size: larger;">Account: </label>
+                                        <span class="form-control-static" style="font-size: larger;">{{accountName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">First Name: </label>
+                                        <input id="userFirstName" class="form-control" value="{{user.FirstName}}" name="userFirstName"></input>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name: </label>
+                                        <input id="userLastName" class="form-control" value="{{user.LastName}}" name="userLastName"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Desk Phone: <i>(optional)</i></label>
+                                        <input id="userDeskPhone" class="form-control" value="{{user.Contact.Phone}}"></input>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Active <input id="userIsActive" type="checkbox" checked="{{user.IsActive}}"/> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Mobile: <i>(optional)</i></label>
+                                        <input id="userMobilePhone" class="form-control" value="{{user.Contact.MobilePhone}}"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Email: </label>
+                                        <input id="userEmail" class="form-control" value="{{user.Contact.Email}}"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Role at the Account:  {{selectedRoleAtAccount}}</label>
+                                        <select id="userRoleAtAccount" class="form-control" name="userRoleAtAccount">
+                                            {{#select selectedRoleAtAccount}}
+                                            {{#each roleAtAccount}}
+                                            <option value="{{@key}}">{{this}}</option>
+                                            {{/each}}
+                                            {{/select}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="permissionSetsEditSection">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label siteAccessLabel">Site Access:</label>
+                                            <p>All users are provided with base access which includes access to: Home Page, Registration, Product Information, News, Chatter, Ideas, My Customers, Assets, Marketplace, Resource Library.  If users require additional access to the site choose from the below options:</p>
+                                            <div class="col-sm-12">
+                                                {{#each aLaCartePermissionSetOptions}}
+                                                <div>
+                                                    <label>
+                                                        <input class="permission-set-checkbox" type="checkbox" checked="false" value="{{@key}}" /> {{this}}
+                                                    </label>
+                                                </div>
+                                                {{/each}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancel</button>
+                        <button id="saveUser" type="button" class="btn btn-default">Save <i class="fa fa-refresh fa-spin" style="display: none"></i></button>
+                        <div class="edit-user-message" style="padding-top:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script id="view-user-template" type="text/x-handlebars-template">
+        <form id="viewUserForm">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">User Detail</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name: </label>
+                                    <span class="form-control-static">{{user.FirstName}}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name: </label>
+                                    <span class="form-control-static">{{user.LastName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Desk Phone: </label>
+                                    <span class="form-control-static">{{user.Contact.Phone}}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile: </label>
+                                    <span class="form-control-static">{{user.Contact.MobilePhone}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email: </label>
+                                    <span class="form-control-static">{{user.Email}}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Username: </label>
+                                    <span class="form-control-static">{{user.FederationIdentifier}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Role At The Account: </label>
+                                    <span class="form-control-static">{{user.Contact.Role_at_the_Account__c}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label siteAccessLabel">Site Access:</label>
+                                    <p>All users are provided with base access which includes access to: Home Page, Registration, Product Information, News, Chatter, Ideas, My
+                                        Customers, Assets, Marketplace, Resource Library. In addition, this user has access to the following:</p>
+                                    <div class="col-sm-12">
+                                        {{#each permissionSets}}
+                                            <li>{{this}}</li>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+</apex:component>

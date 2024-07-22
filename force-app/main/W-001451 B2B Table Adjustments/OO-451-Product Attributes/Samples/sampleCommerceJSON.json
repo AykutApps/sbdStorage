@@ -1,0 +1,96 @@
+[
+    {
+        "relatedProducts": {
+            "X-SELL": [],
+            "UPSELL": [],
+            "ACCESSORY": []
+        },
+        "catentryId": "DXCC2201",
+        "additionalModelNumber": false,
+        "shortDescription": null,
+        "offerPrices": [
+            {
+                "price": 10.99,
+                "currency": "USD"
+            }
+        ],
+        "name": "DEGREASER:32OZ",
+        "siteURL": "https://www.cubcadet.com/en_US/greaseoil/degreaser%3A32oz/DXCC2201.html",
+        "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/DEWALT_Logo.jpg?$staticlink$\" title=\"\" /></p>\r\n\r\n<p>DEWALT Bio-based Degreaser and Cleaner is formulated with proprietary chemistries derived from renewable plant feedstocks to efficiently clean metal and non-porous surfaces. It has a lower carbon footprint and is safer compared to most petrochemical-based degreasers/cleaners. This product does not contain the following harmful ingredients: Sodium hydroxide, Glycol Ethers, Phosphates, Sulphates, Phthalates, Parabens or Ammonia. DEWALT Bio-based Degreaser and Cleaner offers powerful cleaning efficiency with up to 50% less solution required to remove hydrocarbons vs. petrochemical alternatives.</p>\r\n\r\n<ul>\r\n\t<li>USDA Certified Biobased Product</li>\r\n\t<li>Certified Ultimate Biodegradable</li>\r\n\t<li>Superior surface tension properties</li>\r\n\t<li>For most metal and non-porous surfaces</li>\r\n\t<li>Incredible cleaning efficiency on tough soils: grease, oil</li>\r\n\t<li>Renewable and powerful bio-based chemistries</li>\r\n</ul>",
+        "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9493ba3c/products/DXCC2201.jpg"],
+        "attributes": {
+            "RATINGS": [],
+            "SPECS": [
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "32 oz (1 qt)"
+                        }
+                    ],
+                    "grouping": "Oil, Fuel and Lubricant Specifications",
+                    "sequence": 3,
+                    "name": "Volume",
+                    "identifier": "volume"
+                },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "2-Cycle Engine Oil"
+                        }
+                    ],
+                    "grouping": "Oil, Fuel and Lubricant Specifications",
+                    "sequence": 3,
+                    "name": "Oil/Lubricant Category",
+                    "identifier": "oil-lubricant-category"
+                },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "SAE 10W-30"
+                        }
+                    ],
+                    "grouping": "Oil, Fuel and Lubricant Specifications",
+                    "sequence": 3,
+                    "name": "Viscosity",
+                    "identifier": "viscosity"
+                },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "All Ratios"
+                        }
+                    ],
+                    "grouping": "Oil, Fuel and Lubricant Specifications",
+                    "sequence": 3,
+                    "name": "2-Cycle Ratio",
+                    "identifier": "2-cycle-ratio"
+                },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "DEWALT"
+                        }
+                    ],
+                    "grouping": "Marketing",
+                    "sequence": 3,
+                    "name": "Brand",
+                    "identifier": "brand"
+                }
+            ],
+            "FEATURES": []
+        },
+        "itemNumber": "DXCC2201",
+        "listPrices": [
+            {
+                "price": 10.99,
+                "currency": "USD"
+            }
+        ],
+        "category": "Belts"
+    }
+]
