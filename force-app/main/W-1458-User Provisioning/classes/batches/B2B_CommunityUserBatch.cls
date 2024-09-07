@@ -1,11 +1,9 @@
-global class B2B_DealerUserPermissionBatch implements Database.Batchable<sObject>, Database.Stateful {
+global class B2B_CommunityUserBatch implements Database.Batchable<sObject>, Database.Stateful {
     /*  
-        This batch class is developed for repairing the BuyerGroupMembers based on the Account Pricebook Mapping
-
         --------------------------------------------------------------------------
         Execution Script:
         --------------------------------------------------------------------------
-        B2B_DealerUserPermissionBatch b = new B2B_DealerUserPermissionBatch();
+        B2B_CommunityUserBatch b = new B2B_CommunityUserBatch();
         //b.whereClause = ' WHERE Id = \'0032300000cZtr1AAC\'';
         ID BatchProcessId = Database.executeBatch(b,200);     
         --------------------------------------------------------------------------
@@ -40,7 +38,7 @@ global class B2B_DealerUserPermissionBatch implements Database.Batchable<sObject
             }
         }
 
-        B2B_DealerSelfServiceUserHelper.adjustPermissionsBasedOnContactFields(contactIds);
+        B2B_CommunityUserHelper.adjustUserPermissionsBasedOnContactFields(contactIds);
     }
 
     global void finish(Database.BatchableContext BC) {

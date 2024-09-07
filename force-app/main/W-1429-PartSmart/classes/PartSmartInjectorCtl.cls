@@ -88,7 +88,37 @@ global class PartSmartInjectorCtl {
         req.setHeader('Authorization', 'Bearer ' + tokenResponse.access_token);
 
         // JSON body with the specified parameters
-        String body = '{"username": "' + UserInfo.getName() + '", "email": "' + UserInfo.getUserEmail() + '", "businessName": "Test Aykut Dealer", "groupCode": "USIRX"}';
+        User usr = [
+            SELECT FirstName, LastName, Contact.Email, Contact.Account.Name,Contact.Account.BillingStreet, Contact.Account.BillingCity,
+                Contact.Account.BillingPostalCode, Contact.Account.BillingCountry,Contact.Account.Entity_ID__c,
+                Contact.Account.BillingState,Contact.Phone 
+            FROM User
+            WHERE Id = :UserInfo.getUserId()
+            LIMIT 1
+        ];
+        String body;
+
+        if(usr.Contact == null ||usr.Contact.Account == null){
+            body = '{"username": "' + UserInfo.getName() + '",'+
+                    ' "email": "' + UserInfo.getUserEmail() + '",'+
+                    ' "businessName": "Test Aykut Dealer",'+
+                    ' "groupCode": "USIRX"}';
+        } else {
+            body = '{"username": "' + UserInfo.getName() + '",'+
+                    ' "email": "' + UserInfo.getUserEmail() + '",'+
+                    ' "firstName": "' +usr.FirstName + '",' +
+                    ' "lastName": "' +usr.LastName + '",' +
+                    ' "phone": "' +usr.Contact.Phone + '",' +
+                    ' "businessName": "' +usr.Contact.Account.Name + '",' +
+                    ' "streetAddress": "' +usr.Contact.Account.BillingStreet + '",' +
+                    ' "city": "' +usr.Contact.Account.BillingCity + '",' +
+                    ' "postalCode": "' +usr.Contact.Account.BillingPostalCode + '",' +
+                    ' "stateProvince": "' +usr.Contact.Account.BillingState + '",' +
+                    ' "country": "' +usr.Contact.Account.BillingCountry + '",' +
+                    ' "dealerId": "' +usr.Contact.Account.Entity_ID__c + '",' +
+                    ' "groupCode": "USIRX"}';
+        }
+
         req.setBody(body);
 
         // Send HTTP request
@@ -184,6 +214,7 @@ global class PartSmartInjectorCtl {
                 wc = new Webcart();
                 wc.Id = cs.cartId;
                 wc.Is_PartSmart__c = true;
+                wc.B2B_Product_Type__c = 'Parts';
                 wc.OwnerId = ownerId;
                 update wc;
             } else {

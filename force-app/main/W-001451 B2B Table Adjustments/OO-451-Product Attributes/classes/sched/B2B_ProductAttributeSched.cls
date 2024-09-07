@@ -1,5 +1,5 @@
 global with sharing class B2B_ProductAttributeSched implements Schedulable {
-    /* Run hourly between 6a and 10p.
+    /* Run daily at 1a
     --------------------------------------------------------------------------
     Scheduling Script   (copy & paste into execute anonymous window to schedule batch job)
     --------------------------------------------------------------------------

@@ -133,7 +133,7 @@ global class ORS_OrderHelperLogRestService implements RESTHostedMTDEndpoint {
         REST_Inbound_Payload__c restInboundPayload = new REST_Inbound_Payload__c();
 
         // Set SObject API Name and Payload Type
-        restInboundPayload.SObject_API_Name__c = orderRequestPayload.failure?.objectName;
+        restInboundPayload.SObject_API_Name__c = (orderRequestPayload.type == 'Success') ? orderRequestPayload.objectName: orderRequestPayload.failure?.objectName;
         restInboundPayload.SObject_Label__c = orderRequestPayload.failure?.objectName;
         restInboundPayload.Payload_Type__c = PAYLOAD_TYPE;
         restInboundPayload.Status__c = (orderRequestPayload.type == 'Success') ? 'Processed' : 'Error';
@@ -232,6 +232,7 @@ global class ORS_OrderHelperLogRestService implements RESTHostedMTDEndpoint {
         public String uniqueId;
         public Failure failure;
         public String data;
+        public String objectName;
     }
 
     public class Failure {

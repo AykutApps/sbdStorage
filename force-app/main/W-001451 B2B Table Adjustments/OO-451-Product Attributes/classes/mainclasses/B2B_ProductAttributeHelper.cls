@@ -1,13 +1,15 @@
 public with sharing class B2B_ProductAttributeHelper {
     public static void updateProductFilterAttributes(Set<Id> product2Ids) {
         // Define the mapping
-        Map<String, String> indetifierFieldMapping = new Map<String, String>{
-            '2-cycle-ratio' => 'B2B_Filter_2_Cycle_Ratio__c',
-            'brand' => 'B2B_Filter_Brand__c',
-            'oil-lubricant-category' => 'B2B_Filter_Oil_Lubricant_Category__c',
-            'viscosity' => 'B2B_Filter_Viscosity__c',
-            'volume' => 'B2B_Filter_Volume__c'
-        };
+        // Map<String, String> indetifierFieldMapping = new Map<String, String>{
+        //     '2-cycle-ratio' => 'B2B_Filter_2_Cycle_Ratio__c',
+        //     'brand' => 'B2B_Filter_Brand__c',
+        //     'oil-lubricant-category' => 'B2B_Filter_Oil_Lubricant_Category__c',
+        //     'viscosity' => 'B2B_Filter_Viscosity__c',
+        //     'volume' => 'B2B_Filter_Volume__c'
+        // };
+
+        Map<String, String> indetifierFieldMapping = getIdentifierFieldMapping();
 
         List<Product2> ps = [SELECT Id, Commerce_JSON__c FROM Product2 WHERE Id IN :product2Ids];
 
@@ -60,5 +62,15 @@ public with sharing class B2B_ProductAttributeHelper {
             System.debug(exp);
         }
         return specMap;
+    }
+
+    public static Map<String, String> getIdentifierFieldMapping() {
+        Map<String, String> identifierFieldMapping = new Map<String, String>();
+        List<B2B_Product_Master_Attribute__mdt> mappings = [SELECT Identifier__c, Product_Field_API_Name__c FROM B2B_Product_Master_Attribute__mdt];
+
+        for (B2B_Product_Master_Attribute__mdt mapping : mappings) {
+            identifierFieldMapping.put(mapping.Identifier__c, mapping.Product_Field_API_Name__c);
+        }
+        return identifierFieldMapping;
     }
 }

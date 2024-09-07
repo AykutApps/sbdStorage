@@ -23,7 +23,7 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelperTest {
         List<Pricebook2> pbs = new List<PriceBook2>{ pb };
 
         // adjust Price Book Entiries for testing
-        PricebookEntry pbe = [SELECT Id FROM PricebookEntry LIMIT 1];
+        PricebookEntry pbe = [SELECT Id FROM PricebookEntry WHERE Pricebook2.Id =:pb.Id LIMIT 1];
         pbe.External_Key__c = 'ek1';
         pbe.ERP_Valid_From__c = Date.today().addDays(-1);
         pbe.ERP_Valid_To__c = Date.today().addDays(1);
@@ -61,14 +61,14 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelperTest {
     @isTest
     public static void testAdjustBuyerGroupMemberWithDeletion() {
         Account_Pricebook_Mapping__c apm = [SELECT Id FROM Account_Pricebook_Mapping__c LIMIT 1];
-        B2B_BuyerGroupAndEntitlementHelper.adjustBuyerGroupMember(new Set<Id>{ apm.Id });
+        B2B_BuyerGroupAndEntitlementHelper.adjustBuyerGroupMember(new Set<Id>{apm.Id});
         System.assertEquals(1, [SELECT Id FROM BuyerGroupMember].size());
 
         apm.ERP_Start_Date__c = Date.today().addDays(-3);
         apm.ERP_End_Date__c = Date.today().addDays(-1);
         update apm;
 
-        B2B_BuyerGroupAndEntitlementHelper.adjustBuyerGroupMember(new Set<Id>{ apm.Id });
+        B2B_BuyerGroupAndEntitlementHelper.adjustBuyerGroupMember(new Set<Id>{apm.Id});
         System.assertEquals(0, [SELECT Id FROM BuyerGroupMember].size());
     }
 

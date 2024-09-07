@@ -4,7 +4,7 @@ global class PartSmartHelper {
     private Id loggedInUserId;
     public static TokenResponse tokenResponse { get; private set; }
     public static TokenResponse tokenPortalUserResponse { get; private set; }
-    
+
     public PartSmartHelper() {
         scriptUrl = getScriptUrl();
         loggedInUser = UserInfo.getName();
@@ -52,7 +52,7 @@ global class PartSmartHelper {
             '{"username": "' +
             '{!$Credential.Username}' + //Integration_Variable__mdt.getInstance('PartSmart_Username').Value__c +
             '", "password": "' +
-            '{!$Credential.Password}'+ //Integration_Variable__mdt.getInstance('PartSmart_Password').Value__c +
+            '{!$Credential.Password}' + //Integration_Variable__mdt.getInstance('PartSmart_Password').Value__c +
             '"}';
         req.setBody(body);
 
@@ -123,7 +123,7 @@ global class PartSmartHelper {
     }
 
     private static String addPartsToCart(PartRequest part) {
-        Id accountId = [SELECT Id FROM Account WHERE IsBuyer= true ORDER BY CreatedDate ASC LIMIT 1][0].Id;//'001Dh00001JoOEIIA3'; // Defualt Account Id
+        Id accountId = [SELECT Id FROM Account WHERE IsBuyer = TRUE ORDER BY CreatedDate ASC LIMIT 1][0].Id; //'001Dh00001JoOEIIA3'; // Defualt Account Id
         String storeId;
         Webcart wc;
         User owner;
@@ -225,8 +225,8 @@ global class PartSmartHelper {
     @AuraEnabled(cacheable=false)
     public static List<CartItem> getWebcartItems() {
         // Query for the Account Name and Email fields
-        Id accountId = [SELECT Id FROM Account WHERE IsBuyer= true ORDER BY CreatedDate ASC LIMIT 1][0].Id;
-        return [SELECT Id, Name, Quantity, Product2Id,  Product2.Description FROM CartItem WHERE Cart.Is_PartSmart__c = TRUE AND Cart.AccountId =: accountId];
+        Id accountId = [SELECT Id FROM Account WHERE IsBuyer = TRUE ORDER BY CreatedDate ASC LIMIT 1][0].Id;
+        return [SELECT Id, Name, Quantity, Product2Id, Product2.Description FROM CartItem WHERE Cart.Is_PartSmart__c = TRUE AND Cart.AccountId = :accountId];
     }
 
     public class TokenResponse {
@@ -291,3 +291,4 @@ GroupCode: CAMTDX
         }';
 
     */
+

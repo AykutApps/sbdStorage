@@ -540,6 +540,31 @@
                 return contact;
             }
 
+            function getContactWithPermissions(selectedPermissionSets, aLaCartePermissionSetOptions) {
+                var contact = {};
+                var firstName = $("#userFirstName").val();
+                var lastName = $("#userLastName").val();
+                var email = $("#userEmail").val();
+                var phone = $("#userDeskPhone").val();
+                var mobile = $("#userMobilePhone").val();
+                var role = $("#userRoleAtAccount").val();
+                contact = { FirstName: firstName, LastName: lastName, Email: email, AccountId: currentAccount, Phone: phone, MobilePhone: mobile, Role_At_The_Account__c: role };
+                for(let per of selectedPermissionSets){
+                    console.log(per);
+                    console.log(aLaCartePermissionSetOptions[per]);
+                    var permissionName = aLaCartePermissionSetOptions[per];
+                    if(permissionName === 'Orders – Access to submit & review Wholegoods Orders'){
+                        contact.B2B_Whole_Goods_Active__c = true
+                    } else if (permissionName === 'Parts Inquiries – Access to lookup and submit Parts Orders'){
+                        contact.B2B_Parts_Active__c = true
+                    }
+                    
+                }
+                console.log('xxx - getContactWithPermissions contact');
+                console.log(contact);
+                return contact;
+            }
+
             //Create user object that we can send to service for creating user
             function buildUserObject() {}
 
@@ -547,13 +572,15 @@
             function createUser(fromButton) {
                 var addType = $("#hiddenAddType").val();
                 var selectedPermissionSets = [];
+                var selectedPermissionSetsLabels = [];
                 $(".permission-set-checkbox").each(function (index) {
                     if ($(this).prop("checked")) {
                         selectedPermissionSets.push($(this).val());
                     }
                 });
 
-                var contact = getContact();
+                // var contact = getContact(); // upgraded with method getContactWithPermissions
+                var contact = getContactWithPermissions(selectedPermissionSets, aLaCartePermissionSetOptions);
                 var userId = $("#hiddenUserId").val();
                 var spinner = $(" > i.fa-spin", fromButton);
                 var modalMessage = $(".create-user-message");

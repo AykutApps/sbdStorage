@@ -1,8 +1,8 @@
-@RestResource(urlMapping='/documoto-support-service/create-web-order')
-global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
+@RestResource(urlMapping='/documoto-support-service/create-web-order-v2')
+global class DOS_WebcardRestServiceV2 implements RESTHostedMTDEndpoint {
     // Member properties
     global static RESTHostedMTDEndpointHelper endpointHelper;
-    private static final String PAYLOAD_TYPE = 'documoto-support-service/create-web-order';
+    private static final String PAYLOAD_TYPE = 'documoto-support-service/create-web-order-v2';
     private static final String BASE_REST_ENDPOINT = '/documoto-support-service/create-web-order';
     private static final Integer MIN_PAYLOAD_SIZE = 44;
     private static final Integer MAX_PAYLOAD_FIELD_SIZE = 5000;
@@ -67,7 +67,7 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
         return response;
     }
 
-    private static Response2 handlePostRequest() {
+    public static Response2 handlePostRequest() {
         try {
             // Log Request
             logRequest();
@@ -79,6 +79,37 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
             queryStoreId();
             // Owner Assignment
             queryOwner();
+            // validate cart items
+            validateCartItems();
+            // Create WebCart Platfrom Event
+            createWebCartEvent();
+            // get the site domain
+            querySiteDomain();
+        } catch (Exception ex) {
+            errs.add(ex.getMessage());
+        }
+
+        // generate response
+        generateResponse();
+        // Log Response
+        logResponse();
+        return response;
+    }
+
+    public static Response2 handleProcessHelperRequest() {
+        try {
+            // Log Request
+            logRequest();
+            // Deserialize the request body into CartItemRequest
+            parseRequest();
+            // query the dealer account
+            queryDealerAccount();
+            // Store Id
+            queryStoreId();
+            // Owner Assignment
+            queryOwner();
+            // validate cart items
+            validateCartItems();
             // Query Webcart based on Name and AccountId
             queryOrCreateWebcart();
             // add cart items
@@ -151,12 +182,20 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
         ownerId = potentialOwners.isEmpty() ? UserInfo.getUserId() : potentialOwners[0].Id;
     }
 
+    private static void createWebCartEvent() {
+        system.debug('Process Helper Event Event Publish');
+        Process_Helper__e webCartEvent = new Process_Helper__e();
+        webCartEvent.Process_Payload__c = RestContext.request.requestBody.toString();
+        webCartEvent.Process_Type__c = 'WebCart';
+        EventBus.publish(webCartEvent);
+    }
+
     private static void queryOrCreateWebcart() {
-        Webcart[] wcs = [SELECT Id,Documoto_Cart_Numbers__c FROM Webcart WHERE Is_Documoto__c = TRUE AND Status = 'Active' AND AccountId = :dealerAccount.Id LIMIT 1];
+        Webcart[] wcs = [SELECT Id, Documoto_Cart_Numbers__c FROM Webcart WHERE Is_Documoto__c = TRUE AND Status = 'Active' AND AccountId = :dealerAccount.Id LIMIT 1];
 
         if (!wcs.isEmpty()) {
             wc = wcs[0];
-            wc.Documoto_Cart_Numbers__c +=  ', ' + cartItemRequest.cartName.replace('Documoto ', '');
+            wc.Documoto_Cart_Numbers__c += ', ' + cartItemRequest.cartName.replace('Documoto ', '');
             update wc;
         } else {
             ConnectApi.CartInput cartInput = new ConnectApi.CartInput();
@@ -188,15 +227,12 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
         List<ConnectApi.BatchInput> batchInputs = new List<ConnectApi.BatchInput>();
         for (CartItem ci : cartItemRequest.items) {
             ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
-            if (productCodeProductMapByCartItems.get(ci.productCode) != null && productCodeProductMapByCartItems.get(ci.productCode).IsActive == true) {
+            if (productCodeProductMapByCartItems.get(ci.productCode) != null) {
                 cartItemInput.productId = productCodeProductMapByCartItems.get(ci.productCode)?.Id;
                 cartItemInput.quantity = ci.productQuantity;
                 cartItemInput.type = ConnectApi.CartItemType.PRODUCT;
                 batchInputs.add(new ConnectApi.BatchInput(cartItemInput));
-            } else if (productCodeProductMapByCartItems.get(ci.productCode) != null && productCodeProductMapByCartItems.get(ci.productCode).IsActive == false) {
-                errs.add('Product is not activce: '+ ci.productCode);
-            }
-            else {
+            } else {
                 missingProducts.add(ci.productCode);
             }
         }
@@ -207,14 +243,30 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
             ConnectApi.BatchResult[] brs = ConnectApi.CommerceCart.addItemsToCart(storeId, dealerAccount.Id, wc.Id, batchInputs);
             system.debug('ADD ITEMS');
             system.debug(brs);
-            for (ConnectApi.BatchResult br  :brs){
+            for (ConnectApi.BatchResult br : brs) {
                 system.debug(br);
                 if (!br.isSuccess) {
                     itemErrorMessages.add(br.getErrorMessage());
                 }
             }
-            if(!itemErrorMessages.isEmpty()){
+            if (!itemErrorMessages.isEmpty()) {
                 throw new CustomException(JSON.serialize(itemErrorMessages));
+            }
+        }
+    }
+
+    private static void validateCartItems() {
+        // get ProdcutCode Product Map ByCartItems
+        Map<String, Product2> productCodeProductMapByCartItems = getProductCodeProductMapByCartItems(cartItemRequest.items);
+
+        // Prepare batch inputs for adding items to the cart
+        List<ConnectApi.BatchInput> batchInputs = new List<ConnectApi.BatchInput>();
+        for (CartItem ci : cartItemRequest.items) {
+            ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
+            if (productCodeProductMapByCartItems.get(ci.productCode) != null) {
+                // no action
+            } else {
+                missingProducts.add(ci.productCode);
             }
         }
     }
@@ -232,7 +284,7 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
             RestContext.response.statusCode = 400;
         } else {
             response.status = SharedModels.ResponseStatus.SUCCESS;
-            response.webCartId = wc.Id;
+            // response.webCartId = wc.Id;
             response.communityRedirectLink = siteDomain + System.Label.B2B_Store_Path_for_Documoto;
         }
     }
@@ -257,7 +309,7 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
 
         // Query product records based on the collected product codes
         List<Product2> products = [
-            SELECT Id, ProductCode, Name, Description, IsActive /* Add more fields as needed */
+            SELECT Id, ProductCode, Name, Description /* Add more fields as needed */
             FROM Product2
             WHERE ProductCode IN :productCodes
         ];
@@ -305,26 +357,3 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     public class CustomException extends Exception {
     }
 }
-
-/**
- *     @AuraEnabled(cacheable=true)
-    public static List<Webcart> getWebcarts() {
-        // Query for the Account Name and Email fields
-        return [
-            SELECT Id, Name, Owner.Name, Is_Documoto__c, CreatedDate, (SELECT Id, Product2.ProductCode, Quantity FROM CartItems)
-            FROM Webcart
-            WHERE Is_Documoto__c = TRUE
-            ORDER BY CreatedDate DESC
-        ];
-    }
-
-        public static void createCartItem(String payload) {
-        RestRequest req = new RestRequest();
-        req.requestURI = '/document-support-service/create-web-order';
-        req.httpMethod = 'POST';
-        req.requestBody = Blob.valueOf(payload);
-        // RestContext
-        RestContext.request = req;
-        handlePostRequest();
-    }
- */

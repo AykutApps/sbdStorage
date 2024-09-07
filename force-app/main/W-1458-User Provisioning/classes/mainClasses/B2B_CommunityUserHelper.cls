@@ -1,23 +1,30 @@
-public with sharing class B2B_DealerSelfServiceUserHelper {
+public with sharing class B2B_CommunityUserHelper {
     // Static map to cache Permission Set IDs
     private static Map<String, Id> permissionSetIdMap;
 
     // Pre-defined permission set names as constants
-    private static String partsOrderingPermissionSetName = 'IR_USA_DLR_ADD_Parts_Ordering';
-    private static String dealerOrderingPermissionSetName = 'IR_USA_DLR_ADD_Dealer_Ordering';
+    public static String partsOrderingPermissionSetName = 'IR_USA_DLR_ADD_Parts_Ordering';
+    public static String dealerOrderingPermissionSetName = 'IR_USA_DLR_ADD_Dealer_Ordering';
 
-    public static void adjustPermissionsBasedOnContactFields(Set<Id> contactIds) {
+    public static void adjustUserPermissionsBasedOnContactFields(Set<Id> contactIds) {
         // Retrieve necessary contact fields and related user data in one query
         Map<Id, User> userIdMap = new Map<Id, User>([SELECT Id, (SELECT Id, PermissionSet.Name FROM PermissionSetAssignments) FROM User WHERE contactId IN :contactIds]);
-        List<Contact> contacts = [SELECT Id, B2B_Parts_Active__c, B2B_Whole_Goods_Active__c, (SELECT Id FROM Users) FROM Contact WHERE Id IN :contactIds];
+        List<Contact> contacts = [SELECT Id,B2B_Storefront_Product_Type_Ordering__c, (SELECT Id FROM Users) FROM Contact WHERE Id IN :contactIds];
 
         List<PermissionSetAssignment> psaToInsert = new List<PermissionSetAssignment>();
         List<PermissionSetAssignment> psaToDelete = new List<PermissionSetAssignment>();
 
         // Iterate through each contact and adjust permission sets accordingly
         for (Contact contact : contacts) {
+            
+            Boolean isStoreFrontPartProdcutActive = (contact.B2B_Storefront_Product_Type_Ordering__c==null)? false: contact.B2B_Storefront_Product_Type_Ordering__c.contains('Parts');
+            Boolean isStoreFronWholeGoodsProdcutActive = (contact.B2B_Storefront_Product_Type_Ordering__c==null)? false: contact.B2B_Storefront_Product_Type_Ordering__c.contains('Whole Goods');
+
             for (User cuser : contact.Users) {
                 User user = userIdMap.get(cuser.Id);
+                if (user == null) {
+                    continue;
+                }
 
                 PermissionSetAssignment existingPsaPartPermission;
                 PermissionSetAssignment existingPsaWGPermission;
@@ -33,15 +40,15 @@ public with sharing class B2B_DealerSelfServiceUserHelper {
                 }
 
                 // Add necessary permissions if not found
-                if (contact.B2B_Parts_Active__c && existingPsaPartPermission == null) {
+                if (isStoreFrontPartProdcutActive && existingPsaPartPermission == null) {
                     psaToInsert.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = retrievePermissionSetId(partsOrderingPermissionSetName)));
-                } else if (!contact.B2B_Parts_Active__c && existingPsaPartPermission != null) {
+                } else if (!isStoreFrontPartProdcutActive && existingPsaPartPermission != null) {
                     psaToDelete.add(existingPsaPartPermission);
                 }
 
-                if (contact.B2B_Whole_Goods_Active__c && existingPsaWGPermission == null) {
+                if (isStoreFronWholeGoodsProdcutActive && existingPsaWGPermission == null) {
                     psaToInsert.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = retrievePermissionSetId(dealerOrderingPermissionSetName)));
-                } else if (!contact.B2B_Whole_Goods_Active__c && existingPsaWGPermission != null) {
+                } else if (!isStoreFronWholeGoodsProdcutActive && existingPsaWGPermission != null) {
                     psaToDelete.add(existingPsaWGPermission);
                 }
             }
@@ -50,6 +57,11 @@ public with sharing class B2B_DealerSelfServiceUserHelper {
         // Perform DML operations outside the loop
         insert psaToInsert;
         delete psaToDelete;
+    }
+
+    @future
+    public static void adjustUserPermissionsBasedOnContactFieldsFuture(Set<Id> contactIds) {
+        adjustUserPermissionsBasedOnContactFields(contactIds);
     }
 
     public static Id retrievePermissionSetId(String permissionSetName) {

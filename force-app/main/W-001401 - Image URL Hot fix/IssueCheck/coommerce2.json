@@ -1,0 +1,1108 @@
+[
+    {
+        "category": null,
+        "relatedProducts": {
+            "X-SELL": [
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "CS16E-60V-CORDLESS-CHAINS",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [],
+                    "name": "CS16E",
+                    "longDescription": null,
+                    "images": [],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            { "values": [{ "sequence": 0, "value": "16 in." }], "grouping": "Specifications", "sequence": 1, "name": "Bar Length", "identifier": "bar-length" },
+                            {
+                                "values": [{ "sequence": 0, "value": "Automatic (Oil not included)" }],
+                                "grouping": "Specifications",
+                                "sequence": 2,
+                                "name": "Bar Oiler",
+                                "identifier": "bar-oiler"
+                            },
+                            { "values": [{ "sequence": 0, "value": "150Ah" }], "grouping": "Battery", "sequence": 3, "name": "Ampere Hours", "identifier": "battery-ampere-hour" },
+                            { "values": [{ "sequence": 0, "value": "Lithium ion" }], "grouping": "Battery", "sequence": 4, "name": "Battery Type", "identifier": "battery-type" },
+                            { "values": [{ "sequence": 0, "value": "60V MAX" }], "grouping": "Battery", "sequence": 5, "name": "Battery Voltage", "identifier": "battery-voltage" },
+                            {
+                                "values": [{ "sequence": 0, "value": "4-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 6,
+                                "name": "Battery Warranty",
+                                "identifier": "battery-warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": ".625 in" }], "grouping": "Specifications", "sequence": 7, "name": "Chain Pitch", "identifier": "chain-pitch" },
+                            {
+                                "values": [{ "sequence": 0, "value": "13.4m/s,44.0ft/s" }],
+                                "grouping": "Specifications",
+                                "sequence": 8,
+                                "name": "Chain Speed",
+                                "identifier": "chain-speed"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Toolless" }],
+                                "grouping": "Specifications",
+                                "sequence": 9,
+                                "name": "Chain Tensioner",
+                                "identifier": "chain-tensioner"
+                            },
+                            {
+                                "values": [
+                                    {
+                                        "sequence": 0,
+                                        "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                                    }
+                                ],
+                                "grouping": "Disclaimers",
+                                "sequence": 13,
+                                "name": "Specifications",
+                                "identifier": "disclaimer-specifications"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "3-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 32,
+                                "name": "Residential Warranty",
+                                "identifier": "warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": "2.5Wh" }], "grouping": "Battery", "sequence": 33, "name": "Watt Hours", "identifier": "watt-hours" },
+                            {
+                                "values": [{ "sequence": 0, "value": "9.88 / 12.5lbs with battery" }],
+                                "grouping": "Dimensions",
+                                "sequence": 34,
+                                "name": "Weight (approx.)",
+                                "identifier": "weight-approx"
+                            }
+                        ],
+                        "FEATURES": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "60 Volt Max, 2.5Ah, 150Wh lithium-ion battery" },
+                                    { "sequence": 1, "value": "Low kickback 16-in. bar and chain engineered to improve control and stability." },
+                                    { "sequence": 2, "value": "Allows up to 140 cuts of a 4-by 4-inch pressure-treated pine per charge ?" }
+                                ],
+                                "grouping": null,
+                                "sequence": 19,
+                                "name": "Features",
+                                "identifier": "features"
+                            }
+                        ]
+                    },
+                    "itemNumber": "CS16E-60V-CORDLESS-CHAINS",
+                    "listPrices": []
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "HT24E-60V-MAX-CORDLESS-HE",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [],
+                    "name": "HT24E",
+                    "longDescription": null,
+                    "images": [],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            { "values": [{ "sequence": 0, "value": "2.5Ah" }], "grouping": "Battery", "sequence": 1, "name": "Ampere Hours", "identifier": "battery-ampere-hour" },
+                            { "values": [{ "sequence": 0, "value": "Lithium ion" }], "grouping": "Battery", "sequence": 2, "name": "Battery Type", "identifier": "battery-type" },
+                            { "values": [{ "sequence": 0, "value": "60V MAX" }], "grouping": "Battery", "sequence": 3, "name": "Battery Voltage", "identifier": "battery-voltage" },
+                            {
+                                "values": [{ "sequence": 0, "value": "4-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 4,
+                                "name": "Battery Warranty",
+                                "identifier": "battery-warranty"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "24\" Dual action" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 5,
+                                "name": "Blade Length",
+                                "identifier": "blade-length"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Laser Cut" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 6,
+                                "name": "Blade Type",
+                                "identifier": "blade-type"
+                            },
+                            { "values": [{ "sequence": 0, "value": "75 minutes" }], "grouping": "Battery", "sequence": 7, "name": "Charge Time", "identifier": "charge-time" },
+                            {
+                                "values": [
+                                    {
+                                        "sequence": 0,
+                                        "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                                    }
+                                ],
+                                "grouping": "Disclaimers",
+                                "sequence": 11,
+                                "name": "Specifications",
+                                "identifier": "disclaimer-specifications"
+                            },
+                            { "values": [{ "sequence": 0, "value": "Straight" }], "grouping": "Specifications", "sequence": 29, "name": "Shaft Type", "identifier": "shaft-type" },
+                            {
+                                "values": [{ "sequence": 0, "value": "3000 SPM - Strokes per minute" }],
+                                "grouping": "Drive System",
+                                "sequence": 30,
+                                "name": "Speed",
+                                "identifier": "speed"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "3-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 31,
+                                "name": "Residential Warranty",
+                                "identifier": "warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": "150Wh" }], "grouping": "Battery", "sequence": 32, "name": "Watt Hours", "identifier": "watt-hours" },
+                            {
+                                "values": [{ "sequence": 0, "value": "7.67 / 10.29 lbs with battery" }],
+                                "grouping": "Dimensions",
+                                "sequence": 33,
+                                "name": "Weight (approx.)",
+                                "identifier": "weight-approx"
+                            }
+                        ],
+                        "FEATURES": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "60 Volt Max, 2.5Ah, 150Wh lithium-ion battery" },
+                                    { "sequence": 1, "value": "Runs up to 80 minutes on a single charge, without power fade" },
+                                    { "sequence": 2, "value": "24-inch dual-action laser cut steel blades with ¾\u201d cutting capacity" }
+                                ],
+                                "grouping": null,
+                                "sequence": 17,
+                                "name": "Features",
+                                "identifier": "features"
+                            }
+                        ]
+                    },
+                    "itemNumber": "HT24E-60V-MAX-CORDLESS-HE",
+                    "listPrices": []
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "LB600E-60V-MAX-CORDLESS-B",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [],
+                    "name": "LB600E",
+                    "longDescription": null,
+                    "images": [],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            { "values": [{ "sequence": 0, "value": "110 MPH" }], "grouping": "Specifications", "sequence": 0, "name": "Air Speed", "identifier": "air-speed" },
+                            { "values": [{ "sequence": 0, "value": "600 CFM" }], "grouping": "Specifications", "sequence": 1, "name": "Air Volume", "identifier": "air-volume" },
+                            { "values": [{ "sequence": 0, "value": "2.5Ah" }], "grouping": "Battery", "sequence": 2, "name": "Ampere Hours", "identifier": "battery-ampere-hour" },
+                            { "values": [{ "sequence": 0, "value": "Lithium ion" }], "grouping": "Battery", "sequence": 3, "name": "Battery Type", "identifier": "battery-type" },
+                            { "values": [{ "sequence": 0, "value": "60V MAX" }], "grouping": "Battery", "sequence": 4, "name": "Battery Voltage", "identifier": "battery-voltage" },
+                            {
+                                "values": [{ "sequence": 0, "value": "4-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 5,
+                                "name": "Battery Warranty",
+                                "identifier": "battery-warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": "75 minutes" }], "grouping": "Battery", "sequence": 6, "name": "Charge Time", "identifier": "charge-time" },
+                            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Controls", "sequence": 8, "name": "Cruise Control", "identifier": "cruise-control" },
+                            {
+                                "values": [
+                                    {
+                                        "sequence": 0,
+                                        "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                                    }
+                                ],
+                                "grouping": "Disclaimers",
+                                "sequence": 11,
+                                "name": "Specifications",
+                                "identifier": "disclaimer-specifications"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Overmold" }],
+                                "grouping": "Additional Specifications",
+                                "sequence": 18,
+                                "name": "Handle Type",
+                                "identifier": "handle-type"
+                            },
+                            { "values": [{ "sequence": 0, "value": "90 minutes" }], "grouping": "Battery", "sequence": 31, "name": "Run Time", "identifier": "runtime" },
+                            {
+                                "values": [{ "sequence": 0, "value": "3-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 32,
+                                "name": "Residential Warranty",
+                                "identifier": "warranty"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "6.15 lbs / 8.77 lbs with battery" }],
+                                "grouping": "Dimensions",
+                                "sequence": 33,
+                                "name": "Weight (approx.)",
+                                "identifier": "weight-approx"
+                            }
+                        ],
+                        "FEATURES": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "60 Volt Max, 2.5Ah, 150Wh lithium-ion battery" },
+                                    { "sequence": 1, "value": "90 minutes of run time per charge on low speed with no power fade" },
+                                    { "sequence": 2, "value": "Axial fan design delivers maximum efficiency with air speed up to 600 CFM/110 mph (177 km/h)" },
+                                    { "sequence": 3, "value": "3-year limited tool and 4-year limited battery warranty" }
+                                ],
+                                "grouping": null,
+                                "sequence": 17,
+                                "name": "Features",
+                                "identifier": "features"
+                            }
+                        ]
+                    },
+                    "itemNumber": "LB600E-60V-MAX-CORDLESS-B",
+                    "listPrices": []
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "ST15E-60V-MAX-CORDLESS-ST",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [],
+                    "name": "ST15E",
+                    "longDescription": null,
+                    "images": [],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "No" }],
+                                "grouping": "Specifications",
+                                "sequence": 0,
+                                "name": "Attachment Capable",
+                                "identifier": "attachment-capable"
+                            },
+                            { "values": [{ "sequence": 0, "value": "150Wh" }], "grouping": "Battery", "sequence": 1, "name": "Ampere Hours", "identifier": "battery-ampere-hour" },
+                            { "values": [{ "sequence": 0, "value": "Lithium Ion" }], "grouping": "Battery", "sequence": 2, "name": "Battery Type", "identifier": "battery-type" },
+                            { "values": [{ "sequence": 0, "value": "60V MAX" }], "grouping": "Battery", "sequence": 3, "name": "Battery Voltage", "identifier": "battery-voltage" },
+                            {
+                                "values": [{ "sequence": 0, "value": "4-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 4,
+                                "name": "Battery Warranty",
+                                "identifier": "battery-warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": "75 minutes" }], "grouping": "Battery", "sequence": 6, "name": "Charge Time", "identifier": "charge-time" },
+                            {
+                                "values": [{ "sequence": 0, "value": "15\"" }],
+                                "grouping": "Specifications",
+                                "sequence": 11,
+                                "name": "Cutting Swath",
+                                "identifier": "cutting-swath"
+                            },
+                            {
+                                "values": [
+                                    {
+                                        "sequence": 0,
+                                        "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                                    }
+                                ],
+                                "grouping": "Disclaimers",
+                                "sequence": 13,
+                                "name": "Specifications",
+                                "identifier": "disclaimer-specifications"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Brushless" }],
+                                "grouping": "Specifications",
+                                "sequence": 14,
+                                "name": "Drive Motors",
+                                "identifier": "drive-motors"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Bump Head" }],
+                                "grouping": "Specifications",
+                                "sequence": 21,
+                                "name": "Trimmer Head Type",
+                                "identifier": "fixed-head"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Countour with Rubber Overmold" }],
+                                "grouping": "Additional Specifications",
+                                "sequence": 22,
+                                "name": "Handle Type",
+                                "identifier": "handle-type"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": ".08\"" }],
+                                "grouping": "Specifications",
+                                "sequence": 25,
+                                "name": "Line Diameter",
+                                "identifier": "line-diameter"
+                            },
+                            { "values": [{ "sequence": 0, "value": "50 in" }], "grouping": "Specifications", "sequence": 36, "name": "Shaft Length", "identifier": "shaft-length" },
+                            {
+                                "values": [{ "sequence": 0, "value": "Steel/Straight" }],
+                                "grouping": "Specifications",
+                                "sequence": 37,
+                                "name": "Shaft Material",
+                                "identifier": "shaft-material"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": ".080 / .095 in" }],
+                                "grouping": "Trimmer Line Specifications",
+                                "sequence": 38,
+                                "name": "Trimmer Line Diameter",
+                                "identifier": "trimmer-line-diameter"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "3-year limited" }],
+                                "grouping": "Warranty",
+                                "sequence": 39,
+                                "name": "Residential Warranty",
+                                "identifier": "warranty"
+                            },
+                            { "values": [{ "sequence": 0, "value": "2.5Ah" }], "grouping": "Battery", "sequence": 40, "name": "Watt Hours", "identifier": "watt-hours" },
+                            {
+                                "values": [{ "sequence": 0, "value": "8.09 lbs / 10.71 lbs with battery" }],
+                                "grouping": "Dimensions",
+                                "sequence": 41,
+                                "name": "Weight (approx.)",
+                                "identifier": "weight-approx"
+                            }
+                        ],
+                        "FEATURES": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "60 Volt Max 2.5Ah, 150Wh lithium-ion battery" },
+                                    { "sequence": 1, "value": "Up to 45 minutes of run time on a single charge, in low power mode, without power fade" },
+                                    { "sequence": 2, "value": "15 inch cutting swath" },
+                                    { "sequence": 3, "value": "Quickly replace your 0.080\u201d or 0.095\u201d twisted line with the easy dual feed feature." }
+                                ],
+                                "grouping": null,
+                                "sequence": 20,
+                                "name": "Features",
+                                "identifier": "features"
+                            }
+                        ]
+                    },
+                    "itemNumber": "ST15E-60V-MAX-CORDLESS-ST",
+                    "listPrices": []
+                }
+            ],
+            "UPSELL": [],
+            "ACCESSORY": [
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19A30055100",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 32.99, "currency": "USD" }],
+                    "name": "Mulching Kit for 42-inch Cutting Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/zero-turn-mower-blades/mulching-kit-for-42-inch-cutting-decks/19A30055100.html",
+                    "longDescription": "<style type=\"text/css\">.genuine-parts-logo {\r\n\r\npadding-left: 10px;\r\n\r\n}\r\n\r\n.genuine-parts-logo-2 {\r\n\r\npadding-left: 20px;\r\n\r\n}\r\n\r\n.info-icon .icon {\r\n\r\nmargin-left: 0 !important;\r\n\r\n}\r\n</style>\r\n<p>&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Mulching Kit for Cub Cadet and Battery Lawn Tractors and Zero-Turn Mowers with&nbsp;42-inch cutting decks</li>\r\n\t<li>Includes one molded plug and mounting hardware.</li>\r\n\t<li>Ideal for finely cutting grass clippings and redistributing them back into your lawn, providing essential nutrients.</li>\r\n\t<li>Compatible with Troy-Bilt<span style=\"font-size:10.0pt\"><span style=\"line-height:107%\"><span style=\"font-family:&quot;Cambria&quot;,serif\"><span style=\"color:#373a3c\"><span style=\"font-size:10.0pt\"><span style=\"line-height:107%\"><span style=\"font-family:&quot;Arial&quot;,sans-serif\"><span style=\"color:#373a3c\">&reg;</span></span></span></span></span></span></span></span> Super Bronco&trade; 42E XP and&nbsp;Mustang&trade; Z42E XP</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9d06846d/products/19A30055100_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc802c6bd/products/19A30055100_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw760563bb/products/19A30055100_3.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "42 in" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 2,
+                                "name": "Deck Cutting Width",
+                                "identifier": "cutting-deck-width"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19A30055100",
+                    "listPrices": [{ "price": 32.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19A70060OEM",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 115.49, "currency": "USD" }],
+                    "name": "Lawn Striping Kit for 42-, 50- and 54-inch Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/lawn-striping-kit-for-42--50--and-54-inch-decks/19A70060OEM.html",
+                    "longDescription": "<p>Increase your property's curb appeal with a striping kit. Adding patterns to your lawn gives it a professional, well-manicured look. You can mow and stripe at the same time, making it easy to get the lawn you&rsquo;ve always wanted.</p>\r\n\r\n<ul>\r\n\t<li>Fits Cub Cadet Ultima Series&trade; Zero Turn Mowers with 42-, 50- and 54-inch Stamped Steel Decks (2019- )</li>\r\n\t<li>Fits Troy-Bilt Mustang Z42 Zero-Turn Riders with 42-, 50- and 54-inch Stamped Steel Decks (2019- )</li>\r\n\t<li>Easy Installation</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw676a487b/products/Attachments_Accessories/19A70060OEM.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw987b94f2/products/Attachments_Accessories/19A70060OEM_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw32e67270/products/Attachments_Accessories/19A70060OEM_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc210eea1/products/Attachments_Accessories/Striping_Patterns.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw7ad30e19/products/Attachments_Accessories/Striping_Patterns_1.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "42 in" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 2,
+                                "name": "Deck Cutting Width",
+                                "identifier": "cutting-deck-width"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Ultima Series™ ZT" }],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 5,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19A70060OEM",
+                    "listPrices": [{ "price": 115.49, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19B40026100",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 399.99, "currency": "USD" }],
+                    "name": "Cub Cadet Hauler",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/cub-cadet-hauler/19B40026100.html",
+                    "longDescription": "<ul>\r\n\t<li>10 cu. ft / 800 lb Capacity</li>\r\n\t<li>Collapsible sides for vertical storage</li>\r\n\t<li>Foot-pedal dump release</li>\r\n\t<li>Fold-out side panels allow easy access for loading and unloading</li>\r\n\t<li>15 x 6 pneumatic tires</li>\r\n\t<li>Takes 70% less space in a garage or shed than traditional carts</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Hauler-Assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>\r\n\r\n<p><em>A $129 large-package shipping surcharge, levied and collected by UPS, will be applied at Checkout.</em></p>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1f426d26/products/Attachments_Accessories/19B40026100.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw26c22f1f/products/Attachments_Accessories/19B40026100_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4351a95c/products/Attachments_Accessories/19B40026100_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw7a9228db/products/Attachments_Accessories/19B40026100_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4e7bdca7/products/Attachments_Accessories/19B40026100_9.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6c67a193/products/Attachments_Accessories/19B40026100_5.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw080e12c4/products/19A30030100 env_.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw2edf4617/products/19A30030100 env_-2.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "70.5 x 34.75 x 29 inches" }],
+                                "grouping": "Dimensions",
+                                "sequence": 1,
+                                "name": "Assembled Dimensions",
+                                "identifier": "assembled-dimensions"
+                            },
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "RZT SX Series" },
+                                    { "sequence": 1, "value": "Ultima Series™ ZT" },
+                                    { "sequence": 2, "value": "Ultima Series™ ZTX" },
+                                    { "sequence": 3, "value": "RZT LX Series" },
+                                    { "sequence": 4, "value": "CC 30 Series" },
+                                    { "sequence": 5, "value": "XT1/XT2 Enduro Series" },
+                                    { "sequence": 6, "value": "XT3 Enduro Series" },
+                                    { "sequence": 7, "value": "Z-Force® L/LX Series" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 10,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "106 lbs" }],
+                                "grouping": "Dimensions",
+                                "sequence": 43,
+                                "name": "Weight (approx.)",
+                                "identifier": "weight-approx"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19B40026100",
+                    "listPrices": [{ "price": 399.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19B70054100",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 549.99, "currency": "USD" }],
+                    "name": "Double Bagger for 42- and 46-inch Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/baggers-and-grass-collectors/double-bagger-for-42--and-46-inch-decks/19B70054100.html",
+                    "longDescription": "<p>Fits Cub Cadet Ultima&trade; Series Zero Turn Mowers with 42- and 46-inch Decks (2019- &nbsp;)</p>\r\n\r\n<ul>\r\n\t<li>Flex tubing and integrated hood design</li>\r\n\t<li>6.5 Bushel Capacity</li>\r\n\t<li>Utilizes your existing mower blades</li>\r\n\t<li>Includes two bags, a hood, a chute, and weight plates</li>\r\n\t<li>Hardware and installation instructions included</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li><em><a href=\"$url('Product-Show','pid','490-950-C062')$\">Adapter Kit 490-950-C062</a>&nbsp;&nbsp;</em><span style=\"font-size:11pt\"><span style=\"font-family:Calibri,sans-serif\">is required to mount this bagger to all Ultima ZTS (Steering Wheel) models.</span></span></li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Ultima-Bagger-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw87eb41a2/products/19B70054100_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9022aced/products/19B70054100_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1f36d75d/products/19B70054100_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw71dc2e15/products/19B70054100_4.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "42 in, 46 in" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 2,
+                                "name": "Deck Cutting Width",
+                                "identifier": "cutting-deck-width"
+                            },
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "Ultima Series™ ZT" },
+                                    { "sequence": 1, "value": "Ultima Series™ ZTS" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 5,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "LTL/Truck Delivery" }],
+                                "grouping": "Shipping Details",
+                                "sequence": 11,
+                                "name": "LTL/Truck Delivery",
+                                "identifier": "LTL-shipping-message"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19B70054100",
+                    "listPrices": [{ "price": 549.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "490-241-0023",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 76.99, "currency": "USD" }],
+                    "name": "Chains for 20 x 8 x 8 and 20 x 8 x 10 Tires",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/chains-for-20-x-8-x-8-and-20-x-8-x-10-tires/490-241-0023.html",
+                    "longDescription": "<ul>\r\n\t<li>Provides additional traction in snowy and icy conditions</li>\r\n\t<li>Fits 20&quot; x 8&quot; x 8&quot; and 20&quot; x 8&quot; x 10&quot; Rear Tires</li>\r\n\t<li>Contains one set of two tire chains</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw960d4983/products/Attachments_Accessories/490-241-0023.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwcf87d056/products/490-241-0025_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw40550a9b/products/490-241-0025_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw44be1d79/products/490-241-0023_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw442905a1/products/490-241-0023_4.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6a72f8b6/products/490-241-0023_5.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "Ultima Series™ ZT" },
+                                    { "sequence": 1, "value": "XT1/XT2 Enduro Series" },
+                                    { "sequence": 2, "value": "Ultima Series™ ZTS" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 5,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "490-241-0023",
+                    "listPrices": [{ "price": 76.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "757-06093",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 165.21, "currency": "USD" }],
+                    "name": "Armrest Kit",
+                    "siteURL": "https://www.cubcadet.com/en_US/seats/armrest-kit/757-06093.html",
+                    "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" This original equipment part is manufacturer approved.  Meets manufacturer standards for fitment and performance.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span></p>\r\n\r\n<ul>\r\n\t<li>Fits Cub Cadet&nbsp;CC30 models, XT1 and XT2 Enduro Series Lawn Tractors, 2022 and Newer and Cub Cadet ZT1 42E Ultima Series RZT (2022 - )</li>\r\n\t<li>Fits Troy-Bilt TB30T, TB30E XP, Super Bronco 42E XP and Mustang Series RZT (2022 - )</li>\r\n\t<li>Fits Craftsman T2200, T2400, T3200 Lawn Tractors and RZT (2022 - )</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwab63f72f/products/757-06093_5.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1085052e/products/757-06093_6.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd272d56f/products/757-06093_7.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "CC 30 Series" },
+                                    { "sequence": 1, "value": "XT1/XT2 Enduro Series" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 4,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "757-06093",
+                    "listPrices": [{ "price": 165.21, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19A30055100",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 32.99, "currency": "USD" }],
+                    "name": "Mulching Kit for 42-inch Cutting Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/zero-turn-mower-blades/mulching-kit-for-42-inch-cutting-decks/19A30055100.html",
+                    "longDescription": "<style type=\"text/css\">.genuine-parts-logo {\r\n\r\npadding-left: 10px;\r\n\r\n}\r\n\r\n.genuine-parts-logo-2 {\r\n\r\npadding-left: 20px;\r\n\r\n}\r\n\r\n.info-icon .icon {\r\n\r\nmargin-left: 0 !important;\r\n\r\n}\r\n</style>\r\n<p>&nbsp;</p>\r\n\r\n<ul>\r\n\t<li>Mulching Kit for Cub Cadet and Battery Lawn Tractors and Zero-Turn Mowers with&nbsp;42-inch cutting decks</li>\r\n\t<li>Includes one molded plug and mounting hardware.</li>\r\n\t<li>Ideal for finely cutting grass clippings and redistributing them back into your lawn, providing essential nutrients.</li>\r\n\t<li>Compatible with Troy-Bilt<span style=\"font-size:10.0pt\"><span style=\"line-height:107%\"><span style=\"font-family:&quot;Cambria&quot;,serif\"><span style=\"color:#373a3c\"><span style=\"font-size:10.0pt\"><span style=\"line-height:107%\"><span style=\"font-family:&quot;Arial&quot;,sans-serif\"><span style=\"color:#373a3c\">&reg;</span></span></span></span></span></span></span></span> Super Bronco&trade; 42E XP and&nbsp;Mustang&trade; Z42E XP</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9d06846d/products/19A30055100_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc802c6bd/products/19A30055100_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw760563bb/products/19A30055100_3.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "42 in" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 2,
+                                "name": "Deck Cutting Width",
+                                "identifier": "cutting-deck-width"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19A30055100",
+                    "listPrices": [{ "price": 32.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19A70060OEM",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 115.49, "currency": "USD" }],
+                    "name": "Lawn Striping Kit for 42-, 50- and 54-inch Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/lawn-striping-kit-for-42--50--and-54-inch-decks/19A70060OEM.html",
+                    "longDescription": "<p>Increase your property's curb appeal with a striping kit. Adding patterns to your lawn gives it a professional, well-manicured look. You can mow and stripe at the same time, making it easy to get the lawn you&rsquo;ve always wanted.</p>\r\n\r\n<ul>\r\n\t<li>Fits Cub Cadet Ultima Series&trade; Zero Turn Mowers with 42-, 50- and 54-inch Stamped Steel Decks (2019- )</li>\r\n\t<li>Fits Troy-Bilt Mustang Z42 Zero-Turn Riders with 42-, 50- and 54-inch Stamped Steel Decks (2019- )</li>\r\n\t<li>Easy Installation</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw676a487b/products/Attachments_Accessories/19A70060OEM.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw987b94f2/products/Attachments_Accessories/19A70060OEM_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw32e67270/products/Attachments_Accessories/19A70060OEM_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc210eea1/products/Attachments_Accessories/Striping_Patterns.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw7ad30e19/products/Attachments_Accessories/Striping_Patterns_1.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "42 in" }],
+                                "grouping": "Blade Specifications",
+                                "sequence": 2,
+                                "name": "Deck Cutting Width",
+                                "identifier": "cutting-deck-width"
+                            },
+                            {
+                                "values": [{ "sequence": 0, "value": "Ultima Series™ ZT" }],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 5,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19A70060OEM",
+                    "listPrices": [{ "price": 115.49, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19B40026OEM",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 399.99, "currency": "USD" }],
+                    "name": "EZ Stow Collapsible Tow-Behind Cart",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/ez-stow-collapsible-tow-behind-cart/19B40026OEM.html",
+                    "longDescription": "<p>&nbsp;</p>\r\n\r\n<p>The EZ Stow Collapsible Tow-Behind Cart turns into a flat-bed, for versatile hauling and stores vertically</p>\r\n\r\n<ul>\r\n\t<li>34-3/4 in. x 70-1/2 in. x 29 in</li>\r\n\t<li>800 lb Load Capacity</li>\r\n\t<li>10 cu ft</li>\r\n\t<li>Foot-pedal Dump Release</li>\r\n\t<li>13 in. x 6 in. Pneumatic Tires</li>\r\n</ul>\r\n\r\n<div><em><span style=\"font-size:14px;\">A $129 large-package shipping surcharge, levied and collected by UPS, will be applied at checkout.</span></em></div>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc61dd298/products/19B40026OEM.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw71f6494f/products/Attachments_Accessories/19B40026OEM_4.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwfd8c7293/products/Attachments_Accessories/19B40026OEM_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw65f09b96/products/Attachments_Accessories/19B40026OEM_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw71cf9800/products/Attachments_Accessories/19B40026OEM_1.jpg"
+                    ],
+                    "attributes": { "RATINGS": [], "SPECS": [], "FEATURES": [] },
+                    "itemNumber": "19B40026OEM",
+                    "listPrices": [{ "price": 399.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "19B70054OEM",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 529.99, "currency": "USD" }],
+                    "name": "Double Bagger for 42- and 46-inch Decks",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/double-bagger-for-42--and-46-inch-decks/19B70054OEM.html",
+                    "longDescription": "<p>Fits Troy-Bilt&trade; Mustang Z42,&nbsp;Z42E XP and Z46&nbsp;Zero Turn Mowers (2019- &nbsp;)</p>\r\n\r\n<ul>\r\n\t<li>Flex tubing and integrated hood design</li>\r\n\t<li>Sight window, so you know when the bags are full</li>\r\n\t<li>6.5 Bushel Capacity</li>\r\n\t<li>Utilizes your existing mower blades</li>\r\n\t<li>Includes two bags, a hood, a chute, and weight plates</li>\r\n\t<li>Hardware and installation instructions included</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Ultima-Bagger-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa6918cfd/products/Attachments_Accessories/19B70054OEM_7.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwe8e3822c/products/Attachments_Accessories/19B70054OEM_5.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw49333673/products/Attachments_Accessories/19B70054OEM_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf22789f7/products/Attachments_Accessories/19B70054OEM_6.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4c1ec851/products/Attachments_Accessories/19A70054OEM_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9faef479/products/Attachments_Accessories/19B70054OEM_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd94466c2/products/Attachments_Accessories/19B70054OEM_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwb26232fb/products/Attachments_Accessories/19B70054OEM_4.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "LTL/Truck Delivery" }],
+                                "grouping": "Shipping Details",
+                                "sequence": 9,
+                                "name": "LTL/Truck Delivery",
+                                "identifier": "LTL-shipping-message"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "19B70054OEM",
+                    "listPrices": [{ "price": 529.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "490-241-0023",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 76.99, "currency": "USD" }],
+                    "name": "Chains for 20 x 8 x 8 and 20 x 8 x 10 Tires",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/chains-for-20-x-8-x-8-and-20-x-8-x-10-tires/490-241-0023.html",
+                    "longDescription": "<ul>\r\n\t<li>Provides additional traction in snowy and icy conditions</li>\r\n\t<li>Fits 20&quot; x 8&quot; x 8&quot; and 20&quot; x 8&quot; x 10&quot; Rear Tires</li>\r\n\t<li>Contains one set of two tire chains</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw960d4983/products/Attachments_Accessories/490-241-0023.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwcf87d056/products/490-241-0025_1.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw40550a9b/products/490-241-0025_2.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw44be1d79/products/490-241-0023_3.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw442905a1/products/490-241-0023_4.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6a72f8b6/products/490-241-0023_5.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "Ultima Series™ ZT" },
+                                    { "sequence": 1, "value": "XT1/XT2 Enduro Series" },
+                                    { "sequence": 2, "value": "Ultima Series™ ZTS" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 5,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "490-241-0023",
+                    "listPrices": [{ "price": 76.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "490-290-0013",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 43.99, "currency": "USD" }],
+                    "name": "Universal Heavy-Duty Lawn Tractor Cover",
+                    "siteURL": "https://www.cubcadet.com/en_US/universal-parts/universal-heavy-duty-lawn-tractor-cover/490-290-0013.html",
+                    "longDescription": null,
+                    "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa10ec6a5/products/Attachments_Accessories/490-290-0013.jpg"],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [{ "values": [{ "sequence": 0, "value": "Cover" }], "grouping": "Specifications", "sequence": 28, "name": "Series", "identifier": "series" }],
+                        "FEATURES": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "Weather-Protected, Heavy Duty Fabric. Won't Shrink or Stretch." },
+                                    { "sequence": 1, "value": "All-season protection for your lawn tractor" },
+                                    { "sequence": 2, "value": "Coated for maximum water resistance and repellency" },
+                                    { "sequence": 3, "value": "U.V. and mildew resistant" },
+                                    { "sequence": 4, "value": "Weather-protected fabric" },
+                                    { "sequence": 5, "value": "Elastic cord in hem for custom fit" }
+                                ],
+                                "grouping": null,
+                                "sequence": 4,
+                                "name": "Features",
+                                "identifier": "features"
+                            }
+                        ]
+                    },
+                    "itemNumber": "490-290-0013",
+                    "listPrices": [{ "price": 43.99, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "757-06093",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 165.21, "currency": "USD" }],
+                    "name": "Armrest Kit",
+                    "siteURL": "https://www.cubcadet.com/en_US/seats/armrest-kit/757-06093.html",
+                    "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" This original equipment part is manufacturer approved.  Meets manufacturer standards for fitment and performance.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span></p>\r\n\r\n<ul>\r\n\t<li>Fits Cub Cadet&nbsp;CC30 models, XT1 and XT2 Enduro Series Lawn Tractors, 2022 and Newer and Cub Cadet ZT1 42E Ultima Series RZT (2022 - )</li>\r\n\t<li>Fits Troy-Bilt TB30T, TB30E XP, Super Bronco 42E XP and Mustang Series RZT (2022 - )</li>\r\n\t<li>Fits Craftsman T2200, T2400, T3200 Lawn Tractors and RZT (2022 - )</li>\r\n</ul>",
+                    "images": [
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwab63f72f/products/757-06093_5.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1085052e/products/757-06093_6.jpg",
+                        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd272d56f/products/757-06093_7.jpg"
+                    ],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [
+                                    { "sequence": 0, "value": "CC 30 Series" },
+                                    { "sequence": 1, "value": "XT1/XT2 Enduro Series" }
+                                ],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 4,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "757-06093",
+                    "listPrices": [{ "price": 165.21, "currency": "USD" }]
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "757-06228",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [],
+                    "name": "757P06228",
+                    "longDescription": null,
+                    "images": [],
+                    "attributes": { "RATINGS": [], "SPECS": [], "FEATURES": [] },
+                    "itemNumber": "757-06228",
+                    "listPrices": []
+                },
+                {
+                    "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                    "catentryId": "759-04252",
+                    "additionalModelNumber": false,
+                    "shortDescription": null,
+                    "offerPrices": [{ "price": 130.73, "currency": "USD" }],
+                    "name": "Armrest Kit",
+                    "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/armrest-kit/759-04252.html",
+                    "longDescription": "</style>\n<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" This original equipment part is manufacturer approved.  Meets manufacturer standards for fitment and performance.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span>\n\n<p>Fits Cub Cadet Ultima&trade; Series ZT-1 42 models and XT3 Garden Tractors</p>\n\n<p>Fits Troy-Bilt&nbsp;Bronco 46T, Super Bronco 42, Super Bronco 46, Super Bronco XP 50 FAB and Super Bronco XP 54</p>",
+                    "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw49e59864/products/759-04252.jpg"],
+                    "attributes": {
+                        "RATINGS": [],
+                        "SPECS": [
+                            {
+                                "values": [{ "sequence": 0, "value": "Ultima Series™ ZT" }],
+                                "grouping": "Attachment Specifications",
+                                "sequence": 4,
+                                "name": "Fits Series",
+                                "identifier": "fits-series"
+                            }
+                        ],
+                        "FEATURES": []
+                    },
+                    "itemNumber": "759-04252",
+                    "listPrices": [{ "price": 130.73, "currency": "USD" }]
+                }
+            ]
+        },
+        "catentryId": "34ABB2CS766",
+        "additionalModelNumber": false,
+        "shortDescription": null,
+        "offerPrices": [],
+        "name": "Mustang™ Z42E XP Battery-Powered Zero-Turn Mower",
+        "longDescription": "<p>Enjoy listening to playlists, not engine noise, with the battery-powered Troy-Bilt® Mustang™ Z42E XP engineered for noise reduction up to 75% quieter than gas^. Dual electric brushless motors allow mowing up to 3.5 acres of grass or  up to 1.5 hours of runtime per charge**.  A convenient deck lift foot pedal quickly raises the 42\" deck to help mow over roots or clear thresholds. A 3-year limited warranty covers the batteries, while the frame has a limited lifetime warranty.</p>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/769-25913d-rzte-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n\t<li><a aria-label=\"Calibration Guide. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Mustang_z42e_calibration.pdf?$staticlink$\" target=\"_blank\">Calibration Guide</a></li>\r\n</ul>",
+        "images": [],
+        "attributes": {
+            "RATINGS": [
+                { "values": [{ "sequence": 0, "value": "4.8667" }], "grouping": null, "sequence": 12, "name": "Bazaarvoice Average Rating", "identifier": "bvAverageRating" },
+                { "values": [{ "sequence": 0, "value": "15" }], "grouping": null, "sequence": 14, "name": "Bazaarvoice Review Count", "identifier": "bvReviewCount" }
+            ],
+            "SPECS": [
+                { "values": [{ "sequence": 0, "value": "Two gauge wheels" }], "grouping": "Cutting Deck", "sequence": 1, "name": "Anti-Scalping", "identifier": "anti-scalping" },
+                { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Comfort", "sequence": 2, "name": "Armrests", "identifier": "arm-rests" },
+                { "values": [{ "sequence": 0, "value": "60Ah" }], "grouping": "Battery", "sequence": 3, "name": "Ampere Hours", "identifier": "battery-ampere-hour" },
+                {
+                    "values": [{ "sequence": 0, "value": "*Maximum initial battery voltage (measured without a workload) is 56 volts. Nominal voltage is 50.4 volts." }],
+                    "grouping": "Disclaimers",
+                    "sequence": 4,
+                    "name": "Battery Voltage",
+                    "identifier": "battery-disclaimer"
+                },
+                { "values": [{ "sequence": 0, "value": "Digital" }], "grouping": "Battery", "sequence": 5, "name": "Battery Gauge", "identifier": "battery-gauge" },
+                { "values": [{ "sequence": 0, "value": "Lithium-ion" }], "grouping": "Battery", "sequence": 6, "name": "Battery Type", "identifier": "battery-type" },
+                { "values": [{ "sequence": 0, "value": "56V MAX*" }], "grouping": "Battery", "sequence": 7, "name": "Battery Voltage", "identifier": "battery-voltage" },
+                { "values": [{ "sequence": 0, "value": "3-year limited" }], "grouping": "Warranty", "sequence": 8, "name": "Battery Warranty", "identifier": "battery-warranty" },
+                { "values": [{ "sequence": 0, "value": "Two" }], "grouping": "Cutting Deck", "sequence": 9, "name": "Blade(s)", "identifier": "blades" },
+                { "values": [{ "sequence": 0, "value": "Disc" }], "grouping": "Controls", "sequence": 11, "name": "Brakes", "identifier": "brakes" },
+                {
+                    "values": [{ "sequence": 0, "value": "ANSI certified, UL compliant battery and charger" }],
+                    "grouping": "Additional Specifications",
+                    "sequence": 16,
+                    "name": "Certifications",
+                    "identifier": "certifications"
+                },
+                { "values": [{ "sequence": 0, "value": "4 hours" }], "grouping": "Battery", "sequence": 17, "name": "Charge Time", "identifier": "charge-time" },
+                { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Warranty", "sequence": 19, "name": "Commercial Warranty", "identifier": "commercial-warranty" },
+                { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Chassis", "sequence": 20, "name": "Corrosion Protection", "identifier": "corrosion-protection" },
+                { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Controls", "sequence": 21, "name": "Cruise Control", "identifier": "cruise-control" },
+                { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Additional Specifications", "sequence": 24, "name": "Cup Holder", "identifier": "cup-holder" },
+                {
+                    "values": [{ "sequence": 0, "value": "1'' - 4.5''" }],
+                    "grouping": "Cutting Deck",
+                    "sequence": 25,
+                    "name": "Cutting Height Range",
+                    "identifier": "cutting-height-range"
+                },
+                {
+                    "values": [
+                        { "sequence": 0, "value": "^ vs. Troy-Bilt Mustang Z42 17ARFACSA66 gas mower, measurements taken from the operator position in a lab environment." }
+                    ],
+                    "grouping": "Disclaimers",
+                    "sequence": 26,
+                    "name": "Noise Comparison",
+                    "identifier": "decibel-disclaimer"
+                },
+                { "values": [{ "sequence": 0, "value": "Stamped" }], "grouping": "Cutting Deck", "sequence": 27, "name": "Deck Construction", "identifier": "deck-construction" },
+                { "values": [{ "sequence": 0, "value": "42 in" }], "grouping": "Cutting Deck", "sequence": 28, "name": "Deck Cutting Width", "identifier": "deck-cutting-width" },
+                {
+                    "values": [{ "sequence": 0, "value": "Electric" }],
+                    "grouping": "Cutting Deck",
+                    "sequence": 29,
+                    "name": "Deck Engagement (PTO)",
+                    "identifier": "deck-engagement"
+                },
+                { "values": [{ "sequence": 0, "value": "Foot pedal" }], "grouping": "Cutting Deck", "sequence": 30, "name": "Deck Lift", "identifier": "deck-lift" },
+                { "values": [{ "sequence": 0, "value": "13-gauge steel" }], "grouping": "Cutting Deck", "sequence": 31, "name": "Deck Material", "identifier": "deck-material" },
+                { "values": [{ "sequence": 0, "value": "8" }], "grouping": "Cutting Deck", "sequence": 33, "name": "Deck Positions", "identifier": "deck-positions" },
+                {
+                    "values": [{ "sequence": 0, "value": "3-year limited" }],
+                    "grouping": "Warranty",
+                    "sequence": 34,
+                    "name": "Deck Shell Warranty",
+                    "identifier": "deck-shell-warranty"
+                },
+                { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Cutting Deck", "sequence": 37, "name": "Deck Wash", "identifier": "deck-wash" },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                        }
+                    ],
+                    "grouping": "Disclaimers",
+                    "sequence": 38,
+                    "name": "Specifications",
+                    "identifier": "disclaimer-specifications"
+                },
+                {
+                    "values": [{ "sequence": 0, "value": "Brushless Electric Motors" }],
+                    "grouping": "Drive System",
+                    "sequence": 39,
+                    "name": "Drive System",
+                    "identifier": "drive-system"
+                },
+                {
+                    "values": [
+                        {
+                            "sequence": 0,
+                            "value": "**Minimal cutting load, using discharge cutting mode and highest cutting position at full speed with Troy-Bilt® 56V MAX* 60Ah batteries."
+                        }
+                    ],
+                    "grouping": "Disclaimers",
+                    "sequence": 42,
+                    "name": "Efficiency",
+                    "identifier": "efficiency-disclaimer"
+                },
+                { "values": [{ "sequence": 0, "value": "N/A" }], "grouping": "Engine", "sequence": 43, "name": "Engine Brand", "identifier": "engine-brand" },
+                { "values": [{ "sequence": 0, "value": "N/A" }], "grouping": "Engine", "sequence": 44, "name": "Engine Displacement", "identifier": "engine-displacement" },
+                { "values": [{ "sequence": 0, "value": "Included" }], "grouping": "Battery", "sequence": 47, "name": "Fast Charger", "identifier": "fast-charger" },
+                {
+                    "values": [{ "sequence": 0, "value": "7 MPH (4 MPH in low speed mode) / 11.2 km/h" }],
+                    "grouping": "Drive System",
+                    "sequence": 49,
+                    "name": "Forward Speed",
+                    "identifier": "forward-speed"
+                },
+                { "values": [{ "sequence": 0, "value": "2'' x 2'' tubular steel" }], "grouping": "Chassis", "sequence": 50, "name": "Frame", "identifier": "frame" },
+                { "values": [{ "sequence": 0, "value": "Lifetime Limited" }], "grouping": "Warranty", "sequence": 51, "name": "Frame Warranty", "identifier": "frame-warranty" },
+                { "values": [{ "sequence": 0, "value": "11\"x 6\"-5\"" }], "grouping": "Wheels", "sequence": 52, "name": "Front Tires", "identifier": "front-tires" },
+                { "values": [{ "sequence": 0, "value": "None" }], "grouping": "Additional Specifications", "sequence": 53, "name": "Headlight(s)", "identifier": "headlights" },
+                { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Additional Specifications", "sequence": 55, "name": "Hour Meter", "identifier": "hour-meter" },
+                {
+                    "values": [{ "sequence": 0, "value": "34ABB2CS766" }],
+                    "grouping": "Additional Specifications",
+                    "sequence": 60,
+                    "name": "Model Number",
+                    "identifier": "model-number"
+                },
+                { "values": [{ "sequence": 0, "value": "Brushless" }], "grouping": "Specifications", "sequence": 61, "name": "Mowing Motor", "identifier": "mowing-motor" },
+                {
+                    "values": [{ "sequence": 0, "value": "Available separately" }],
+                    "grouping": "Additional Specifications",
+                    "sequence": 62,
+                    "name": "Mulch Kit",
+                    "identifier": "mulch-kit"
+                },
+                {
+                    "values": [{ "sequence": 0, "value": "Yes" }],
+                    "grouping": "Additional Specifications",
+                    "sequence": 63,
+                    "name": "Operator Presence System",
+                    "identifier": "operator-presence-system"
+                },
+                {
+                    "values": [{ "sequence": 0, "value": "Foot Operated" }],
+                    "grouping": "Additional Specifications",
+                    "sequence": 64,
+                    "name": "Parking Brake",
+                    "identifier": "parking-brake"
+                },
+                { "values": [{ "sequence": 0, "value": "20\u201dx 8\u201d-8\"" }], "grouping": "Wheels", "sequence": 71, "name": "Rear Tires", "identifier": "rear-tires" },
+                { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Chassis", "sequence": 72, "name": "Rear Tow Hitch", "identifier": "rear-tow-hitch" },
+                { "values": [{ "sequence": 0, "value": "3 MPH / 4.8 km/h" }], "grouping": "Drive System", "sequence": 74, "name": "Reverse Speed", "identifier": "reverse-speed" },
+                { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Chassis", "sequence": 75, "name": "ROPS", "identifier": "rops" },
+                { "values": [{ "sequence": 0, "value": "Up to 3.5 acres" }], "grouping": "Battery", "sequence": 76, "name": "Run Time", "identifier": "runtime" },
+                { "values": [{ "sequence": 0, "value": "Knob" }], "grouping": "Comfort", "sequence": 77, "name": "Seat Adjustment", "identifier": "seat-adjustments" },
+                { "values": [{ "sequence": 0, "value": "20\" high back" }], "grouping": "Comfort", "sequence": 78, "name": "Seat Type", "identifier": "seat-type" },
+                { "values": [{ "sequence": 0, "value": "Push button start" }], "grouping": "Battery", "sequence": 79, "name": "Start Method", "identifier": "start-method" },
+                { "values": [{ "sequence": 0, "value": "Lap Bars" }], "grouping": "Controls", "sequence": 80, "name": "Steering Control", "identifier": "steering-wheel-control" },
+                { "values": [{ "sequence": 0, "value": "Turf Master / Multi Trac" }], "grouping": "Wheels", "sequence": 82, "name": "Tire Tread", "identifier": "tire-tread" },
+                { "values": [{ "sequence": 0, "value": "Dual Electric" }], "grouping": "Drive System", "sequence": 83, "name": "Transmission", "identifier": "transmission" },
+                {
+                    "values": [{ "sequence": 0, "value": "2 Brushless motors" }],
+                    "grouping": "Drive System",
+                    "sequence": 84,
+                    "name": "Transmission Input",
+                    "identifier": "transmission-input"
+                },
+                { "values": [{ "sequence": 0, "value": "0°" }], "grouping": "Chassis", "sequence": 85, "name": "Turning Radius", "identifier": "turning-radius" },
+                {
+                    "values": [{ "sequence": 0, "value": "3-year unlimited hours" }],
+                    "grouping": "Warranty",
+                    "sequence": 86,
+                    "name": "Residential Warranty",
+                    "identifier": "warranty"
+                },
+                { "values": [{ "sequence": 0, "value": "3000Wh" }], "grouping": "Battery", "sequence": 87, "name": "Watt Hours", "identifier": "watt-hours" }
+            ],
+            "FEATURES": [
+                {
+                    "values": [
+                        { "sequence": 0, "value": "56V MAX* (60Ah) Lithium Ion battery with three brushless motors designed for reliable performance" },
+                        { "sequence": 1, "value": "Mows up to 3.5 acres of grass and has up to 1.5 hours of runtime per charge**" },
+                        { "sequence": 2, "value": "Up to 75% quieter than gas^" },
+                        {
+                            "sequence": 3,
+                            "value": "Dual electric brushless motors provide power to each rear wheel, resulting in zero-turn performance to quickly cut and maneuver around the yard."
+                        }
+                    ],
+                    "grouping": null,
+                    "sequence": 48,
+                    "name": "Features",
+                    "identifier": "features"
+                }
+            ]
+        },
+        "itemNumber": "34ABB2CS766",
+        "listPrices": []
+    }
+]

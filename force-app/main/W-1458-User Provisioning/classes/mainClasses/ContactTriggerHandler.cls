@@ -12,11 +12,12 @@ public class ContactTriggerHandler implements TriggerInterface {
     public void afterInsert() {
         createConsumerAccounts(Trigger.new);
         rebuildCommunicationPreferenceRelations(Trigger.new);
+        adjustUserPermissionsBasedOnContactFields();
     }
     public void afterUpdate() {
         rebuildCommunicationPreferenceRelations(Trigger.new);
         updateRelatedUserData(Trigger.new);
-        //updateUserPermissionSetAssignments(Trigger.new);
+        adjustUserPermissionsBasedOnContactFields();
     }
     public void afterDelete() {
     }
@@ -286,6 +287,30 @@ public class ContactTriggerHandler implements TriggerInterface {
             for (Contact c : contactCPMap.keySet()) {
                 c.Community_Permissions__c = contactCPMap.get(c).Id;
             }
+        }
+    }
+
+    private void adjustUserPermissionsBasedOnContactFields() {
+        Set<Id> conIds = new Set<Id>();
+        if (Trigger.isInsert) {
+            for (Contact con : (List<Contact>) Trigger.new) {
+                if (con.B2B_Parts_Active__c || con.B2B_Whole_Goods_Active__c) {
+                    conIds.add(con.Id);
+                }
+            }
+        } else if (Trigger.isUpdate) {
+            for (Id conId : Trigger.newMap.keySet()) {
+                Contact oldCon = (Contact) Trigger.oldMap.get(conId);
+                Contact newCon = (Contact) Trigger.newMap.get(conId);
+
+                if (oldCon.B2B_Storefront_Product_Type_Ordering__c != newCon.B2B_Storefront_Product_Type_Ordering__c) {
+                    conIds.add(newCon.Id);
+                }
+            }
+        }
+
+        if (conIds.size() > 0) {
+            B2B_CommunityUserHelper.adjustUserPermissionsBasedOnContactFieldsFuture(conIds);
         }
     }
 }

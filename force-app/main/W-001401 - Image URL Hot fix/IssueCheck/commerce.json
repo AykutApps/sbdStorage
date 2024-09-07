@@ -1,0 +1,907 @@
+{
+    "category": null,
+    "relatedProducts": {
+        "X-SELL": [],
+        "UPSELL": [],
+        "ACCESSORY": [
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30017OEM",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 399.99, "currency": "USD" }],
+                "name": "46-inch All-Season Plow Blade",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/46-inch-all-season-plow-blade/19A30017OEM.html",
+                "longDescription": "<p>This 46 inch&nbsp;Heavy Duty Steel Snow Blade is strong enough to clear large snow filled areas in no time at all. The quick-change angle, adjusts the snow blade from straight ahead to 25&deg; to the left or right. The adjustable skid shoes allow you to use this snow blade in a variety of conditions, even gravel driveways. The spring-loaded blade return protects your tractor and the blade from damage.</p>\r\n\r\n<ul>\r\n\t<li>Fits all Troy-Bilt, Bolens, Yard Machines, Huskee and MTD Gold riding Mowers,&nbsp;2001 and newer</li>\r\n\t<li>Fits Cub Cadet XT-1 and&nbsp;XT-2 Enduro Series Tractors and Series 1000 and 1500&nbsp;LT, GT and LTX lawn tractors.</li>\r\n\t<li>Manual Angle Adjustment from Straight Ahead to 25&deg; Left and 25&deg; Right.</li>\r\n\t<li>Adjustable Skid Shoes</li>\r\n\t<li>Spring-Loaded Blade Return</li>\r\n\t<li>Assembled dimension: 6.25 in. W x 18.75 in. D x 3 in. H</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/snow-plow-blade-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>\r\n\r\n<p><em>A $35&nbsp;large-package shipping surcharge, levied and collected by UPS, will be applied at Checkout.</em></p>",
+                "images": [],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 11,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30017OEM",
+                "listPrices": [{ "price": 399.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30020100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 76.99, "currency": "USD" }],
+                "name": "Front Bumper Kit",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/front-bumper-kit/19A30020100.html",
+                "longDescription": "<p>The bumper kit wraps around the front of your riding mower to help protect the hood and grille, preventing damage from trees, shrubs and other obstacles.</p>\r\n\r\n<p>Fits most Cub Cadet Riding Mowers, including XT1 and XT2 Enduro Series Models</p>\r\n\r\n<ul>\r\n\t<li>Rugged All-Steel Bumper for Added Safety and Protection</li>\r\n\t<li>Attaches in Minutes</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw56b7032a/products/Attachments_Accessories/19A30020100_4.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa54de53e/products/Attachments_Accessories/19A30020100_10.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf6f89718/products/Attachments_Accessories/19A30020100_11.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw0000f53d/products/Attachments_Accessories/19A30020100_9.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw3de316f6/products/Attachments_Accessories/19A30020100_5.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30020100",
+                "listPrices": [{ "price": 76.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30028100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 314.99, "currency": "USD" }],
+                "name": "FastAttach® Electric Rear Spreader",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/fastattach-electric-rear-spreader/19A30028100.html",
+                "longDescription": "<p>Add versatility to your XT Enduro Series&trade;&nbsp;tractor with the FastAttach<sup>&reg;</sup>&nbsp;Connection System. Simply align, latch and lock. No tools required!</p>\r\n\r\n<p>The Electric Spreader can be used with fertilizer, seed, salt or sand.</p>\r\n\r\n<ul>\r\n\t<li>Hopper holds up to 100 lb. of material, so you can fertilize your lawn without stopping to refill</li>\r\n\t<li>Speader connects directly to your tractor's&nbsp;battery</li>\r\n\t<li>Easy ON and OFF control without leaving your seat.</li>\r\n\t<li>Spreader material deflector included</li>\r\n\t<li>Insulated hitch plate connection and spring-loaded pins ensure a proper fit</li>\r\n</ul>",
+                "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1ba5274d/products/Attachments_Accessories/19A30028100.jpg"],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 5,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30028100",
+                "listPrices": [{ "price": 314.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30030100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [],
+                "name": "FastAttach® Double Bagger For 42- and 46-inch Decks",
+                "longDescription": "<p style=\"margin:0in\"><strong>Due to high demand, some parts and accessories are experiencing delays. Your order may take longer to arrive than planned. We thank you for your patience as we work to fulfill your order.</strong></p>\r\n\r\n<p style=\"margin:0in\">&nbsp;</p>\r\n\r\n<p>Add versatility to your XT Enduro Series&trade;&nbsp;tractor with the FastAttach<sup>&reg;</sup> Connection System. Simply align, latch and lock.</p>\r\n\r\n<p>Fits Riding Mowers with a 42- or 46-inch Cutting Deck, including XT1 and XT2 Enduro Series&trade; Models (2010- )</p>\r\n\r\n<ul>\r\n\t<li>Utilizes FastAttach<sup>&reg;</sup> mounting for easy installation &amp; removal</li>\r\n\t<li>Integrated hood design</li>\r\n\t<li>Flex tubing for visual of grass flow and increased shipping efficiencies</li>\r\n\t<li>Top hinged hood so you do not have to flip the seat up when emptying</li>\r\n\t<li>Improved bag material</li>\r\n\t<li>Sight window to let you know when the bags are full</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/XT-Fast-Attach-42-46-Bagger-Assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                "images": [],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "42 in, 46 in" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 3,
+                            "name": "Deck Cutting Width",
+                            "identifier": "cutting-deck-width"
+                        },
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 6,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30030100",
+                "listPrices": []
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30031100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [],
+                "name": "Double Bagger For 42- and 46-inch Decks",
+                "longDescription": "<p>Fits Riding Mowers including XT1 and XT2 Enduro Series Models (2010- )</p>\r\n\r\n<ul>\r\n\t<li>Integrated hood design</li>\r\n\t<li>Flex tubing for visual of grass flow and increased shipping efficiencies</li>\r\n\t<li>Top hinged hood so you do not have to flip the seat up to empty the&nbsp;bags</li>\r\n\t<li>Improved bag material</li>\r\n\t<li>Sight window to let you know when the bags are full</li>\r\n</ul>",
+                "images": [],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "42 in, 46 in" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 3,
+                            "name": "Deck Cutting Width",
+                            "identifier": "cutting-deck-width"
+                        },
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 6,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30031100",
+                "listPrices": []
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30035100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 319.99, "currency": "USD" }],
+                "name": "FastAttach® Rear Sprayer",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/fastattach-rear-sprayer/19A30035100.html",
+                "longDescription": "<p>Add versatility to your XT Enduro Series&nbsp;tractor with the FastAttach<sup>&reg;</sup> Connection System. Simply align, latch and lock. No tools required!</p>\r\n\r\n<p>Compatible with liquid fertilizer, pesticides, de-icer and water</p>\r\n\r\n<ul>\r\n\t<li>9-Gallon spot sprayer with single broadcast nozzle</li>\r\n\t<li>Quickly connects to cargo carrier (straps and cargo carrier included)</li>\r\n\t<li>Operate electric on/off switch from the operator&rsquo;s seat</li>\r\n</ul>",
+                "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd9364055/products/Attachments_Accessories/19A30035100.jpg"],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30035100",
+                "listPrices": [{ "price": 319.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30037100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 459.99, "currency": "USD" }],
+                "name": "FastAttach® All-Season Plow Blade",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/fastattach-all-season-plow-blade/19A30037100.html",
+                "longDescription": "<p>Add versatility to your XT Enduro Series&nbsp;tractor with the FastAttach&trade; Connection System. Simply align, latch and lock. No tools required!</p>\r\n\r\n<p>46-in dozer blade is specifically designed to fit XT1 and XT2 Enduro Series&trade; lawn tractors.</p>\r\n\r\n<ul>\r\n\t<li>12-Gauge&nbsp;steel blade can move snow, dirt, gravel, mulch and more</li>\r\n\t<li>Single handle with comfort grip allows the operator to lift, lower and adjust the angle of the blade without leaving the seat</li>\r\n\t<li>Adjustable shave plate optimizes performance with different tire sizes and is reversible to extend the life after normal wear</li>\r\n\t<li>Robust bracket design keeps the blade at the proper height in the transport mode</li>\r\n\t<li>Quick installation and removal of the plow without tools</li>\r\n\t<li>Compatible with single tube bumper installed</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/XT-All-Season-Plow-Assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>\r\n\r\n<p><em>A $35&nbsp;large-package shipping surcharge, levied and collected by UPS, will be applied at Checkout.</em></p>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4f6cfeb1/products/Attachments_Accessories/19A30037100.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwca573136/products/Attachments_Accessories/19A30037100_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw572fe23d/products/Attachments_Accessories/19A30037100_6.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1c36848a/products/Attachments_Accessories/19A30037100_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw236c0520/products/Attachments_Accessories/19A30037100_7.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa496a827/products/19A30037100 env_-2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw8c232675/products/19A30037100 env_.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [
+                        { "values": [{ "sequence": 0, "value": "5" }], "grouping": null, "sequence": 1, "name": "Bazaarvoice Average Rating", "identifier": "bvAverageRating" },
+                        { "values": [{ "sequence": 0, "value": "1" }], "grouping": null, "sequence": 3, "name": "Bazaarvoice Review Count", "identifier": "bvReviewCount" }
+                    ],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 12,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30037100",
+                "listPrices": [{ "price": 459.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30038100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 93.99, "currency": "USD" }],
+                "name": "FastAttach® Front Brush Guard",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/fastattach-front-brush-guard/19A30038100.html",
+                "longDescription": "<p>Add versatility to your XT Enduro Series&trade;&nbsp;tractor with the FastAttach<sup>&reg;</sup> Connection System. Simply align, latch and lock. No tools required!</p>\r\n\r\n<p>Front Brush Guard specifically designed to fit XT1 and XT2 Enduro Series&trade; lawn tractors.</p>\r\n\r\n<ul>\r\n\t<li>Does not interfer with Opening and closing&nbsp;the hood</li>\r\n\t<li>Protects your tractor's front end</li>\r\n\t<li>Durable steel and poly design adds style your Enduro Series&trade; tractor</li>\r\n\t<li>No tools required with FastAttach<sup>&reg;</sup></li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw67695bcd/products/Attachments_Accessories/19A30038100.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwbab251d6/products/Attachments_Accessories/19A30038100_1.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30038100",
+                "listPrices": [{ "price": 93.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30043100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 469.99, "currency": "USD" }],
+                "name": "Leaf Collector For 42 and 46-inch Decks",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/leaf-collector-for-42-and-46-inch-decks/19A30043100.html",
+                "longDescription": "<p>Fits Riding Mowers including XT1 and XT2 Enduro Series Models (2010- )</p>\r\n\r\n<ul>\r\n\t<li>Collection system includes frame attachment, cover and discharge tubes</li>\r\n\t<li>Holds up to 25 cu.ft of leaves and debris</li>\r\n\t<li>Rear Zipper opening allows for easy dumping of material when the leaf collection system is full</li>\r\n\t<li>A quick connect bungee cord secures the cover, minimizing material leakage</li>\r\n\t<li>Fits <em>Separately Available</em> <a href=\"$url('Product-Show','pid','19B40026100')$\">Cub Cadet Hauler</a> and other popular tow-behind carts from&nbsp;&nbsp;Agri-Fab, Ohio Steel, Brinley-Hardy and YTL.</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Detailed Product Information. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Leaf-Collector-Sell-Sheet.pdf?$staticlink$\" target=\"_blank\">Detailed Product Information</a></li>\r\n\t\r\n    <li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Leaf-collector-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4d3cfdb1/products/Attachments_Accessories/19A30043100_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa4f41b03/products/Attachments_Accessories/19A30043100.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf6aad84b/products/Attachments_Accessories/19A30043100_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw57e42634/products/Attachments_Accessories/19A30043100_2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwed4111ae/products/Attachments_Accessories/19A30043100_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw391fd9ab/products/Attachments_Accessories/19A30043100_4.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 5,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30043100",
+                "listPrices": [{ "price": 469.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30046100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 76.29, "currency": "USD" }],
+                "name": "Xtreme® Mulching Kit for 42-inch Cutting Decks",
+                "siteURL": "https://www.cubcadet.com/en_US/zero-turn-mower-blades/xtreme-mulching-kit-for-42-inch-cutting-decks/19A30046100.html",
+                "longDescription": "<style type=\"text/css\">.genuine-parts-logo {\r\n\r\npadding-left: 10px;\r\n\r\n}\r\n\r\n.genuine-parts-logo-2 {\r\n\r\npadding-left: 20px;\r\n\r\n}\r\n\r\n.info-icon .icon {\r\n\r\nmargin-left: 0 !important;\r\n\r\n}\r\n</style>\r\n<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/Cub_Cadet_Genuine_Parts_Logo_80x70.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" Cub Cadet blades are engineered to Cub Cadet original equipment exact specifications. Each blade goes through rigid multi-step factory testing to ensure the highest safety and performance standards are met. Use only Cub Cadet Genuine Parts for an exact fit, optimal performance and maximum safety.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span> <img alt=\"genuine-parts-logo\" class=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/Cub_Quality_Shield_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" Receive the assurance of quality when you purchase a part, attachment or accessory from Cub Cadet. You get the peace of mind knowing that you will receive an original equipment part that has been approved, tested and certified by Cub Cadet.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span> <img alt=\"genuine-parts-logo\" class=\"genuine-parts-logo-2\" src=\"products/Genuine_Parts_Logos/Cub_MIUSA_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" Cub Cadet blades are made in the USA with global materials. \" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span></p>\r\n\r\n<ul>\r\n\t<li>Fits most XT1, XT2 and RZT Models with a&nbsp;42-inch Cutting Deck</li>\r\n\t<li>Includes two Xtreme<sup>&reg;</sup> mulching blades, molded plug, mounting hardware and instructions</li>\r\n\t<li>Ideal for finely cutting grass clippings and redistributing them back into your lawn, providing essential nutrients</li>\r\n</ul>",
+                "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwe30b518c/products/19A30046100.jpg"],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "Xtreme" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 1,
+                            "name": "Blade Category",
+                            "identifier": "blade-category"
+                        },
+                        { "values": [{ "sequence": 0, "value": "2-in-1" }], "grouping": "Blade Specifications", "sequence": 2, "name": "Blade Type", "identifier": "blade-type" },
+                        {
+                            "values": [{ "sequence": 0, "value": "S" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 4,
+                            "name": "Center Hole Pattern",
+                            "identifier": "center-hole-pattern"
+                        },
+                        {
+                            "values": [{ "sequence": 0, "value": "42 in" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 5,
+                            "name": "Deck Cutting Width",
+                            "identifier": "cutting-deck-width"
+                        },
+                        {
+                            "values": [
+                                { "sequence": 0, "value": "Ultima Series™ ZT" },
+                                { "sequence": 1, "value": "XT1/XT2 Enduro Series" }
+                            ],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 8,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30046100",
+                "listPrices": [{ "price": 76.29, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19A30056100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 524.99, "currency": "USD" }],
+                "name": "Triple Bagger for 42- and 46-inch Decks",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/triple-bagger-for-42--and-46-inch-decks/19A30056100.html",
+                "longDescription": "<ul>\r\n\t<li>Fits Cub Cadet XT Enduro Series XT1 and XT2 series lawn tractors with 42 in. and 46 in. cutting decks.</li>\r\n\t<li>Includes three bags, chute, deflector, hood, mounting brackets and hardware.</li>\r\n\t<li>Superior bagging performance with a 10-bushel capacity.</li>\r\n\t<li>The easy-to-empty bags are made of heavy duty material and feature an integrated handle and a thermoform bottom.</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6711a2ff/products/19A30056100_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw33e955ad/products/19A30056100_2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw803e1840/products/19A30056100_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwbafffad4/products/19A30056100_4.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwfc629731/products/19A30056100_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw15e327e5/products/19A30056100_6.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6dbeba22/products/19A30056100_7.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc8fed3ba/products/19A30056100_8.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw72057417/products/19A30056100_9.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1d5e4f70/products/19A30056100_10.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwc3ca094f/products/19A30056100_11.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd56340fd/products/19A30056100_12.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "42 in, 46 in" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 2,
+                            "name": "Deck Cutting Width",
+                            "identifier": "cutting-deck-width"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19A30056100",
+                "listPrices": [{ "price": 524.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19B30029100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 114.99, "currency": "USD" }],
+                "name": "FastAttach® Rear Cargo Carrier",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/fastattach-rear-cargo-carrier/19B30029100.html",
+                "longDescription": "<p>Add versatility to your XT Enduro&trade; Series tractor with the FastAttach<sup>&reg;</sup> Connection System. Simply align, latch and lock, no tools required! The Rear Cargo Carrier makes it easy for you to carry mulch, dirt, tools, plants and more. It's hinged to fold and stay in an up-right position when it's not being used, making it a convenient attachment to have for your tractor.</p>\r\n\r\n<ul>\r\n\t<li>Steel shelf attaches securely to the rear of XT1 and XT2 tractors</li>\r\n\t<li>80 lb Capacity</li>\r\n\t<li>Easy To Mount. No Tools Required</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw604a356c/products/Attachments_Accessories/19B30029100.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf8f2fed4/products/19A30029100 env_.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19B30029100",
+                "listPrices": [{ "price": 114.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19B30031100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 449.99, "currency": "USD" }],
+                "name": "Double Bagger For 42- and 46-inch Decks",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/double-bagger-for-42--and-46-inch-decks/19B30031100.html",
+                "longDescription": "<p>Fits Riding Mowers including XT1 and XT2 Enduro Series Models (2010- )</p>\r\n\r\n<ul>\r\n\t<li>Integrated hood design</li>\r\n\t<li>Flex tubing for visual of grass flow and increased shipping efficiencies</li>\r\n\t<li>Top hinged hood so you do not have to flip the seat up to empty the&nbsp;bags</li>\r\n\t<li>Improved bag material</li>\r\n</ul>\r\n\r\n<div><em><span style=\"font-size:14px;\">A $129 large-package shipping surcharge, levied and collected by UPS, will be applied at checkout.</span></em></div>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf518e5d4/products/Attachments_Accessories/19B30031100_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwdb028fd6/products/19B30031100_2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwcc976ea2/products/19B30031100_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd8d41d63/products/19B30031100_4.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwe286f957/products/19B30031100_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4b589dec/products/19B30031100_6.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwa4f43f1b/products/19B30031100_7.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "42 in, 46 in" }],
+                            "grouping": "Blade Specifications",
+                            "sequence": 3,
+                            "name": "Deck Cutting Width",
+                            "identifier": "cutting-deck-width"
+                        },
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 6,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19B30031100",
+                "listPrices": [{ "price": 449.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19B40024OEM",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 2499.99, "currency": "USD" }],
+                "name": "42\" 3-Stage Snow Blower Attachment",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/42inch-3-stage-snow-blower-attachment/19B40024OEM.html",
+                "longDescription": "<p>Fits Cub Cadet XT1 and XT2 Enduro Series Lawn Tractors, 2015 and newer</p>\r\n\r\n<p>Fits Troy-Bilt Super Bronco XP riding lawn mower, 2015 and newer</p>\r\n\r\n<ul>\r\n\t<li>Innovative Three-Stage Technology clears snow up to 25% faster than a traditional Two-Stage Snow Thrower</li>\r\n\t<li>Quickly and easily removes 18&rdquo; of snow</li>\r\n\t<li>Robust steel high arch chute provides optimal snow throwing</li>\r\n\t<li>High volume accelerator cuts and chops snow</li>\r\n\t<li>Includes adjustable replaceable skid shoes and scraper blade</li>\r\n\t<li><a href=\"$url('Product-Show','pid','19B30022100')$\">Snow Cab</a> available separately.</li>\r\n\t<li><a href=\"https://www.cubcadet.com/en_US/riding-mower-accessories/chains-for-20-x-8-x-8-and-20-x-8-x-10-tires/490-241-0023.html\">20-inch Tire Chains</a>&nbsp;and <a href=\"$url('Product-Show','pid','490-241-0025')$\">22-inch Tire Chains</a> available separately.</li>\r\n\t<li><a href=\"$url('Product-Show','pid','490-900-M060')$\">Rear Weight Kit</a>&nbsp;available&nbsp;</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/XT-3-Stage-Blower-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                "images": [],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "LTL/Truck Delivery" }],
+                            "grouping": "Shipping Details",
+                            "sequence": 9,
+                            "name": "LTL/Truck Delivery",
+                            "identifier": "LTL-shipping-message"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19B40024OEM",
+                "listPrices": [{ "price": 2499.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19B40026100",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 399.99, "currency": "USD" }],
+                "name": "Cub Cadet Hauler",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/cub-cadet-hauler/19B40026100.html",
+                "longDescription": "<ul>\r\n\t<li>10 cu. ft / 800 lb Capacity</li>\r\n\t<li>Collapsible sides for vertical storage</li>\r\n\t<li>Foot-pedal dump release</li>\r\n\t<li>Fold-out side panels allow easy access for loading and unloading</li>\r\n\t<li>15 x 6 pneumatic tires</li>\r\n\t<li>Takes 70% less space in a garage or shed than traditional carts</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Hauler-Assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>\r\n\r\n<p><em>A $129 large-package shipping surcharge, levied and collected by UPS, will be applied at Checkout.</em></p>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1f426d26/products/Attachments_Accessories/19B40026100.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw26c22f1f/products/Attachments_Accessories/19B40026100_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4351a95c/products/Attachments_Accessories/19B40026100_2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw7a9228db/products/Attachments_Accessories/19B40026100_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4e7bdca7/products/Attachments_Accessories/19B40026100_9.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6c67a193/products/Attachments_Accessories/19B40026100_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw080e12c4/products/19A30030100 env_.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw2edf4617/products/19A30030100 env_-2.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "70.5 x 34.75 x 29 inches" }],
+                            "grouping": "Dimensions",
+                            "sequence": 1,
+                            "name": "Assembled Dimensions",
+                            "identifier": "assembled-dimensions"
+                        },
+                        {
+                            "values": [
+                                { "sequence": 0, "value": "RZT SX Series" },
+                                { "sequence": 1, "value": "Ultima Series™ ZT" },
+                                { "sequence": 2, "value": "Ultima Series™ ZTX" },
+                                { "sequence": 3, "value": "RZT LX Series" },
+                                { "sequence": 4, "value": "CC 30 Series" },
+                                { "sequence": 5, "value": "XT1/XT2 Enduro Series" },
+                                { "sequence": 6, "value": "XT3 Enduro Series" },
+                                { "sequence": 7, "value": "Z-Force® L/LX Series" }
+                            ],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 10,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        },
+                        { "values": [{ "sequence": 0, "value": "106 lbs" }], "grouping": "Dimensions", "sequence": 43, "name": "Weight (approx.)", "identifier": "weight-approx" }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "19B40026100",
+                "listPrices": [{ "price": 399.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19C30021OEM",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 230.99, "currency": "USD" }],
+                "name": "Sun Shade",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/sun-shade/19C30021OEM.html",
+                "longDescription": "<ul>\r\n\t<li>Fits Troy-Bilt Super Bronco XP and Cub Cadet XT1 and XT2 Lawn Tractors, 2015-After</li>\r\n\t<li>Durable clear vinyl and heavy-duty tear-resistant fabric &nbsp;Spacious interior allows plenty of room to move&nbsp;</li>\r\n\t<li>Front and side windows optimize visibility&nbsp;</li>\r\n\t<li>Strong powder-coated steel tubular frame</li>\r\n\t<li>Provides excellent shade</li>\r\n\t<li>Easy Assembly</li>\r\n</ul>",
+                "images": [],
+                "attributes": { "RATINGS": [], "SPECS": [], "FEATURES": [] },
+                "itemNumber": "19C30021OEM",
+                "listPrices": [{ "price": 230.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19C30022OEM",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 459.99, "currency": "USD" }],
+                "name": "Snow Cab",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/snow-cab/19C30022OEM.html",
+                "longDescription": "<ul>\r\n\t<li>Fits Troy-Bilt Super Bronco XP and Cub Cadet Enduro series XT1 and XT2 Riding Mowers</li>\r\n\t<li>Durable clear vinyl and heavy duty tear resistantant fabric provides an optimum seal from weather.</li>\r\n\t<li>Provides easy access to snow plow and snow blower controls.</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1b596a96/products/19C30022OEM_.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwe0cb731c/products/19C30022OEM.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw8c447f01/products/19C30022OEM_1.jpg"
+                ],
+                "attributes": { "RATINGS": [], "SPECS": [], "FEATURES": [] },
+                "itemNumber": "19C30022OEM",
+                "listPrices": [{ "price": 459.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "19C30026OEM",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 519.99, "currency": "USD" }],
+                "name": "Sun Shade / Snow Cab Kit",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/sun-shade-snow-cab-kit/19C30026OEM.html",
+                "longDescription": "<p>Keep yourself covered with this Sun/Snow Combo Kit for your Troy-Bilt Super Bronco XP or Cub Cadet&nbsp; XT1 / XT2 Enduro Series tractor. The frame design supports both the sun shade and the snow cab, making it easy for you to enjoy year-round protection from the elements. With both of these, you'll have solid protection from sun, wind, snow and cold.</p>\r\n\r\n<ul>\r\n\t<li>Fits Troy-Bilt Super Bronco XP and Cub Cadet XT1 and XT2 Enduro Series Riding Mowers, 2015-After</li>\r\n\t<li>Durable clear vinyl and heavy-duty tear-resistant fabric with excellent 360&deg; visibility</li>\r\n\t<li>Easy access for plow and blower operator controls</li>\r\n\t<li>Easy Assembly</li>\r\n</ul>",
+                "images": [],
+                "attributes": { "RATINGS": [], "SPECS": [], "FEATURES": [] },
+                "itemNumber": "19C30026OEM",
+                "listPrices": [{ "price": 519.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "490-241-0023",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 76.99, "currency": "USD" }],
+                "name": "Chains for 20 x 8 x 8 and 20 x 8 x 10 Tires",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/chains-for-20-x-8-x-8-and-20-x-8-x-10-tires/490-241-0023.html",
+                "longDescription": "<ul>\r\n\t<li>Provides additional traction in snowy and icy conditions</li>\r\n\t<li>Fits 20&quot; x 8&quot; x 8&quot; and 20&quot; x 8&quot; x 10&quot; Rear Tires</li>\r\n\t<li>Contains one set of two tire chains</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw960d4983/products/Attachments_Accessories/490-241-0023.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwcf87d056/products/490-241-0025_1.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw40550a9b/products/490-241-0025_2.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw44be1d79/products/490-241-0023_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw442905a1/products/490-241-0023_4.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw6a72f8b6/products/490-241-0023_5.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [
+                                { "sequence": 0, "value": "Ultima Series™ ZT" },
+                                { "sequence": 1, "value": "XT1/XT2 Enduro Series" },
+                                { "sequence": 2, "value": "Ultima Series™ ZTS" }
+                            ],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 5,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "490-241-0023",
+                "listPrices": [{ "price": 76.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "490-900-0067",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 104.99, "currency": "USD" }],
+                "name": "Riding Mower Sun Shade",
+                "siteURL": "https://www.cubcadet.com/en_US/universal-parts/riding-mower-sun-shade/490-900-0067.html",
+                "longDescription": "<p>Universal Design fits most lawn tractors</p>\r\n\r\n<ul>\r\n\t<li>Collapsible design allows for mowing under low branches</li>\r\n\t<li>Easy bracket assembly to riding mower with no drilling required</li>\r\n\t<li>Can be installed/uninstalled quickly without tools after initial&nbsp;installation</li>\r\n\t<li>Powder coated steel frame&nbsp;with strong breakaway hinges</li>\r\n\t<li>Folds up for easy storage (bag included)</li>\r\n</ul>",
+                "images": [],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "490-900-0067",
+                "listPrices": [{ "price": 104.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "490-900-M059",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 71.99, "currency": "USD" }],
+                "name": "42 lb Suitcase Weight",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/42-lb-suitcase-weight/490-900-M059.html",
+                "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /></p>\r\n\r\n<p>For riding mowers with separately available <a href=\"$url('Product-Show','pid','490-900-M060')$\">Rear-mounted Weight Kit</a>.</p>\r\n\r\n<ul>\r\n\t<li>Fits most Troy-Bilt, Bolens, MTD Gold, Huskee, White Outdoor and Yard-Man riding mowers.</li>\r\n\t<li>Rear-mounted to provide a counterbalance for front-mounted attachments.</li>\r\n</ul>",
+                "images": ["https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1f99cd95/products/490-900-M059.jpg"],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [
+                                { "sequence": 0, "value": "XT1/XT2 Enduro Series" },
+                                { "sequence": 1, "value": "XT3 Enduro Series" }
+                            ],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 5,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "490-900-M059",
+                "listPrices": [{ "price": 71.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "490-900-M060",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 192.99, "currency": "USD" }],
+                "name": "Rear-mounted Weight Kit",
+                "siteURL": "https://www.cubcadet.com/en_US/riding-mower-accessories/rear-mounted-weight-kit/490-900-M060.html",
+                "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /></p>\r\n\r\n<p>Rear mount weight kit for riding tractors &amp; riding mowers. Recommended for use with snow thrower attachment and dozer/snow blade (sold separately) for additional traction when used in conjunction with optional tire chains. Installation &amp; usage instructions included with package.</p>\r\n\r\n<ul>\r\n\t<li>This rear-mounted 60 lb. weight kit adds&nbsp;traction to your riding mower by providing a counterbalance for front-mounted tractor attachments.</li>\r\n\t<li>Includes one suitcase weight (approximately 42 lbs.), bracket (18 lbs.) and hardware. &nbsp;Bracket can hold two (<a href=\"$url('Product-Show','pid','490-900-M059')$\">additional separately available 42 lb Suitcase Weight</a>) for approximately 144 lbs. of total weight.</li>\r\n\t<li>Fits Troy-Bilt, MTD, MTD Gold, Huskee, Bolens, White Outdoor, Yard-man and Yard Machines Riding Mowers, 1999 and After</li>\r\n\t<li>Fits Cub Cadet XT1 and XT2 Enduro Series Tractors 2015-After</li>\r\n\t<li>Fits Cub Cadet Series 1000 and Series 1500 Lawn Tractors 1999-After</li>\r\n</ul>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/Weight-Kit-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd8c90c67/products/490-900-M060_3.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwe8b1547d/products/490-900-M060_4.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw7a2e7b42/products/490-900-M060_5.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [{ "sequence": 0, "value": "XT1/XT2 Enduro Series" }],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 5,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "490-900-M060",
+                "listPrices": [{ "price": 192.99, "currency": "USD" }]
+            },
+            {
+                "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+                "catentryId": "757-06093",
+                "additionalModelNumber": false,
+                "shortDescription": null,
+                "offerPrices": [{ "price": 165.21, "currency": "USD" }],
+                "name": "Armrest Kit",
+                "siteURL": "https://www.cubcadet.com/en_US/seats/armrest-kit/757-06093.html",
+                "longDescription": "<p><img alt=\"genuine-parts-logo\" src=\"products/Genuine_Parts_Logos/MTD_Genuine_Parts_Logo_80x80.jpg?$staticlink$\" title=\"\" /><span class=\"info-icon\"><span class=\"icon\" data-original-title=\" This original equipment part is manufacturer approved.  Meets manufacturer standards for fitment and performance.\" data-placement=\"top\" data-toggle=\"tooltip\" title=\"\"></span></span></p>\r\n\r\n<ul>\r\n\t<li>Fits Cub Cadet&nbsp;CC30 models, XT1 and XT2 Enduro Series Lawn Tractors, 2022 and Newer and Cub Cadet ZT1 42E Ultima Series RZT (2022 - )</li>\r\n\t<li>Fits Troy-Bilt TB30T, TB30E XP, Super Bronco 42E XP and Mustang Series RZT (2022 - )</li>\r\n\t<li>Fits Craftsman T2200, T2400, T3200 Lawn Tractors and RZT (2022 - )</li>\r\n</ul>",
+                "images": [
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwab63f72f/products/757-06093_5.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1085052e/products/757-06093_6.jpg",
+                    "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd272d56f/products/757-06093_7.jpg"
+                ],
+                "attributes": {
+                    "RATINGS": [],
+                    "SPECS": [
+                        {
+                            "values": [
+                                { "sequence": 0, "value": "CC 30 Series" },
+                                { "sequence": 1, "value": "XT1/XT2 Enduro Series" }
+                            ],
+                            "grouping": "Attachment Specifications",
+                            "sequence": 4,
+                            "name": "Fits Series",
+                            "identifier": "fits-series"
+                        }
+                    ],
+                    "FEATURES": []
+                },
+                "itemNumber": "757-06093",
+                "listPrices": [{ "price": 165.21, "currency": "USD" }]
+            }
+        ]
+    },
+    "catentryId": "13ALA9TSA10",
+    "additionalModelNumber": false,
+    "shortDescription": null,
+    "offerPrices": [{ "price": 2299, "currency": "USD" }],
+    "name": "XT1 LT42B",
+    "siteURL": "https://www.cubcadet.com/en_US/lawn-and-garden-tractors/xt1-lt42b/13ALA9TSA10.html",
+    "longDescription": "<p>The Cub Cadet&reg; Enduro Series XT1 LT42B 42-in. 19 HP* Riding Lawn Mower features a 42-in., 13-gauge stamped twin-blade deck with 12 cutting positions. An optimized steering system with responsive handling is engineered to give a 16-in. turn radius a zero-turn feel. An adjustable cut and sew high back 15-in. seat designed to provide comfort for an excellent mowing experience.</p>\r\n\r\n<h5>Documents and Guides</h5>\r\n\r\n<ul>\r\n\t<li><a aria-label=\"Assembly Instructions. OPENS IN NEW WINDOW\" href=\"PDFs/Accessories/769-25738b-nx15-rider-assembly.pdf?$staticlink$\" target=\"_blank\">Assembly Instructions</a></li>\r\n</ul>",
+    "images": [
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf4ca0383/products/Equipment/Cub-Cadet_XT1LT42_New_2000x2000_10.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw98737a4c/products/Equipment/Cub-Cadet_XT1LT42B_1.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw4dae2e92/products/Equipment/Cub-Cadet_XT1LT42B_4.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw9024b446/products/Equipment/Cub-Cadet_XT1LT42B_2.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw0f82e420/products/Equipment/Cub-Cadet_XT1LT42B_3.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dw1c2620d2/products/Equipment/Cub-Cadet_XT1LT42B_5.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwd2e72159/products/Equipment/Cub-Cadet_XT1_LT42_Accessories.jpg",
+        "https://www.cubcadet.com/on/demandware.static/-/Sites-mtd-master-catalog/default/dwf6e92dcf/products/Equipment/Cub_Cadet_LT42_Parts.jpg"
+    ],
+    "attributes": {
+        "RATINGS": [],
+        "SPECS": [
+            { "values": [{ "sequence": 0, "value": "Dual element" }], "grouping": "Engine", "sequence": 0, "name": "Air Filter", "identifier": "air-filter" },
+            { "values": [{ "sequence": 0, "value": "Two gauge wheels" }], "grouping": "Cutting Deck", "sequence": 1, "name": "Anti-Scalping", "identifier": "anti-scalping" },
+            { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Comfort", "sequence": 2, "name": "Armrests", "identifier": "arm-rests" },
+            { "values": [{ "sequence": 0, "value": "230 CCA" }], "grouping": "Battery", "sequence": 3, "name": "Battery", "identifier": "battery" },
+            { "values": [{ "sequence": 0, "value": "AGM (Absorbent Glass Mat)" }], "grouping": "Battery", "sequence": 4, "name": "Battery Type", "identifier": "battery-type" },
+            { "values": [{ "sequence": 0, "value": "12V" }], "grouping": "Battery", "sequence": 5, "name": "Battery Voltage", "identifier": "battery-voltage" },
+            { "values": [{ "sequence": 0, "value": "Poly Bushing" }], "grouping": "Wheels", "sequence": 6, "name": "Bearing Type", "identifier": "bearing-type" },
+            { "values": [{ "sequence": 0, "value": "Two" }], "grouping": "Cutting Deck", "sequence": 7, "name": "Blade(s)", "identifier": "blades" },
+            { "values": [{ "sequence": 0, "value": "Disc" }], "grouping": "Controls", "sequence": 8, "name": "Brakes", "identifier": "brakes" },
+            { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Chassis", "sequence": 9, "name": "Bumper", "identifier": "bumper" },
+            { "values": [{ "sequence": 0, "value": "3 Amp Dual Circuit" }], "grouping": "Engine", "sequence": 12, "name": "Charging System", "identifier": "charging-system" },
+            { "values": [{ "sequence": 0, "value": "Choke-a-matic" }], "grouping": "Engine", "sequence": 13, "name": "Choke", "identifier": "choke" },
+            { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Warranty", "sequence": 15, "name": "Commercial Warranty", "identifier": "commercial-warranty" },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Chassis", "sequence": 16, "name": "Corrosion Protection", "identifier": "corrosion-protection" },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Controls", "sequence": 17, "name": "Cruise Control", "identifier": "cruise-control" },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Additional Specifications", "sequence": 21, "name": "Cup Holder", "identifier": "cup-holder" },
+            {
+                "values": [{ "sequence": 0, "value": "1\" - 4\"" }],
+                "grouping": "Cutting Deck",
+                "sequence": 22,
+                "name": "Cutting Height Range",
+                "identifier": "cutting-height-range"
+            },
+            { "values": [{ "sequence": 0, "value": "Single" }], "grouping": "Engine", "sequence": 23, "name": "Cylinders", "identifier": "cylinders-material" },
+            { "values": [{ "sequence": 0, "value": "Stamped" }], "grouping": "Cutting Deck", "sequence": 25, "name": "Deck Construction", "identifier": "deck-construction" },
+            { "values": [{ "sequence": 0, "value": "42 in" }], "grouping": "Cutting Deck", "sequence": 26, "name": "Deck Cutting Width", "identifier": "deck-cutting-width" },
+            { "values": [{ "sequence": 0, "value": "Manual" }], "grouping": "Cutting Deck", "sequence": 27, "name": "Deck Engagement (PTO)", "identifier": "deck-engagement" },
+            { "values": [{ "sequence": 0, "value": "Manual" }], "grouping": "Cutting Deck", "sequence": 28, "name": "Deck Lift", "identifier": "deck-lift" },
+            { "values": [{ "sequence": 0, "value": "13-gauge steel" }], "grouping": "Cutting Deck", "sequence": 29, "name": "Deck Material", "identifier": "deck-material" },
+            { "values": [{ "sequence": 0, "value": "12" }], "grouping": "Cutting Deck", "sequence": 30, "name": "Deck Positions", "identifier": "deck-positions" },
+            {
+                "values": [{ "sequence": 0, "value": "3-year unlimited hours" }],
+                "grouping": "Warranty",
+                "sequence": 31,
+                "name": "Deck Shell Warranty",
+                "identifier": "deck-shell-warranty"
+            },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Cutting Deck", "sequence": 32, "name": "Deck Wash", "identifier": "deck-wash" },
+            {
+                "values": [
+                    {
+                        "sequence": 0,
+                        "value": "Specifications subject to change without notice and without incurring obligation. Products depicted on website and other advertisements are for demonstration purposes only. Actual products offered for sale may vary in design, required attachments, safety features and non-functional appearance from. See other general disclaimers at the bottom of our website."
+                    }
+                ],
+                "grouping": "Disclaimers",
+                "sequence": 33,
+                "name": "Specifications",
+                "identifier": "disclaimer-specifications"
+            },
+            { "values": [{ "sequence": 0, "value": "Hydrostatic" }], "grouping": "Drive System", "sequence": 34, "name": "Drive System", "identifier": "drive-system" },
+            { "values": [{ "sequence": 0, "value": "Briggs & Stratton®" }], "grouping": "Engine", "sequence": 39, "name": "Engine Brand", "identifier": "engine-brand" },
+            { "values": [{ "sequence": 0, "value": "540cc" }], "grouping": "Engine", "sequence": 40, "name": "Engine Displacement", "identifier": "engine-displacement" },
+            { "values": [{ "sequence": 0, "value": "Professional Series" }], "grouping": "Engine", "sequence": 41, "name": "Engine Model", "identifier": "engine-make-model" },
+            { "values": [{ "sequence": 0, "value": "33S877-0038" }], "grouping": "Engine", "sequence": 42, "name": "Engine Model Number", "identifier": "engine-model-number" },
+            {
+                "values": [{ "sequence": 0, "value": "1.5 qt. US (1.42 L)" }],
+                "grouping": "Engine",
+                "sequence": 43,
+                "name": "Engine Oil Capacity",
+                "identifier": "engine-oil-capacity"
+            },
+            {
+                "values": [{ "sequence": 0, "value": "Gross hp per SAE J1940 as rated by engine manufacturer at 3600 RPM" }],
+                "grouping": "Disclaimers",
+                "sequence": 44,
+                "name": "Horsepower",
+                "identifier": "engine-power-disclaimer"
+            },
+            { "values": [{ "sequence": 0, "value": "Ignition Key" }], "grouping": "Engine", "sequence": 45, "name": "Engine Start", "identifier": "engine-start" },
+            { "values": [{ "sequence": 0, "value": "Rubber" }], "grouping": "Comfort", "sequence": 48, "name": "Floor Mats", "identifier": "floor-mats" },
+            { "values": [{ "sequence": 0, "value": "5.5 MPH / 8.6 km/h" }], "grouping": "Drive System", "sequence": 49, "name": "Forward Speed", "identifier": "forward-speed" },
+            { "values": [{ "sequence": 0, "value": "Robotically welded" }], "grouping": "Chassis", "sequence": 50, "name": "Frame", "identifier": "frame" },
+            { "values": [{ "sequence": 0, "value": "5-year unlimited hours" }], "grouping": "Warranty", "sequence": 51, "name": "Frame Warranty", "identifier": "frame-warranty" },
+            {
+                "values": [{ "sequence": 0, "value": "5-year unlimited hours" }],
+                "grouping": "Warranty",
+                "sequence": 52,
+                "name": "Front Axle Warranty",
+                "identifier": "front-axle-warranty"
+            },
+            { "values": [{ "sequence": 0, "value": "Cast iron" }], "grouping": "Chassis", "sequence": 53, "name": "Front Pivot Bar", "identifier": "front-pivot-bar" },
+            { "values": [{ "sequence": 0, "value": "15\"x 6\"-6\"" }], "grouping": "Wheels", "sequence": 54, "name": "Front Tires", "identifier": "front-tires" },
+            { "values": [{ "sequence": 0, "value": "Carburetor" }], "grouping": "Engine", "sequence": 55, "name": "Fuel Delivery", "identifier": "fuel-delivery" },
+            { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Engine", "sequence": 56, "name": "Fuel Gauge", "identifier": "fuel-gauge" },
+            {
+                "values": [{ "sequence": 0, "value": "3.0 gal. US (11.36 L)" }],
+                "grouping": "Engine",
+                "sequence": 57,
+                "name": "Fuel Tank Capacity",
+                "identifier": "fuel-tank-capacity"
+            },
+            { "values": [{ "sequence": 0, "value": "Mechanical" }], "grouping": "Engine", "sequence": 58, "name": "Governor", "identifier": "governor" },
+            { "values": [{ "sequence": 0, "value": "Dual-LED" }], "grouping": "Additional Specifications", "sequence": 59, "name": "Headlight(s)", "identifier": "headlights" },
+            { "values": [{ "sequence": 0, "value": "19HP" }], "grouping": "Engine", "sequence": 60, "name": "Engine Output", "identifier": "horsepower" },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Additional Specifications", "sequence": 61, "name": "Hour Meter", "identifier": "hour-meter" },
+            { "values": [{ "sequence": 0, "value": "Fully pressurized" }], "grouping": "Engine", "sequence": 66, "name": "Lubrication", "identifier": "lubrication" },
+            {
+                "values": [{ "sequence": 0, "value": "13ALA9TSA10" }],
+                "grouping": "Additional Specifications",
+                "sequence": 67,
+                "name": "Model Number",
+                "identifier": "model-number"
+            },
+            {
+                "values": [{ "sequence": 0, "value": "Available Separately" }],
+                "grouping": "Additional Specifications",
+                "sequence": 68,
+                "name": "Mulch Kit",
+                "identifier": "mulch-kit"
+            },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Engine", "sequence": 69, "name": "Oil Filter", "identifier": "oil-filter" },
+            {
+                "values": [{ "sequence": 0, "value": "Yes" }],
+                "grouping": "Additional Specifications",
+                "sequence": 70,
+                "name": "Operator Presence System",
+                "identifier": "operator-presence-system"
+            },
+            { "values": [{ "sequence": 0, "value": "3/4\"" }], "grouping": "Drive System", "sequence": 76, "name": "Rear Axle", "identifier": "rear-axle" },
+            { "values": [{ "sequence": 0, "value": "No" }], "grouping": "Drive System", "sequence": 77, "name": "Rear Differential Lock", "identifier": "rear-differential-lock" },
+            { "values": [{ "sequence": 0, "value": "20\"x 8\"-8\"" }], "grouping": "Wheels", "sequence": 78, "name": "Rear Tires", "identifier": "rear-tires" },
+            { "values": [{ "sequence": 0, "value": "Yes" }], "grouping": "Chassis", "sequence": 79, "name": "Rear Tow Hitch", "identifier": "rear-tow-hitch" },
+            { "values": [{ "sequence": 0, "value": "3 MPH / 4.8 km/h" }], "grouping": "Drive System", "sequence": 81, "name": "Reverse Speed", "identifier": "reverse-speed" },
+            { "values": [{ "sequence": 0, "value": "Lever" }], "grouping": "Comfort", "sequence": 82, "name": "Seat Adjustment", "identifier": "seat-adjustments" },
+            { "values": [{ "sequence": 0, "value": "15\" high-back" }], "grouping": "Comfort", "sequence": 83, "name": "Seat Type", "identifier": "seat-type" },
+            { "values": [{ "sequence": 0, "value": "XT1® Enduro Series™" }], "grouping": "Specifications", "sequence": 84, "name": "Series", "identifier": "series" },
+            { "values": [{ "sequence": 0, "value": "Electric" }], "grouping": "Engine", "sequence": 85, "name": "Starter Type", "identifier": "starter-type" },
+            { "values": [{ "sequence": 0, "value": "Turf Saver" }], "grouping": "Wheels", "sequence": 86, "name": "Tire Tread", "identifier": "tire-tread" },
+            { "values": [{ "sequence": 0, "value": "Tuff Torq® TL-200" }], "grouping": "Drive System", "sequence": 87, "name": "Transmission", "identifier": "transmission" },
+            {
+                "values": [{ "sequence": 0, "value": "Foot Pedal" }],
+                "grouping": "Drive System",
+                "sequence": 88,
+                "name": "Transmission Control",
+                "identifier": "transmission-control"
+            },
+            {
+                "values": [{ "sequence": 0, "value": "Aluminum" }],
+                "grouping": "Drive System",
+                "sequence": 89,
+                "name": "Transmission Housing",
+                "identifier": "transmission-housing"
+            },
+            { "values": [{ "sequence": 0, "value": "16\"" }], "grouping": "Chassis", "sequence": 90, "name": "Turning Radius", "identifier": "turning-radius" },
+            { "values": [{ "sequence": 0, "value": "3-year unlimited hours" }], "grouping": "Warranty", "sequence": 92, "name": "Residential Warranty", "identifier": "warranty" }
+        ],
+        "FEATURES": [
+            {
+                "values": [
+                    { "sequence": 0, "value": "The Cub Cadet XT1 LT42B is powered by a Briggs & Stratton Professional Series single cylinder 540cc engine" },
+                    { "sequence": 1, "value": "42-inch stamped, 13-gauge, twin-blade deck with 12 cutting positions." },
+                    { "sequence": 2, "value": "Equipped with an optimized steering system for responsive handling to give a 16-inch turn radius a zero-turn feel." },
+                    { "sequence": 3, "value": "3-year/no hour limit warranty (includes powertrain) and 5-year chassis and front axle unlimited hours." },
+                    { "sequence": 4, "value": "Ideal for mowing up to 1.5 acres of mostly flat terrain and a few obstacles." },
+                    { "sequence": 5, "value": "Tuff Torq foot controlled hydrostatic transmission, no shifting - just push the pedal and go" }
+                ],
+                "grouping": null,
+                "sequence": 47,
+                "name": "Features",
+                "identifier": "features"
+            }
+        ]
+    },
+    "itemNumber": "13ALA9TSA10",
+    "listPrices": [{ "price": 2299, "currency": "USD" }]
+}

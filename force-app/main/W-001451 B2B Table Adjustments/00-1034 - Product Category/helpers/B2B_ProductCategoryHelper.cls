@@ -1,26 +1,49 @@
 public with sharing class B2B_ProductCategoryHelper {
+    /*  analyze JSON from Demandware/PIM stored on Product2 and 
+
+    2024-06    Aykut (CRM Agile Team) creates class per OO-1034: Salesforce SBD - Assign products to category
+    2024-07-19 mburr(MJ) populated Product2.Section__c to 'Part' or 'Handheld' if not populated - applies to Product2 Record Type 'Part' only
+*/
     public static void adjustProductCategories(Set<Id> product2Ids) {
+        List<Product2> productsToUpdate = new List<Product2>();
         List<ProductCategoryProduct> pcpToInsert = new List<ProductCategoryProduct>();
         List<ProductCategoryProduct> pcpToUpdate = new List<ProductCategoryProduct>();
         List<ProductCategoryProduct> pcpToDelete = new List<ProductCategoryProduct>();
         List<Product2> prs = [
-            SELECT Id, B2B_Product_Type__c, Commerce_JSON__c, (SELECT Id, IsPrimaryCategory, ProductCategory.Name FROM ProductCategoryProducts)
+            SELECT
+                Id,
+                RecordTypeId,
+                B2B_Product_Type__c,
+                Section__c,
+                Commerce_JSON__c,
+                Product_Code_External_Id__c,
+                B2B_Handheld_Override__c,
+                (SELECT Id, IsPrimaryCategory, ProductCategory.Name FROM ProductCategoryProducts)
             FROM Product2
-            WHERE Id IN :product2Ids
+            WHERE Id IN :product2Ids AND (NOT Product_Code_External_Id__c LIKE '%-LEGACY')
         ];
         Map<String, ProductCategory> nameProductCategoryMap = getNameProductCategoryMap();
 
         for (Product2 p : prs) {
+            Product2 pToUpdate;
+            // update Product2 if needed
+            if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
+                pToUpdate = new Product2(Id = p.Id);
+                pToUpdate.Section__c = 'Part';
+            }
+
             // check if Product Category link is there, if not then create on insert
             if (getProductCategoryLink(p, 'Products').isEmpty() && !String.isBlank(nameProductCategoryMap.get('Products')?.Id)) {
                 String productCategoryId = nameProductCategoryMap.get('Products')?.Id;
-                pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = false));
+                if (!String.isBlank(productCategoryId)) {
+                    //pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = false));
+                }
             }
 
             if (p.B2B_Product_Type__c == 'Whole Goods') {
                 List<ProductCategoryProduct> wgPcps = getProductCategoryLink(p, 'Whole Goods');
                 String productCategoryId = nameProductCategoryMap.get('Whole Goods')?.Id;
-                if (wgPcps.isEmpty()) {
+                if (wgPcps.isEmpty() && !String.isBlank(productCategoryId)) {
                     pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
                 } else if (wgPcps.size() == 1) {
                     // wgPcps[0].ProductCategoryId = productCategoryId;
@@ -34,10 +57,19 @@ public with sharing class B2B_ProductCategoryHelper {
             } else if (p.B2B_Product_Type__c == 'Parts') {
                 CommerceData cdata = getCategoryFromCommerceJson(p.Commerce_JSON__c);
 
-                if (cdata != null && cdata.category == 'Handheld') {
+                if ((cdata != null && cdata.category == 'Handheld') || p.B2B_Handheld_Override__c) {
+                    //If Product2.Section__c is blank and Product2.RecordType is 'Part', then change to 'Handheld'
+                    if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
+                        if (pToUpdate == null)
+                            pToUpdate = new Product2(Id = p.Id);
+                        if (String.isBlank(pToUpdate.Section__c) || pToUpdate.Section__c == 'Part') {
+                            pToUpdate.Section__c = 'Handheld';
+                        }
+                    }
+
                     List<ProductCategoryProduct> hhPcps = getProductCategoryLink(p, 'Handheld');
                     String productCategoryId = nameProductCategoryMap.get('Handheld')?.Id;
-                    if (hhPcps.isEmpty()) {
+                    if (hhPcps.isEmpty() && !String.isBlank(productCategoryId)) {
                         pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
                     } else if (hhPcps.size() == 1) {
                         // wgPcps[0].ProductCategoryId = productCategoryId;
@@ -48,7 +80,7 @@ public with sharing class B2B_ProductCategoryHelper {
 
                     pcpToDelete.addAll(getProductCategoryLink(p, 'Parts'));
                     pcpToDelete.addAll(getProductCategoryLink(p, 'Whole Goods'));
-                    pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, cdata.category));
+                    if(cdata?.category != null)pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, cdata.category));
                 } else {
                     // get category from commerce JSON
                     String subProductCategoryId = (cdata == null) ? null : nameProductCategoryMap.get(cdata.category)?.Id;
@@ -57,7 +89,8 @@ public with sharing class B2B_ProductCategoryHelper {
                     List<ProductCategoryProduct> partPcps = getProductCategoryLink(p, 'Parts');
                     String productCategoryId = nameProductCategoryMap.get('Parts')?.Id;
                     if (partPcps.isEmpty() && !String.isBlank(productCategoryId)) {
-                        pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = partIsPrimary));
+                        if (partIsPrimary)
+                            pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = partIsPrimary));
                     } else if (partPcps.size() == 1) {
                         // partPcps[0].ProductCategoryId = productCategoryId;
                         partPcps[0].ProductId = p.Id;
@@ -69,7 +102,8 @@ public with sharing class B2B_ProductCategoryHelper {
                         List<ProductCategoryProduct> cDataPcps = getProductCategoryLink(p, cdata.category);
                         if (cDataPcps.isEmpty()) {
                             if (!String.isBlank(subProductCategoryId)) {
-                                pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = subProductCategoryId, ProductId = p.Id, IsPrimaryCategory = !partIsPrimary));
+                                if (!partIsPrimary)
+                                    pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = subProductCategoryId, ProductId = p.Id, IsPrimaryCategory = !partIsPrimary));
                             }
                         }
                     }
@@ -79,9 +113,20 @@ public with sharing class B2B_ProductCategoryHelper {
                         pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, cdata.category));
                 }
             }
+
+            // delete non primary products
+            pcpToDelete.addAll(getNonPrimaryProductCategoryLink(p));
+
+            if (pToUpdate != null) {
+                productsToUpdate.add(pToUpdate);
+            }
         }
 
         // DML Operation
+        if (!productsToUpdate.isEmpty()) {
+            update productsToUpdate;
+        }
+
         if (!pcpToDelete.isEmpty()) {
             delete pcpToDelete;
         }
@@ -102,6 +147,16 @@ public with sharing class B2B_ProductCategoryHelper {
         List<ProductCategoryProduct> pcps = new List<ProductCategoryProduct>();
         for (ProductCategoryProduct pcp : p.ProductCategoryProducts) {
             if (pcp.ProductCategory.Name == productCategoryName) {
+                pcps.add(pcp);
+            }
+        }
+        return pcps;
+    }
+
+    private static List<ProductCategoryProduct> getNonPrimaryProductCategoryLink(Product2 p) {
+        List<ProductCategoryProduct> pcps = new List<ProductCategoryProduct>();
+        for (ProductCategoryProduct pcp : p.ProductCategoryProducts) {
+            if (!pcp.IsPrimaryCategory) {
                 pcps.add(pcp);
             }
         }
