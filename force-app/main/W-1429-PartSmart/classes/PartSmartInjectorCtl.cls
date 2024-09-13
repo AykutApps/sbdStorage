@@ -1,7 +1,7 @@
 global class PartSmartInjectorCtl {
     public String scriptUrl { get; private set; }
     public String loggedInUser { get; private set; }
-    
+
     private TokenResponse tokenResponse { get; private set; }
     private TokenResponse tokenPortalUserResponse { get; private set; }
 
@@ -12,8 +12,27 @@ global class PartSmartInjectorCtl {
     private static Map<String, Product2> productCodeProductMapByCartItems;
     private static PartRequest part;
     private static final String DEFAULT_CART_NAME = 'PartSmart';
-    private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
+    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce'; // DEVONE, DEMO = B2B Dealer Community
     private static Id loggedInUserId;
+
+    // Error handling
+    public enum FriendlyMessages {
+        INACTIVE_ITEM,
+        MISSING_ITEM,
+        ITEM_NLA,
+        ITEM_REPLACED,
+        BASE_ITEM,
+        GENERAL_ERROR
+    }
+
+    private static Map<FriendlyMessages, String> messageMap = new Map<FriendlyMessages, String>{
+        FriendlyMessages.INACTIVE_ITEM => 'The product is inactive: ',
+        FriendlyMessages.MISSING_ITEM => 'Item cannot be found in community. Cannot add to your draft order: ',
+        FriendlyMessages.ITEM_NLA => 'Please search for another part number. Item is no longer available: ',
+        FriendlyMessages.ITEM_REPLACED => 'This SKU have been replaced: ',
+        FriendlyMessages.BASE_ITEM => 'Please add the appropriate color/variant SKU. Cannot add BASE SKU to your draft order: ',
+        FriendlyMessages.GENERAL_ERROR => 'An error occurred, and item(s) cannot be added to your draft order: '
+    };
 
     public PartSmartInjectorCtl() {
         scriptUrl = getScriptUrl();
@@ -89,34 +108,65 @@ global class PartSmartInjectorCtl {
 
         // JSON body with the specified parameters
         User usr = [
-            SELECT FirstName, LastName, Contact.Email, Contact.Account.Name,Contact.Account.BillingStreet, Contact.Account.BillingCity,
-                Contact.Account.BillingPostalCode, Contact.Account.BillingCountry,Contact.Account.Entity_ID__c,
-                Contact.Account.BillingState,Contact.Phone 
+            SELECT
+                FirstName,
+                LastName,
+                Contact.Email,
+                Contact.Account.Name,
+                Contact.Account.BillingStreet,
+                Contact.Account.BillingCity,
+                Contact.Account.BillingPostalCode,
+                Contact.Account.BillingCountry,
+                Contact.Account.Entity_ID__c,
+                Contact.Account.BillingState,
+                Contact.Phone
             FROM User
             WHERE Id = :UserInfo.getUserId()
             LIMIT 1
         ];
         String body;
 
-        if(usr.Contact == null ||usr.Contact.Account == null){
-            body = '{"username": "' + UserInfo.getName() + '",'+
-                    ' "email": "' + UserInfo.getUserEmail() + '",'+
-                    ' "businessName": "Test Aykut Dealer",'+
-                    ' "groupCode": "USIRX"}';
+        if (usr.Contact == null || usr.Contact.Account == null) {
+            body = '{"username": "' + UserInfo.getName() + '",' + ' "email": "' + UserInfo.getUserEmail() + '",' + ' "businessName": "Test Dealer",' + ' "groupCode": "USIRX"}';
         } else {
-            body = '{"username": "' + UserInfo.getName() + '",'+
-                    ' "email": "' + UserInfo.getUserEmail() + '",'+
-                    ' "firstName": "' +usr.FirstName + '",' +
-                    ' "lastName": "' +usr.LastName + '",' +
-                    ' "phone": "' +usr.Contact.Phone + '",' +
-                    ' "businessName": "' +usr.Contact.Account.Name + '",' +
-                    ' "streetAddress": "' +usr.Contact.Account.BillingStreet + '",' +
-                    ' "city": "' +usr.Contact.Account.BillingCity + '",' +
-                    ' "postalCode": "' +usr.Contact.Account.BillingPostalCode + '",' +
-                    ' "stateProvince": "' +usr.Contact.Account.BillingState + '",' +
-                    ' "country": "' +usr.Contact.Account.BillingCountry + '",' +
-                    ' "dealerId": "' +usr.Contact.Account.Entity_ID__c + '",' +
-                    ' "groupCode": "USIRX"}';
+            body =
+                '{"username": "' +
+                UserInfo.getName() +
+                '",' +
+                ' "email": "' +
+                UserInfo.getUserEmail() +
+                '",' +
+                ' "firstName": "' +
+                usr.FirstName +
+                '",' +
+                ' "lastName": "' +
+                usr.LastName +
+                '",' +
+                ' "phone": "' +
+                usr.Contact.Phone +
+                '",' +
+                ' "businessName": "' +
+                usr.Contact.Account.Name +
+                '",' +
+                ' "streetAddress": "' +
+                usr.Contact.Account.BillingStreet +
+                '",' +
+                ' "city": "' +
+                usr.Contact.Account.BillingCity +
+                '",' +
+                ' "postalCode": "' +
+                usr.Contact.Account.BillingPostalCode +
+                '",' +
+                ' "stateProvince": "' +
+                usr.Contact.Account.BillingState +
+                '",' +
+                ' "country": "' +
+                usr.Contact.Account.BillingCountry +
+                '",' +
+                ' "dealerId": "' +
+                usr.Contact.Account.Entity_ID__c +
+                '",' +
+                ' "groupCode": "USIRX"}';
         }
 
         req.setBody(body);
@@ -145,9 +195,13 @@ global class PartSmartInjectorCtl {
 
     @RemoteAction
     global static String addToCart(String jsonString) {
-        part = (PartRequest) System.JSON.deserialize(jsonString, PartRequest.class);
-        String addToCartResult = addPartsToCart();
-        return addToCartResult;
+        try {
+            part = (PartRequest) System.JSON.deserialize(jsonString, PartRequest.class);
+            String addToCartResult = addPartsToCart();
+            return addToCartResult;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     private static String addPartsToCart() {
@@ -172,7 +226,7 @@ global class PartSmartInjectorCtl {
 
             // insert the cart items
             addCartItems();
-            
+
             response = 'Success';
         } catch (Exception e) {
             response = e.getMessage();
@@ -180,20 +234,19 @@ global class PartSmartInjectorCtl {
         return response;
     }
 
-
-
     private static void queryDealerAccountId() {
-        if(dealerAccountId != null) return;
-        
-        User[] loggedInUserDealers = [SELECT Id, Contact.Id, Contact.AccountId from User WHERE Id =:loggedInUserId];
-        if(loggedInUserDealers.size() == 1){
-            if(loggedInUserDealers[0].Contact.AccountId != null){
+        if (dealerAccountId != null)
+            return;
+
+        User[] loggedInUserDealers = [SELECT Id, Contact.Id, Contact.AccountId FROM User WHERE Id = :loggedInUserId];
+        if (loggedInUserDealers.size() == 1) {
+            if (loggedInUserDealers[0].Contact.AccountId != null) {
                 dealerAccountId = loggedInUserDealers[0].Contact.AccountId;
             } else {
-                throw new CustomException('There is no dealer account found for userId: '+ loggedInUserId);
+                throw new CustomException('There is no dealer account found for userId: ' + loggedInUserId);
             }
         } else {
-            throw new CustomException('There is no user found for userId: '+ loggedInUserId);
+            throw new CustomException('There is no user found for userId: ' + loggedInUserId);
         }
     }
 
@@ -260,7 +313,17 @@ global class PartSmartInjectorCtl {
 
         // Query product records based on the collected product codes
         List<Product2> products = [
-            SELECT Id, ProductCode, Detail_SKU__c, Name, Description /* Add more fields as needed */
+            SELECT
+                Id,
+                ProductCode,
+                Detail_SKU__c,
+                Name,
+                B2B_no_longer_available__c,
+                Description,
+                isActive,
+                B2B_Replacement_Product__c,
+                B2B_Replacement_Product__r.ProductCode,
+                Is_Base_Part__c /* Add more fields as needed */
             FROM Product2
             WHERE ProductCode IN :productCodes
         ];
@@ -279,8 +342,17 @@ global class PartSmartInjectorCtl {
         for (Arg arg : part.params.args) {
             Product2 product = productCodeProductMapByCartItems.get(arg.sku);
             if (product == null) {
-                throw new CustomException('Error: Can not add ' + arg.sku + ' to your draft order. Item can not be found in the community.');
+                throw new CustomException(messageMap.get(FriendlyMessages.MISSING_ITEM) + arg.sku);
+            } else if (!product.isActive) {
+                throw new CustomException(messageMap.get(FriendlyMessages.INACTIVE_ITEM) + arg.sku);
+            } else if (product.B2B_no_longer_available__c) {
+                throw new CustomException(messageMap.get(FriendlyMessages.ITEM_NLA) + arg.sku);
+            } else if (product.B2B_Replacement_Product__c != null) {
+                throw new CustomException(messageMap.get(FriendlyMessages.ITEM_REPLACED) + arg.sku + ' by ' + product.B2B_Replacement_Product__r.ProductCode);
+            } else if (product.Is_Base_Part__c == true) {
+                throw new CustomException(messageMap.get(FriendlyMessages.BASE_ITEM) + arg.sku);
             }
+
             ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
             cartItemInput.productId = productCodeProductMapByCartItems.get(arg.sku)?.Id;
             cartItemInput.quantity = String.valueof(arg.qty);
@@ -290,16 +362,15 @@ global class PartSmartInjectorCtl {
         system.debug('add item to cart');
         ConnectApi.BatchResult[] brs = ConnectApi.CommerceCart.addItemsToCart(storeId, dealerAccountId, wc.Id, batchInputs);
         String[] itemErrorMessages = new List<String>();
-        for (ConnectApi.BatchResult br  :brs){
+        for (ConnectApi.BatchResult br : brs) {
             system.debug(br);
             if (!br.isSuccess) {
                 itemErrorMessages.add(br.getErrorMessage());
             }
         }
-        if(!itemErrorMessages.isEmpty()){
+        if (!itemErrorMessages.isEmpty()) {
             throw new CustomException(JSON.serialize(itemErrorMessages));
         }
-        
     }
 
     public class TokenResponse {
@@ -332,42 +403,3 @@ global class PartSmartInjectorCtl {
     public class CustomException extends Exception {
     }
 }
-
-/*
-{"Username":"06005","Email":"rvi.dealer@mtdproducts.com","BusinessName":"RVI TEST DEALER","GroupCode":"CAMTDX","FirstName":"RVI","LastName":"TEST DEALER","Phone":"3305587400","StreetAddress":"5903 GRAFTON RD.","City":"VALLEY CITY","StateProvince":"OH","PostalCode":"44280","Country":"US","DealerId":""}
-Username: where to get it
-GroupCode: CAMTDX
-*/
-
-/*
-        {
-            "username": "string",
-            "email": "user@example.com",
-            "businessName": "string",
-            "groupCode": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "phone": "string",
-            "streetAddress": "string",
-            "city": "string",
-            "stateProvince": "string",
-            "postalCode": "string",
-            "country": "string",
-            "dealerId": "string"
-        }
-
-        '{
-            "username": "' + UserInfo.getName() + '", 
-            "email": "' + UserInfo.getUserEmail() + '", 
-            "businessName": "Test Aykut Dealer", 
-            "groupCode": "USIR"
-        }';
-
-            @AuraEnabled(cacheable=false)
-                public static List<CartItem> getWebcartItems() {
-                // Query for the Account Name and Email fields
-                return [SELECT Id, Name, Quantity, Product2Id, Product2.Description FROM CartItem WHERE Cart.Is_PartSmart__c = TRUE AND Cart.AccountId = :defaultTestDealerAccountId];
-            }   
-
-    */
-
