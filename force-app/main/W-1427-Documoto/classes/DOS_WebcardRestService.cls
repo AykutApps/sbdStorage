@@ -8,7 +8,8 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static final Integer MAX_PAYLOAD_FIELD_SIZE = 5000;
     private static final Integer MAX_PAYLOAD_SIZE = MAX_PAYLOAD_FIELD_SIZE;
     private static final String BASE_SOBJECT_API_NAME = 'WebCart';
-    private static final String SITE_NAME = 'B2B_Dealer_Store1';
+    // private static final String SITE_NAME = 'B2B_Dealer_Store1';
+    private static final String SITE_NAME = 'SBD_Outdoor_Commerce';
 
     private static List<String> errs = new List<String>();
     private static List<String> missingProducts = new List<String>();
@@ -22,7 +23,40 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static Boolean isPrimary = false;
 
     private static final String DEFAULT_CART_NAME = 'Documoto';
-    private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
+    // private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
+    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce';
+
+    // Error handling
+    public enum FriendlyMessages {
+        INACTIVE_ITEM,
+        MISSING_ITEM,
+        ITEM_NLA,
+        ITEM_REPLACED,
+        BASE_ITEM,
+        INACTIVE_ITEM_REPLACEMENT,
+        ITEM_NLA_REPLACEMENT,
+        BASE_ITEM_REPLACEMENT,
+        GENERAL_ERROR
+    }
+
+    private static Map<FriendlyMessages, String> messageMap = new Map<FriendlyMessages, String>{
+        FriendlyMessages.INACTIVE_ITEM => 'The product is inactive: ',
+        FriendlyMessages.MISSING_ITEM => 'Item cannot be found in community. Cannot add to your draft order: ',
+        FriendlyMessages.ITEM_NLA => 'Please search for another part number. Item is no longer available: ',
+        FriendlyMessages.ITEM_REPLACED => 'This SKU for {0} have been replaced: {1} ',
+        FriendlyMessages.BASE_ITEM => 'Please add the appropriate color/variant SKU. Cannot add BASE SKU to your draft order: ',
+        FriendlyMessages.INACTIVE_ITEM_REPLACEMENT => 'The replacement product for {0} is inactive: {1}',
+        FriendlyMessages.ITEM_NLA_REPLACEMENT => 'Please search for another part number. Replacement for {0} is no longer available: {1}',
+        FriendlyMessages.BASE_ITEM_REPLACEMENT => 'Please add the appropriate color/variant SKU. Cannot add replacement for {0} BASE SKU to your draft order: {1}',
+        FriendlyMessages.GENERAL_ERROR => 'An error occurred, and item(s) cannot be added to your draft order: '
+    };
+
+    private static Set<String> inactiveItems = new Set<String>();
+    private static Set<String> missingItems = new Set<String>();
+    private static Set<String> nlaItems = new Set<String>();
+    private static Set<String> replacedItems = new Set<String>();
+    private static Set<String> baseItems = new Set<String>();
+    private static Set<String> replacedItemsErrors = new Set<String>();
 
     // Implement Inmterface
     global static String getPayloadType() {
@@ -152,11 +186,11 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     }
 
     private static void queryOrCreateWebcart() {
-        Webcart[] wcs = [SELECT Id,Documoto_Cart_Numbers__c FROM Webcart WHERE Is_Documoto__c = TRUE AND Status = 'Active' AND AccountId = :dealerAccount.Id LIMIT 1];
+        Webcart[] wcs = [SELECT Id, Documoto_Cart_Numbers__c FROM Webcart WHERE Is_Documoto__c = TRUE AND Status = 'Active' AND AccountId = :dealerAccount.Id LIMIT 1];
 
         if (!wcs.isEmpty()) {
             wc = wcs[0];
-            wc.Documoto_Cart_Numbers__c +=  ', ' + cartItemRequest.cartName.replace('Documoto ', '');
+            wc.Documoto_Cart_Numbers__c += ', ' + cartItemRequest.cartName.replace('Documoto ', '');
             update wc;
         } else {
             ConnectApi.CartInput cartInput = new ConnectApi.CartInput();
@@ -188,16 +222,47 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
         List<ConnectApi.BatchInput> batchInputs = new List<ConnectApi.BatchInput>();
         for (CartItem ci : cartItemRequest.items) {
             ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
-            if (productCodeProductMapByCartItems.get(ci.productCode) != null && productCodeProductMapByCartItems.get(ci.productCode).IsActive == true) {
+            if (productCodeProductMapByCartItems.get(ci.productCode) == null) {
+                missingItems.add(ci.productCode);
+            } else if (productCodeProductMapByCartItems.get(ci.productCode).IsActive == false) {
+                inactiveItems.add(ci.productCode);
+            } else if (productCodeProductMapByCartItems.get(ci.productCode).B2B_No_Longer_Available__c == true) {
+                nlaItems.add(ci.productCode);
+            } else if (productCodeProductMapByCartItems.get(ci.productCode).B2B_Replacement_Product__c != null) {
+                Product2 product = productCodeProductMapByCartItems.get(ci.productCode);
+                if (product.B2B_Replacement_Product__r.isActive == false) {
+                    errs.add(
+                        String.format(
+                            messageMap.get(FriendlyMessages.INACTIVE_ITEM_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
+                } else if (product.B2B_Replacement_Product__r.B2B_no_longer_available__c) {
+                    errs.add(
+                        String.format(
+                            messageMap.get(FriendlyMessages.ITEM_NLA_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
+                } else if (product.B2B_Replacement_Product__r.Is_Base_Part__c) {
+                    errs.add(
+                        String.format(
+                            messageMap.get(FriendlyMessages.BASE_ITEM_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
+                } else {
+                    errs.add(
+                        String.format(messageMap.get(FriendlyMessages.ITEM_REPLACED), new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode })
+                    );
+                }
+            } else if (productCodeProductMapByCartItems.get(ci.productCode).Is_Base_Part__c == true) {
+                baseItems.add(ci.productCode);
+            } else {
                 cartItemInput.productId = productCodeProductMapByCartItems.get(ci.productCode)?.Id;
                 cartItemInput.quantity = ci.productQuantity;
                 cartItemInput.type = ConnectApi.CartItemType.PRODUCT;
                 batchInputs.add(new ConnectApi.BatchInput(cartItemInput));
-            } else if (productCodeProductMapByCartItems.get(ci.productCode) != null && productCodeProductMapByCartItems.get(ci.productCode).IsActive == false) {
-                errs.add('Product is not activce: '+ ci.productCode);
-            }
-            else {
-                missingProducts.add(ci.productCode);
             }
         }
 
@@ -207,13 +272,13 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
             ConnectApi.BatchResult[] brs = ConnectApi.CommerceCart.addItemsToCart(storeId, dealerAccount.Id, wc.Id, batchInputs);
             system.debug('ADD ITEMS');
             system.debug(brs);
-            for (ConnectApi.BatchResult br  :brs){
+            for (ConnectApi.BatchResult br : brs) {
                 system.debug(br);
                 if (!br.isSuccess) {
                     itemErrorMessages.add(br.getErrorMessage());
                 }
             }
-            if(!itemErrorMessages.isEmpty()){
+            if (!itemErrorMessages.isEmpty()) {
                 throw new CustomException(JSON.serialize(itemErrorMessages));
             }
         }
@@ -222,12 +287,34 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static void generateResponse() {
         response = new Response2();
         response.countryCode = 'US';
-        if (!missingProducts.isEmpty()) {
-            response.faultDescription = 'Unknown Products: ' + JSON.serialize(missingProducts).replaceAll('\"', '"');
-            response.status = SharedModels.ResponseStatus.FAILURE;
-            RestContext.response.statusCode = 400;
-        } else if (!errs.isEmpty()) {
-            response.faultDescription = JSON.serialize(errs);
+        // if (!missingItems.isEmpty() || !inactiveItems.isEmpty() || !nlaItems.isEmpty() || !replacedItems.isEmpty() || !baseItems.isEmpty() || !errs.isEmpty()) {
+        if (!missingItems.isEmpty() || !inactiveItems.isEmpty() || !nlaItems.isEmpty() || !baseItems.isEmpty() || !errs.isEmpty()) {
+            String errorMessage = '';
+            if (!missingItems.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.MISSING_ITEM) + String.join(missingItems, ' , ') + ' . ';
+            }
+
+            if (!inactiveItems.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.INACTIVE_ITEM) + String.join(inactiveItems, ' , ') + ' . ';
+            }
+
+            if (!nlaItems.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(nlaItems, ' , ') + ' . ';
+            }
+
+            // if (!replacedItems.isEmpty()) {
+            //     errorMessage += messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(replacedItems, ' , ') + ' . ';
+            // }
+
+            if (!baseItems.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.BASE_ITEM) + String.join(baseItems, ' , ') + ' . ';
+            }
+
+            if (!errs.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.GENERAL_ERROR) + String.join(errs, ' \n');
+            }
+
+            response.faultDescription = errorMessage;
             response.status = SharedModels.ResponseStatus.FAILURE;
             RestContext.response.statusCode = 400;
         } else {
@@ -257,7 +344,19 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
 
         // Query product records based on the collected product codes
         List<Product2> products = [
-            SELECT Id, ProductCode, Name, Description, IsActive /* Add more fields as needed */
+            SELECT
+                Id,
+                ProductCode,
+                Name,
+                Description,
+                IsActive,
+                B2B_No_Longer_Available__c,
+                B2B_Replacement_Product__c,
+                B2B_Replacement_Product__r.ProductCode,
+                B2B_Replacement_Product__r.isActive,
+                B2B_Replacement_Product__r.B2B_no_longer_available__c,
+                B2B_Replacement_Product__r.Is_Base_Part__c,
+                Is_Base_Part__c /* Add more fields as needed */
             FROM Product2
             WHERE ProductCode IN :productCodes
         ];
@@ -305,26 +404,3 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     public class CustomException extends Exception {
     }
 }
-
-/**
- *     @AuraEnabled(cacheable=true)
-    public static List<Webcart> getWebcarts() {
-        // Query for the Account Name and Email fields
-        return [
-            SELECT Id, Name, Owner.Name, Is_Documoto__c, CreatedDate, (SELECT Id, Product2.ProductCode, Quantity FROM CartItems)
-            FROM Webcart
-            WHERE Is_Documoto__c = TRUE
-            ORDER BY CreatedDate DESC
-        ];
-    }
-
-        public static void createCartItem(String payload) {
-        RestRequest req = new RestRequest();
-        req.requestURI = '/document-support-service/create-web-order';
-        req.httpMethod = 'POST';
-        req.requestBody = Blob.valueOf(payload);
-        // RestContext
-        RestContext.request = req;
-        handlePostRequest();
-    }
- */
