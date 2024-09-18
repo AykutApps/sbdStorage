@@ -1,9 +1,9 @@
-global class ProductQuantityRuleBatch implements Database.Batchable<sObject>, Database.Stateful {
+global class B2B_ProductQuantityRuleBatch implements Database.Batchable<sObject>, Database.Stateful {
     /*  
         --------------------------------------------------------------------------
         Execution Script:
         --------------------------------------------------------------------------
-        ProductQuantityRuleBatch b = new ProductQuantityRuleBatch();
+        B2B_ProductQuantityRuleBatch b = new B2B_ProductQuantityRuleBatch();
         //b.whereClause = ' WHERE Package_Quantity__c > 0';
         ID BatchProcessId = Database.executeBatch(b,200);     
         --------------------------------------------------------------------------
@@ -32,7 +32,7 @@ global class ProductQuantityRuleBatch implements Database.Batchable<sObject>, Da
             productIds.add(product.Id);
         }
 
-        ProductQuantityRuleHelper.upsertProductQuantityRules(productIds);
+        B2B_ProductQuantityRuleHelper.upsertProductQuantityRules(productIds);
     }
 
     global void finish(Database.BatchableContext BC) {

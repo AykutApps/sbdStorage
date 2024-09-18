@@ -15,6 +15,8 @@ global class PartSmartInjectorCtl {
     private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce'; // DEVONE, DEMO = B2B Dealer Community
     private static Id loggedInUserId;
 
+    private static String response;
+
     // Error handling
     public enum FriendlyMessages {
         INACTIVE_ITEM,
@@ -22,6 +24,9 @@ global class PartSmartInjectorCtl {
         ITEM_NLA,
         ITEM_REPLACED,
         BASE_ITEM,
+        INACTIVE_ITEM_REPLACEMENT,
+        ITEM_NLA_REPLACEMENT,
+        BASE_ITEM_REPLACEMENT,
         GENERAL_ERROR
     }
 
@@ -31,6 +36,9 @@ global class PartSmartInjectorCtl {
         FriendlyMessages.ITEM_NLA => 'Please search for another part number. Item is no longer available: ',
         FriendlyMessages.ITEM_REPLACED => 'This SKU have been replaced: ',
         FriendlyMessages.BASE_ITEM => 'Please add the appropriate color/variant SKU. Cannot add BASE SKU to your draft order: ',
+        FriendlyMessages.INACTIVE_ITEM_REPLACEMENT => 'The replacement product for {0} is inactive: {1}',
+        FriendlyMessages.ITEM_NLA_REPLACEMENT => 'Please search for another part number. Replacement for {0} is no longer available: {1}',
+        FriendlyMessages.BASE_ITEM_REPLACEMENT => 'Please add the appropriate color/variant SKU. Cannot add replacement for {0} BASE SKU to your draft order: {1}',
         FriendlyMessages.GENERAL_ERROR => 'An error occurred, and item(s) cannot be added to your draft order: '
     };
 
@@ -206,8 +214,8 @@ global class PartSmartInjectorCtl {
 
     private static String addPartsToCart() {
         User owner;
-        String response = '';
         loggedInUserId = UserInfo.getUserId();
+        response = '';
         try {
             // query dealer account
             queryDealerAccountId();
@@ -227,7 +235,7 @@ global class PartSmartInjectorCtl {
             // insert the cart items
             addCartItems();
 
-            response = 'Success';
+            response = (String.isBlank(response)) ? 'Success' : response;
         } catch (Exception e) {
             response = e.getMessage();
         }
@@ -323,6 +331,9 @@ global class PartSmartInjectorCtl {
                 isActive,
                 B2B_Replacement_Product__c,
                 B2B_Replacement_Product__r.ProductCode,
+                B2B_Replacement_Product__r.isActive,
+                B2B_Replacement_Product__r.B2B_no_longer_available__c,
+                B2B_Replacement_Product__r.Is_Base_Part__c,
                 Is_Base_Part__c /* Add more fields as needed */
             FROM Product2
             WHERE ProductCode IN :productCodes
@@ -347,17 +358,31 @@ global class PartSmartInjectorCtl {
                 throw new CustomException(messageMap.get(FriendlyMessages.INACTIVE_ITEM) + arg.sku);
             } else if (product.B2B_no_longer_available__c) {
                 throw new CustomException(messageMap.get(FriendlyMessages.ITEM_NLA) + arg.sku);
-            } else if (product.B2B_Replacement_Product__c != null) {
-                throw new CustomException(messageMap.get(FriendlyMessages.ITEM_REPLACED) + arg.sku + ' by ' + product.B2B_Replacement_Product__r.ProductCode);
             } else if (product.Is_Base_Part__c == true) {
                 throw new CustomException(messageMap.get(FriendlyMessages.BASE_ITEM) + arg.sku);
-            }
+            } else if (product.B2B_Replacement_Product__c != null) {
+                if (product.B2B_Replacement_Product__r.isActive == false) {
+                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.INACTIVE_ITEM_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
+                } else if (product.B2B_Replacement_Product__r.B2B_no_longer_available__c) {
+                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.ITEM_NLA_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
+                } else if (product.B2B_Replacement_Product__r.Is_Base_Part__c) {
+                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.BASE_ITEM_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
 
-            ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
-            cartItemInput.productId = productCodeProductMapByCartItems.get(arg.sku)?.Id;
-            cartItemInput.quantity = String.valueof(arg.qty);
-            cartItemInput.type = ConnectApi.CartItemType.PRODUCT;
-            batchInputs.add(new ConnectApi.BatchInput(cartItemInput));
+                } else {
+                    response = 'Success! \n Info: ' + messageMap.get(FriendlyMessages.ITEM_REPLACED) + arg.sku + ' by ' + product.B2B_Replacement_Product__r.ProductCode;
+                    ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
+                    cartItemInput.productId = product.B2B_Replacement_Product__c;
+                    cartItemInput.quantity = String.valueof(arg.qty);
+                    cartItemInput.type = ConnectApi.CartItemType.PRODUCT;
+                    batchInputs.add(new ConnectApi.BatchInput(cartItemInput));
+                }
+            } else {
+                ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
+                cartItemInput.productId = productCodeProductMapByCartItems.get(arg.sku)?.Id;
+                cartItemInput.quantity = String.valueof(arg.qty);
+                cartItemInput.type = ConnectApi.CartItemType.PRODUCT;
+                batchInputs.add(new ConnectApi.BatchInput(cartItemInput));
+            }
         }
         system.debug('add item to cart');
         ConnectApi.BatchResult[] brs = ConnectApi.CommerceCart.addItemsToCart(storeId, dealerAccountId, wc.Id, batchInputs);

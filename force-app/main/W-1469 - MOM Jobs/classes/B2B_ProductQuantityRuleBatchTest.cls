@@ -1,8 +1,8 @@
 @isTest
-public with sharing class ProductQuantityRuleBatchTest {
+public with sharing class B2B_ProductQuantityRuleBatchTest {
     @isTest
     public static void testProductQuantityRuleBatchTest() {
-        ProductQuantityRuleHelper.createPurchaseQuantityRules();
+        B2B_ProductQuantityRuleHelper.createPurchaseQuantityRules();
         TestData_Product2.createProducts();
 
         List<Product2> prs = [SELECT Id,Package_Quantity__c FROM Product2];
@@ -14,7 +14,7 @@ public with sharing class ProductQuantityRuleBatchTest {
         update prs;
 
         Test.startTest();
-        ProductQuantityRuleBatch b = new ProductQuantityRuleBatch();
+        B2B_ProductQuantityRuleBatch b = new B2B_ProductQuantityRuleBatch();
         ID BatchProcessId = Database.executeBatch(b, 200);
         Test.stopTest();
 

@@ -1,4 +1,4 @@
-public with sharing class ProductQuantityRuleHelper {
+public without sharing class B2B_ProductQuantityRuleHelper {
     public static Integer MAX_MOM_NUMBER = 45;
 
     public static void createPurchaseQuantityRules() {

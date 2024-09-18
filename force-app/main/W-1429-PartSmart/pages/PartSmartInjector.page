@@ -47,7 +47,7 @@
             toast.innerText = message;
             var container = document.getElementById("toastContainer");
             container.appendChild(toast);
-            let toastTime = isError ? 8000 : 2000;
+            let toastTime = isError ? 10000 : 4000;
             setTimeout(function () {
                 container.removeChild(toast);
             }, toastTime);
@@ -63,10 +63,12 @@
                     console.log("xxx-server apex result", result);
                     showProcessingModal(false);
                     console.log("xxx-event", event);
-                    if (!result.includes("Success")) {
+                    if (result.includes("Info")) {
+                        showToast(result, false);
+                    } else if (!result.includes('Success')) {
                         showToast(result, true);
-                    } else {
-                        showToast("Product added to cart!", false);
+                    } else   {
+                        showToast('Product added to cart!', false);
                     }
                 },
                 { escape: true }

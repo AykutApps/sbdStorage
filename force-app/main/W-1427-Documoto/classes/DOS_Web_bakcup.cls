@@ -8,11 +8,9 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static final Integer MAX_PAYLOAD_FIELD_SIZE = 5000;
     private static final Integer MAX_PAYLOAD_SIZE = MAX_PAYLOAD_FIELD_SIZE;
     private static final String BASE_SOBJECT_API_NAME = 'WebCart';
-    private static final String SITE_NAME = 'B2B_Dealer_Store1';
-    // private static final String SITE_NAME = 'SBD_Outdoor_Commerce';
+    // private static final String SITE_NAME = 'B2B_Dealer_Store1';
+    private static final String SITE_NAME = 'SBD_Outdoor_Commerce';
 
-    private static List<String> infos = new List<String>();
-    // private static List<String> warns = new List<String>();
     private static List<String> errs = new List<String>();
     private static List<String> missingProducts = new List<String>();
     private static Webcart wc;
@@ -25,8 +23,8 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static Boolean isPrimary = false;
 
     private static final String DEFAULT_CART_NAME = 'Documoto';
-    private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
-    // private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce';
+    // private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
+    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce';
 
     // Error handling
     public enum FriendlyMessages {
@@ -35,22 +33,16 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
         ITEM_NLA,
         ITEM_REPLACED,
         BASE_ITEM,
-        INACTIVE_ITEM_REPLACEMENT,
-        ITEM_NLA_REPLACEMENT,
-        BASE_ITEM_REPLACEMENT,
-        ADD_TO_CART_ERROR
+        GENERAL_ERROR
     }
 
     private static Map<FriendlyMessages, String> messageMap = new Map<FriendlyMessages, String>{
         FriendlyMessages.INACTIVE_ITEM => 'The product is inactive: ',
         FriendlyMessages.MISSING_ITEM => 'Item cannot be found in community. Cannot add to your draft order: ',
         FriendlyMessages.ITEM_NLA => 'Please search for another part number. Item is no longer available: ',
-        FriendlyMessages.ITEM_REPLACED => 'This SKU for {0} have been replaced by {1}.',
+        FriendlyMessages.ITEM_REPLACED => 'This SKU have been replaced: ',
         FriendlyMessages.BASE_ITEM => 'Please add the appropriate color/variant SKU. Cannot add BASE SKU to your draft order: ',
-        FriendlyMessages.INACTIVE_ITEM_REPLACEMENT => 'The replacement product for {0} is inactive: {1}.',
-        FriendlyMessages.ITEM_NLA_REPLACEMENT => 'Please search for another part number. Replacement for {0} is no longer available: {1}.',
-        FriendlyMessages.BASE_ITEM_REPLACEMENT => 'Please add the appropriate color/variant SKU. Cannot add replacement for {0} BASE SKU to your draft order: {1}.',
-        FriendlyMessages.ADD_TO_CART_ERROR => 'These item(s) cannot be added to your draft order: '
+        FriendlyMessages.GENERAL_ERROR => 'An error occurred, and item(s) cannot be added to your draft order: '
     };
 
     private static Set<String> inactiveItems = new Set<String>();
@@ -58,8 +50,6 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static Set<String> nlaItems = new Set<String>();
     private static Set<String> replacedItems = new Set<String>();
     private static Set<String> baseItems = new Set<String>();
-    private static Set<String> replacedItemsErrors = new Set<String>();
-    private static Set<String> infoMessages = new Set<String>();
 
     // Implement Inmterface
     global static String getPayloadType() {
@@ -220,13 +210,18 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static void addCartItems() {
         // get ProdcutCode Product Map ByCartItems
         Map<String, Product2> productCodeProductMapByCartItems = getProductCodeProductMapByCartItems(cartItemRequest.items);
-        system.debug('xxx -  productCodeProductMapByCartItems');
-        system.debug(productCodeProductMapByCartItems);
 
         // Prepare batch inputs for adding items to the cart
         List<ConnectApi.BatchInput> batchInputs = new List<ConnectApi.BatchInput>();
         for (CartItem ci : cartItemRequest.items) {
             ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
+
+            // Set<String> missingItemsReplacement can not happen becuase B2B_Replacement_Product is a lookup field
+            Set<String> inactiveItemsReplacement
+            Set<String> nlaItemsReplacement
+            // Set<String> replacedItemsReplacement: can not happend becuase the part warehouse always manages the final replacement
+            Set<String> baseItemsReplacement
+
             if (productCodeProductMapByCartItems.get(ci.productCode) == null) {
                 missingItems.add(ci.productCode);
             } else if (productCodeProductMapByCartItems.get(ci.productCode).IsActive == false) {
@@ -234,33 +229,7 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
             } else if (productCodeProductMapByCartItems.get(ci.productCode).B2B_No_Longer_Available__c == true) {
                 nlaItems.add(ci.productCode);
             } else if (productCodeProductMapByCartItems.get(ci.productCode).B2B_Replacement_Product__c != null) {
-                Product2 product = productCodeProductMapByCartItems.get(ci.productCode);
-                if (product.B2B_Replacement_Product__r.isActive == false) {
-                    errs.add(
-                        String.format(
-                            messageMap.get(FriendlyMessages.INACTIVE_ITEM_REPLACEMENT),
-                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
-                        )
-                    );
-                } else if (product.B2B_Replacement_Product__r.B2B_no_longer_available__c) {
-                    errs.add(
-                        String.format(
-                            messageMap.get(FriendlyMessages.ITEM_NLA_REPLACEMENT),
-                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
-                        )
-                    );
-                } else if (product.B2B_Replacement_Product__r.Is_Base_Part__c) {
-                    errs.add(
-                        String.format(
-                            messageMap.get(FriendlyMessages.BASE_ITEM_REPLACEMENT),
-                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
-                        )
-                    );
-                } else {
-                    infoMessages.add(
-                        String.format(messageMap.get(FriendlyMessages.ITEM_REPLACED), new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode })
-                    );
-                }
+                replacedItems.add(ci.productCode + ' by ' + productCodeProductMapByCartItems.get(ci.productCode).B2B_Replacement_Product__r.ProductCode);
             } else if (productCodeProductMapByCartItems.get(ci.productCode).Is_Base_Part__c == true) {
                 baseItems.add(ci.productCode);
             } else {
@@ -292,35 +261,30 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static void generateResponse() {
         response = new Response2();
         response.countryCode = 'US';
-        // if (!missingItems.isEmpty() || !inactiveItems.isEmpty() || !nlaItems.isEmpty() || !replacedItems.isEmpty() || !baseItems.isEmpty() || !errs.isEmpty()) {
-        if (!missingItems.isEmpty() || !inactiveItems.isEmpty() || !nlaItems.isEmpty() || !baseItems.isEmpty() || !errs.isEmpty()) {
+        if (!missingItems.isEmpty() || !inactiveItems.isEmpty() || !nlaItems.isEmpty() || !replacedItems.isEmpty() || !baseItems.isEmpty() || !errs.isEmpty()) {
             String errorMessage = '';
-            if (!infoMessages.isEmpty()) {
-                errorMessage += String.join(infoMessages, ' || ');
-            }
-
-            if (!errs.isEmpty()) {
-                errorMessage += ' || ' + messageMap.get(FriendlyMessages.ADD_TO_CART_ERROR) + String.join(errs, ' || ');
-            }
-
             if (!missingItems.isEmpty()) {
-                errorMessage += ' || ' + messageMap.get(FriendlyMessages.MISSING_ITEM) + String.join(missingItems, ' , ');
+                errorMessage += messageMap.get(FriendlyMessages.MISSING_ITEM) + String.join(missingItems, ' , ') + ' . ';
             }
 
             if (!inactiveItems.isEmpty()) {
-                errorMessage += ' || ' + messageMap.get(FriendlyMessages.INACTIVE_ITEM) + String.join(inactiveItems, ' , ');
+                errorMessage += messageMap.get(FriendlyMessages.INACTIVE_ITEM) + String.join(inactiveItems, ' , ') + ' . ';
             }
 
             if (!nlaItems.isEmpty()) {
-                errorMessage += ' || ' + messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(nlaItems, ' , ');
+                errorMessage += messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(nlaItems, ' , ') + ' . ';
             }
 
-            // if (!replacedItems.isEmpty()) {
-            //     errorMessage += messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(replacedItems, ' , ') + ' . ';
-            // }
+            if (!replacedItems.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.ITEM_NLA) + String.join(replacedItems, ' , ') + ' . ';
+            }
 
             if (!baseItems.isEmpty()) {
-                errorMessage += ' || ' + messageMap.get(FriendlyMessages.BASE_ITEM) + String.join(baseItems, ' , ');
+                errorMessage += messageMap.get(FriendlyMessages.BASE_ITEM) + String.join(baseItems, ' , ') + ' . ';
+            }
+
+            if (!errs.isEmpty()) {
+                errorMessage += messageMap.get(FriendlyMessages.GENERAL_ERROR) + String.join(errs, ' \n');
             }
 
             response.faultDescription = errorMessage;
@@ -363,8 +327,7 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
                 B2B_Replacement_Product__c,
                 B2B_Replacement_Product__r.ProductCode,
                 B2B_Replacement_Product__r.isActive,
-                B2B_Replacement_Product__r.B2B_no_longer_available__c,
-                B2B_Replacement_Product__r.Is_Base_Part__c,
+                B2B_Replacement_Product__r.B2B_No_Longer_Available__c,
                 Is_Base_Part__c /* Add more fields as needed */
             FROM Product2
             WHERE ProductCode IN :productCodes

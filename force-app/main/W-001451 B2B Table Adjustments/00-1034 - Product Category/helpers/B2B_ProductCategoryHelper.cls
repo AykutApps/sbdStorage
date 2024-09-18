@@ -25,6 +25,11 @@ public with sharing class B2B_ProductCategoryHelper {
         Map<String, ProductCategory> nameProductCategoryMap = getNameProductCategoryMap();
 
         for (Product2 p : prs) {
+            
+            // related product category
+            String productCategoryId;
+
+            // Update the product if needed
             Product2 pToUpdate;
             // update Product2 if needed
             if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
@@ -32,90 +37,50 @@ public with sharing class B2B_ProductCategoryHelper {
                 pToUpdate.Section__c = 'Part';
             }
 
-            // check if Product Category link is there, if not then create on insert
-            if (getProductCategoryLink(p, 'Products').isEmpty() && !String.isBlank(nameProductCategoryMap.get('Products')?.Id)) {
-                String productCategoryId = nameProductCategoryMap.get('Products')?.Id;
-                if (!String.isBlank(productCategoryId)) {
-                    //pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = false));
-                }
-            }
-
+            // Check Product Types
             if (p.B2B_Product_Type__c == 'Whole Goods') {
-                List<ProductCategoryProduct> wgPcps = getProductCategoryLink(p, 'Whole Goods');
-                String productCategoryId = nameProductCategoryMap.get('Whole Goods')?.Id;
-                if (wgPcps.isEmpty() && !String.isBlank(productCategoryId)) {
+                productCategoryId = nameProductCategoryMap.get('Whole Goods')?.Id;
+                if (!String.isBlank(productCategoryId)) {
                     pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                } else if (wgPcps.size() == 1) {
-                    // wgPcps[0].ProductCategoryId = productCategoryId;
-                    wgPcps[0].ProductId = p.Id;
-                    wgPcps[0].IsPrimaryCategory = true;
-                    pcpToUpdate.add(wgPcps[0]);
-                }
-
-                pcpToDelete.addAll(getProductCategoryLink(p, 'Parts'));
-                pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, null));
+                } 
             } else if (p.B2B_Product_Type__c == 'Parts') {
                 CommerceData cdata = getCategoryFromCommerceJson(p.Commerce_JSON__c);
-
-                if ((cdata != null && cdata.category == 'Handheld') || p.B2B_Handheld_Override__c) {
-                    //If Product2.Section__c is blank and Product2.RecordType is 'Part', then change to 'Handheld'
-                    if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
-                        if (pToUpdate == null)
-                            pToUpdate = new Product2(Id = p.Id);
-                        if (String.isBlank(pToUpdate.Section__c) || pToUpdate.Section__c == 'Part') {
-                            pToUpdate.Section__c = 'Handheld';
-                        }
-                    }
-
-                    List<ProductCategoryProduct> hhPcps = getProductCategoryLink(p, 'Handheld');
-                    String productCategoryId = nameProductCategoryMap.get('Handheld')?.Id;
-                    if (hhPcps.isEmpty() && !String.isBlank(productCategoryId)) {
-                        pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                    } else if (hhPcps.size() == 1) {
-                        // wgPcps[0].ProductCategoryId = productCategoryId;
-                        hhPcps[0].ProductId = p.Id;
-                        hhPcps[0].IsPrimaryCategory = true;
-                        pcpToUpdate.add(hhPcps[0]);
-                    }
-
-                    pcpToDelete.addAll(getProductCategoryLink(p, 'Parts'));
-                    pcpToDelete.addAll(getProductCategoryLink(p, 'Whole Goods'));
-                    if(cdata?.category != null)pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, cdata.category));
-                } else {
-                    // get category from commerce JSON
-                    String subProductCategoryId = (cdata == null) ? null : nameProductCategoryMap.get(cdata.category)?.Id;
-                    Boolean partIsPrimary = (subProductCategoryId == null);
-
-                    List<ProductCategoryProduct> partPcps = getProductCategoryLink(p, 'Parts');
-                    String productCategoryId = nameProductCategoryMap.get('Parts')?.Id;
-                    if (partPcps.isEmpty() && !String.isBlank(productCategoryId)) {
-                        if (partIsPrimary)
-                            pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = partIsPrimary));
-                    } else if (partPcps.size() == 1) {
-                        // partPcps[0].ProductCategoryId = productCategoryId;
-                        partPcps[0].ProductId = p.Id;
-                        partPcps[0].IsPrimaryCategory = partIsPrimary;
-                        pcpToUpdate.add(partPcps[0]);
-                    }
-
-                    if (cdata != null && !String.isBlank(cdata.category)) {
-                        List<ProductCategoryProduct> cDataPcps = getProductCategoryLink(p, cdata.category);
-                        if (cDataPcps.isEmpty()) {
-                            if (!String.isBlank(subProductCategoryId)) {
-                                if (!partIsPrimary)
-                                    pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = subProductCategoryId, ProductId = p.Id, IsPrimaryCategory = !partIsPrimary));
+                if (cdata != null && String.isNotBlank(cdata.category)){
+                    
+                    // Handhelds
+                    if (cdata.category == 'Handheld' || p.B2B_Handheld_Override__c) {
+                        
+                        //If Product2.Section__c is blank and Product2.RecordType is 'Part', then change to 'Handheld'
+                        if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
+                            if (pToUpdate == null)
+                                pToUpdate = new Product2(Id = p.Id);
+                            if (String.isBlank(pToUpdate.Section__c) || pToUpdate.Section__c == 'Part') {
+                                pToUpdate.Section__c = 'Handheld';
                             }
                         }
-                    }
 
-                    pcpToDelete.addAll(getProductCategoryLink(p, 'Whole Goods'));
-                    if (cdata != null && !String.isBlank(cdata.category))
-                        pcpToDelete.addAll(getNonRelavantPartsSubProductCategoryLinks(p, cdata.category));
+                        productCategoryId = nameProductCategoryMap.get('Handheld')?.Id;
+                        
+                        if (!String.isBlank(productCategoryId)) {
+                            pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
+                        } 
+                    // Other categories
+                    } else {
+                        productCategoryId = (nameProductCategoryMap.get(cdata.category) == null)? nameProductCategoryMap.get('Parts')?.Id: nameProductCategoryMap.get(cdata.category)?.Id;
+                        if (!String.isBlank(productCategoryId)) {
+                            pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
+                        } 
+                    }
+                } else {
+                    productCategoryId = nameProductCategoryMap.get('Parts')?.Id;
+                    if (!String.isBlank(productCategoryId)) {
+                        pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
+                    } 
                 }
             }
 
             // delete non primary products
-            pcpToDelete.addAll(getNonPrimaryProductCategoryLink(p));
+            pcpToDelete.addAll(p.ProductCategoryProducts);
 
             if (pToUpdate != null) {
                 productsToUpdate.add(pToUpdate);
@@ -126,7 +91,7 @@ public with sharing class B2B_ProductCategoryHelper {
         if (!productsToUpdate.isEmpty()) {
             update productsToUpdate;
         }
-
+		
         if (!pcpToDelete.isEmpty()) {
             delete pcpToDelete;
         }
@@ -136,45 +101,11 @@ public with sharing class B2B_ProductCategoryHelper {
         }
 
         if (!pcpToInsert.isEmpty()) {
-            system.debug('pcpToInsert');
-            system.debug(pcpToInsert);
             insert pcpToInsert;
         }
     }
 
     // Helper Methods
-    private static List<ProductCategoryProduct> getProductCategoryLink(Product2 p, String productCategoryName) {
-        List<ProductCategoryProduct> pcps = new List<ProductCategoryProduct>();
-        for (ProductCategoryProduct pcp : p.ProductCategoryProducts) {
-            if (pcp.ProductCategory.Name == productCategoryName) {
-                pcps.add(pcp);
-            }
-        }
-        return pcps;
-    }
-
-    private static List<ProductCategoryProduct> getNonPrimaryProductCategoryLink(Product2 p) {
-        List<ProductCategoryProduct> pcps = new List<ProductCategoryProduct>();
-        for (ProductCategoryProduct pcp : p.ProductCategoryProducts) {
-            if (!pcp.IsPrimaryCategory) {
-                pcps.add(pcp);
-            }
-        }
-        return pcps;
-    }
-
-    private static List<ProductCategoryProduct> getNonRelavantPartsSubProductCategoryLinks(Product2 p, String productCategoryName) {
-        List<ProductCategoryProduct> pcps = new List<ProductCategoryProduct>();
-        for (ProductCategoryProduct pcp : p.ProductCategoryProducts) {
-            if (pcp.ProductCategory.Name != 'Products' && pcp.ProductCategory.Name != 'Parts' && pcp.ProductCategory.Name != 'Whole Goods') {
-                if (productCategoryName == null || pcp.ProductCategory.Name != productCategoryName) {
-                    pcps.add(pcp);
-                }
-            }
-        }
-        return pcps;
-    }
-
     private static Map<String, ProductCategory> getNameProductCategoryMap() {
         Map<String, ProductCategory> nameProductCategoryMap = new Map<String, ProductCategory>();
         for (ProductCategory pc : [SELECT Id, Name FROM ProductCategory]) {

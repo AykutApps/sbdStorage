@@ -36,6 +36,8 @@ public with sharing class DOS_WebcardRestServiceTest {
         Product2 product = new Product2();
         product.Name = 'Test';
         product.ProductCode = 'TESTPRODUCTCODE';
+        product.IsActive = true;
+        product.B2B_No_Longer_Available__c = false;
         insert product;
 
         PriceBook2 retailPricebook = new PriceBook2();
@@ -116,6 +118,7 @@ public with sharing class DOS_WebcardRestServiceTest {
         req.httpMethod = 'POST';
         req.requestBody = Blob.valueOf(requestBody);
         RestContext.request = req;
+        RestContext.response = new RestResponse();
 
         Test.startTest();
         DOS_WebcardRestService.Response2 response = DOS_WebcardRestService.doPost();
@@ -135,6 +138,7 @@ public with sharing class DOS_WebcardRestServiceTest {
         req.httpMethod = 'POST';
         req.requestBody = Blob.valueOf(requestBody);
         RestContext.request = req;
+        RestContext.response = new RestResponse();
 
         Test.startTest();
         DOS_WebcardRestService.Response2 response = DOS_WebcardRestService.doPost();
@@ -160,6 +164,7 @@ public with sharing class DOS_WebcardRestServiceTest {
         req.httpMethod = 'POST';
         req.requestBody = Blob.valueOf(requestBody);
         RestContext.request = req;
+        RestContext.response = new RestResponse();
 
         Test.startTest();
         DOS_WebcardRestService.Response2 response = DOS_WebcardRestService.doPost();

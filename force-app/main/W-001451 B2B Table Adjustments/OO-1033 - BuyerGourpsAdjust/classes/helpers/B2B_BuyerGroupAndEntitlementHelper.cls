@@ -251,7 +251,7 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelper {
         Map<String, Account_Pricebook_Mapping__c> externalKeyAPMMap = new Map<String, Account_Pricebook_Mapping__c>();
 
         List<Account_Pricebook_Mapping__c> accountPricebookMappings = [
-            SELECT Id, External_Key__c, ERP_Start_Date__c, ERP_End_Date__c, Account__c, Account__r.Entity_ID__c, Price_Book__r.External_Key__c
+            SELECT Id, External_Key__c, ERP_Start_Date__c, ERP_End_Date__c, Account__c, Account__r.Entity_ID__c, Price_Book__r.External_Key__c, CSP_Start_Date__c, CSP_End_Date__c
             FROM Account_Pricebook_Mapping__c
             WHERE Id IN :accountPricebookMappingIds AND External_Key__c != NULL
         ];
@@ -317,7 +317,8 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelper {
 
         for (String externalKey : externalKeyAPMMap.keySet()) {
             Account_Pricebook_Mapping__c apm = externalKeyAPMMap.get(externalKey);
-            if (apm.ERP_Start_Date__c <= currentDate && currentDate <= apm.ERP_End_Date__c) {
+            // if (apm.ERP_Start_Date__c <= currentDate && currentDate <= apm.ERP_End_Date__c) {
+            if (apm.CSP_Start_Date__c <= currentDate && currentDate <= apm.CSP_End_Date__c) {
                 // Check if BuyerGroupMember exists
                 if (!existingBgmMap.containsKey(apm.External_Key__c)) {
                     // Create new BuyerGroupMember record

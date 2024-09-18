@@ -1,9 +1,9 @@
 @isTest
-public class ProductQuantityRuleHelperTest {
+public class B2B_ProductQuantityRuleHelperTest {
 
     @isTest
     public static void testUpsertProductQuantityRules_simple(){
-        ProductQuantityRuleHelper.createPurchaseQuantityRules();
+        B2B_ProductQuantityRuleHelper.createPurchaseQuantityRules();
         TestData_Product2.createProducts();
 
         List<Product2> prs = [SELECT Id,Package_Quantity__c FROM Product2];
@@ -13,13 +13,13 @@ public class ProductQuantityRuleHelperTest {
             i++;
         }
         update prs;
-        ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
+        B2B_ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
         System.assertEquals(prs.size(),[SELECT Id FROM ProductQuantityRule].size());
     }
 
     @isTest
     public static void testUpsertProductQuantityRules_multiple(){
-        ProductQuantityRuleHelper.createPurchaseQuantityRules();
+        B2B_ProductQuantityRuleHelper.createPurchaseQuantityRules();
         TestData_Product2.createProducts();
 
         List<Product2> prs = [SELECT Id,Package_Quantity__c FROM Product2];
@@ -29,8 +29,8 @@ public class ProductQuantityRuleHelperTest {
             i++;
         }
         update prs;
-        ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
-        ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
+        B2B_ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
+        B2B_ProductQuantityRuleHelper.upsertProductQuantityRules((new Map<Id,Product2>(prs)).keyset());
         System.assertEquals(prs.size(),[SELECT Id FROM ProductQuantityRule].size());
     }
 }
