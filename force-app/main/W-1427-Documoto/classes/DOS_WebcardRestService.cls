@@ -8,8 +8,8 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static final Integer MAX_PAYLOAD_FIELD_SIZE = 5000;
     private static final Integer MAX_PAYLOAD_SIZE = MAX_PAYLOAD_FIELD_SIZE;
     private static final String BASE_SOBJECT_API_NAME = 'WebCart';
-    private static final String SITE_NAME = 'B2B_Dealer_Store1';
-    // private static final String SITE_NAME = 'SBD_Outdoor_Commerce';
+    // private static final String SITE_NAME = 'B2B_Dealer_Store1';
+    private static final String SITE_NAME = 'SBD_Outdoor_Commerce'; // Staging ='SBD_Outdoor_Commerce', DEVONE, DEMO = 'B2B_Dealer_Store1'
 
     private static List<String> infos = new List<String>();
     // private static List<String> warns = new List<String>();
@@ -25,8 +25,8 @@ global class DOS_WebcardRestService implements RESTHostedMTDEndpoint {
     private static Boolean isPrimary = false;
 
     private static final String DEFAULT_CART_NAME = 'Documoto';
-    private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
-    // private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce';
+    // private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community';
+    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce'; // Staging= = 'SBD Outdoor Commerce', DEVONE, DEMO = 'B2B Dealer Community'
 
     // Error handling
     public enum FriendlyMessages {

@@ -1,7 +1,9 @@
 @isTest
 public with sharing class PartSmartInjectorCtlTest {
     static void makeData() {
-        Account dealerAccount = TestData_Account.createDealerAccount(RecordTypes.account_CAAuthorizedAccount.Id, 'Documoto Test Dealer Name', 'DOCU001');
+        Account dealerAccount = TestData_Account.createDealerAccount(RecordTypes.account_CAAuthorizedAccount.Id, 'Test', 'DOCU001');
+        dealerAccount.Hustler_Parts_Account__c = '12345';
+        update dealerAccount;
 
         BuyerAccount buyerAccount = new BuyerAccount();
         buyerAccount.BuyerId = dealerAccount.Id;
@@ -34,6 +36,8 @@ public with sharing class PartSmartInjectorCtlTest {
         Product2 product = new Product2();
         product.Name = 'Test';
         product.ProductCode = 'TESTPRODUCTCODE';
+        product.IsActive = true;
+        product.B2B_No_Longer_Available__c = false;
         insert product;
 
         PriceBook2 retailPricebook = new PriceBook2();
@@ -88,6 +92,59 @@ public with sharing class PartSmartInjectorCtlTest {
         webStoreBuyerGroup.WebStoreId = webStore.Id;
         insert webStoreBuyerGroup;
 
+        CommerceEntitlementPolicy commerceEntPolicy = new CommerceEntitlementPolicy(
+            CanViewPrice = true,
+            CanViewProduct = true,
+            IsActive = true,
+            Name = 'Test _ All Products and Prices'
+        );
+        insert commerceEntPolicy;
+
+        CommerceEntitlementBuyerGroup cebg = new CommerceEntitlementBuyerGroup(BuyerGroupId = buyerGroup.Id, PolicyId = commerceEntPolicy.Id);
+        insert cebg;
+        BuyerGroupPricebook bgpb = new BuyerGroupPricebook(BuyerGroupId = buyerGroup.Id, Pricebook2Id = testPricebookId, IsActive = true);
+        insert bgpb;
+
+        WebStorePricebook wspb = new WebStorePricebook(Pricebook2Id = testPricebookId, WebStoreId = webStore.Id, IsActive = true);
+        insert wspb;
+
+        // Product Category Creation
+
+        WebStoreCatalog catalog = [
+            SELECT Id, ProductCatalogId
+            FROM WebStoreCatalog
+            WHERE SalesStoreId = :webStore.Id
+            LIMIT 1
+        ];
+
+        List<ProductCategoryProduct> productCategories = new List<ProductCategoryProduct>();
+
+        ProductCategory parentCategory = new ProductCategory(Name = 'Parent Category', CatalogId = catalog.ProductCatalogId);
+        insert parentCategory;
+
+        List<ProductCategory> childCategories = new List<ProductCategory>();
+        for (Integer i = 0; i < 7; i++) {
+            ProductCategory cat = new ProductCategory(ParentCategoryId = parentCategory.Id, Name = 'Child Category ' + (i + 1), CatalogId = catalog.ProductCatalogId);
+            childCategories.add(cat);
+        }
+
+        insert childCategories;
+
+        for (ProductCategory child : childCategories) {
+            productCategories.add(new ProductCategoryProduct(ProductId = product.Id, ProductCategoryId = child.Id));
+        }
+
+        insert productCategories;
+
+        //#region Create product categories and assign products to category and entitlement policy
+        ProductCategory prodCategory = new ProductCategory(Name = 'Test Category', IsNavigational = true, CatalogId = catalog.ProductCatalogId);
+        insert prodCategory;
+        List<CommerceEntitlementProduct> cep = new List<CommerceEntitlementProduct>();
+
+        cep.add(new CommerceEntitlementProduct(PolicyId = commerceEntPolicy.Id, ProductId = product.Id));
+
+        insert cep;
+
         system.debug('dealerAccount');
         system.debug(dealerAccount);
 
@@ -127,26 +184,62 @@ public with sharing class PartSmartInjectorCtlTest {
     static void testCreate_cart_item_add_basic() {
         makeData();
         String jsonRequest = '{"id":565421,"method":"convergence::execute","params":{"method":"addPartToCart","args":[{"sku":"TESTPRODUCTCODE","brandCode":"cut","brandName":"Cub Cadet","desc":"DECAL, HOT","qty":1,"userName":"Aykut Parlak","langCode":"en","catalogLang":"en"}]}}';
-        PartSmartInjectorCtl.dealerAccountId = [SELECT Id from Account WHERE Name='Documoto Test Dealer Name'][0].Id;
+        PartSmartInjectorCtl.dealerAccountId = [SELECT Id FROM Account WHERE Name = 'Test'][0].Id;
 
         Test.startTest();
         String response = PartSmartInjectorCtl.addToCart(jsonRequest);
         Test.stopTest();
 
-        // System.assertEquals('Success', response); TODO
+        System.assertEquals('Success', response);
     }
 
     @isTest(SeeAllData=true)
-    static void testCreate_cart_item_add_newCart() {
+    static void testCreate_cart_item_add_replacement_product_error() {
         makeData();
         String jsonRequest = '{"id":565421,"method":"convergence::execute","params":{"method":"addPartToCart","args":[{"sku":"TESTPRODUCTCODE","brandCode":"cut","brandName":"Cub Cadet","desc":"DECAL, HOT","qty":1,"userName":"Aykut Parlak","langCode":"en","catalogLang":"en"}]}}';
-        PartSmartInjectorCtl.dealerAccountId = [SELECT Id from Account WHERE Name='Documoto Test Dealer Name'][0].Id;
-        
+        PartSmartInjectorCtl.dealerAccountId = [SELECT Id FROM Account WHERE Name = 'Test'][0].Id;
+
+        Product2 prd = [SELECT Id FROM Product2 WHERE ProductCode = 'TESTPRODUCTCODE'];
+
+        Product2 prdReplacement = new Product2();
+        prdReplacement.Name = 'Test';
+        prdReplacement.ProductCode = 'TESTPRODUCTCODEREPLACEMENT';
+        prdReplacement.IsActive = true;
+        prdReplacement.Is_Base_Part__c = true;
+        insert prdReplacement;
+
+        prd.B2B_Replacement_Product__c = prdReplacement.Id;
+        update prd;
+
         Test.startTest();
         String response = PartSmartInjectorCtl.addToCart(jsonRequest);
         Test.stopTest();
 
-        // System.assertEquals('Success', response); TODO
+        System.Assert(!response.contains('Success'));
+    }
+
+    @isTest(SeeAllData=true)
+    static void testCreate_cart_item_add_replacement_product_success() {
+        makeData();
+        String jsonRequest = '{"id":565421,"method":"convergence::execute","params":{"method":"addPartToCart","args":[{"sku":"TESTPRODUCTCODEREPLACEMENT","brandCode":"cut","brandName":"Cub Cadet","desc":"DECAL, HOT","qty":1,"userName":"Aykut Parlak","langCode":"en","catalogLang":"en"}]}}';
+        PartSmartInjectorCtl.dealerAccountId = [SELECT Id FROM Account WHERE Name = 'Test'][0].Id;
+
+        Product2 prdReplacement = [SELECT Id FROM Product2 WHERE ProductCode = 'TESTPRODUCTCODE'];
+
+        Product2 prd = new Product2();
+        prd.Name = 'Test';
+        prd.ProductCode = 'TESTPRODUCTCODEREPLACEMENT';
+        prd.IsActive = true;
+        prd.Is_Base_Part__c = false;
+        prd.B2B_No_Longer_Available__c = false;
+        prd.B2B_Replacement_Product__c = prdReplacement.Id;
+        insert prd;
+
+        Test.startTest();
+        String response = PartSmartInjectorCtl.addToCart(jsonRequest);
+        Test.stopTest();
+
+        System.Assert(response.contains('Info'));
     }
 
     @isTest
@@ -189,7 +282,10 @@ public with sharing class PartSmartInjectorCtlTest {
         Test.stopTest();
 
         // Verify the method returns the correct response
-        System.assertEquals('https://www.partsmart.net/stream.js?access_token=abc123&refresh_token=abc234&expires_in=1080', pc.scriptUrl, 'Script URL ccreation not working correct');
+        System.assertEquals(
+            'https://www.partsmart.net/stream.js?access_token=abc123&refresh_token=abc234&expires_in=1080',
+            pc.scriptUrl,
+            'Script URL ccreation not working correct'
+        );
     }
-    
 }

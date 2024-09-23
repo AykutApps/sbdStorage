@@ -92,6 +92,59 @@ public with sharing class DOS_WebcardRestServiceTest {
         webStoreBuyerGroup.WebStoreId = webStore.Id;
         insert webStoreBuyerGroup;
 
+        CommerceEntitlementPolicy commerceEntPolicy = new CommerceEntitlementPolicy(
+            CanViewPrice = true,
+            CanViewProduct = true,
+            IsActive = true,
+            Name = 'Test _ All Products and Prices'
+        );
+        insert commerceEntPolicy;
+
+        CommerceEntitlementBuyerGroup cebg = new CommerceEntitlementBuyerGroup(BuyerGroupId = buyerGroup.Id, PolicyId = commerceEntPolicy.Id);
+        insert cebg;
+        BuyerGroupPricebook bgpb = new BuyerGroupPricebook(BuyerGroupId = buyerGroup.Id, Pricebook2Id = testPricebookId, IsActive = true);
+        insert bgpb;
+
+        WebStorePricebook wspb = new WebStorePricebook(Pricebook2Id = testPricebookId, WebStoreId = webStore.Id, IsActive = true);
+        insert wspb;
+
+        // Product Category Creation
+
+        WebStoreCatalog catalog = [
+            SELECT Id, ProductCatalogId
+            FROM WebStoreCatalog
+            WHERE SalesStoreId = :webStore.Id
+            LIMIT 1
+        ];
+
+        List<ProductCategoryProduct> productCategories = new List<ProductCategoryProduct>();
+
+        ProductCategory parentCategory = new ProductCategory(Name = 'Parent Category', CatalogId = catalog.ProductCatalogId);
+        insert parentCategory;
+
+        List<ProductCategory> childCategories = new List<ProductCategory>();
+        for (Integer i = 0; i < 7; i++) {
+            ProductCategory cat = new ProductCategory(ParentCategoryId = parentCategory.Id, Name = 'Child Category ' + (i + 1), CatalogId = catalog.ProductCatalogId);
+            childCategories.add(cat);
+        }
+
+        insert childCategories;
+
+        for (ProductCategory child : childCategories) {
+            productCategories.add(new ProductCategoryProduct(ProductId = product.Id, ProductCategoryId = child.Id));
+        }
+
+        insert productCategories;
+
+        //#region Create product categories and assign products to category and entitlement policy
+        ProductCategory prodCategory = new ProductCategory(Name = 'Test Category', IsNavigational = true, CatalogId = catalog.ProductCatalogId);
+        insert prodCategory;
+        List<CommerceEntitlementProduct> cep = new List<CommerceEntitlementProduct>();
+
+        cep.add(new CommerceEntitlementProduct(PolicyId = commerceEntPolicy.Id, ProductId = product.Id));
+
+        insert cep;
+
         system.debug('dealerAccount');
         system.debug(dealerAccount);
 
@@ -220,5 +273,36 @@ public with sharing class DOS_WebcardRestServiceTest {
         system.debug(response2);
         Test.stopTest();
         System.assertEquals(expectedStatus, response2.status);
+    }
+
+    @isTest(SeeAllData=true)
+    static void testReplacement_product() {
+        SharedModels.ResponseStatus expectedStatus = SharedModels.ResponseStatus.SUCCESS;
+        makeData();
+        Product2 prdReplacement = [SELECT Id FROM Product2 WHERE ProductCode = 'TESTPRODUCTCODE'];
+
+        Product2 prd = new Product2();
+        prd.Name = 'Test';
+        prd.ProductCode = 'TESTPRODUCTCODEREPLACEMENT';
+        prd.IsActive = true;
+        prd.Is_Base_Part__c = false;
+        prd.B2B_No_Longer_Available__c = false;
+        prd.B2B_Replacement_Product__c = prdReplacement.Id;
+        insert prd;
+
+        String requestBody = '{"cartName":"Documoto 201756","hustlerPartsAccountNumber":"12345","items":[{"productCode":"TESTPRODUCTCODEREPLACEMENT","productQuantity":"3"}]}';
+        RestRequest req = new RestRequest();
+        req.requestURI = '/documoto-support-service/create-web-order';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf(requestBody);
+        RestContext.request = req;
+
+        RestResponse res = new RestResponse();
+        RestContext.response = res;
+
+        Test.startTest();
+        DOS_WebcardRestService.Response2 response = DOS_WebcardRestService.doPost();
+        Test.stopTest();
+        System.assertEquals(expectedStatus, response.status);
     }
 }

@@ -12,9 +12,11 @@ global class PartSmartInjectorCtl {
     private static Map<String, Product2> productCodeProductMapByCartItems;
     private static PartRequest part;
     private static final String DEFAULT_CART_NAME = 'PartSmart';
-    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce'; // DEVONE, DEMO = B2B Dealer Community
+    private static final String B2B_DEALER_COMMUNITY_NAME = 'SBD Outdoor Commerce'; // Staging='SBD Outdoor Commerce',  DEVONE, DEMO = 'B2B Dealer Community'
+    // private static final String B2B_DEALER_COMMUNITY_NAME = 'B2B Dealer Community'; // Staging='SBD Outdoor Commerce',  DEVONE, DEMO = 'B2B Dealer Community'
     private static Id loggedInUserId;
 
+    private static String requestJson;
     private static String response;
 
     // Error handling
@@ -140,41 +142,29 @@ global class PartSmartInjectorCtl {
             body =
                 '{"username": "' +
                 UserInfo.getName() +
-                '",' +
-                ' "email": "' +
+                '", "email": "' +
                 UserInfo.getUserEmail() +
-                '",' +
-                ' "firstName": "' +
+                '", "firstName": "' +
                 usr.FirstName +
-                '",' +
-                ' "lastName": "' +
+                '", "lastName": "' +
                 usr.LastName +
-                '",' +
-                ' "phone": "' +
+                '", "phone": "' +
                 usr.Contact.Phone +
-                '",' +
-                ' "businessName": "' +
+                '", "businessName": "' +
                 usr.Contact.Account.Name +
-                '",' +
-                ' "streetAddress": "' +
+                '", "streetAddress": "' +
                 usr.Contact.Account.BillingStreet +
-                '",' +
-                ' "city": "' +
+                '", "city": "' +
                 usr.Contact.Account.BillingCity +
-                '",' +
-                ' "postalCode": "' +
+                '", "postalCode": "' +
                 usr.Contact.Account.BillingPostalCode +
-                '",' +
-                ' "stateProvince": "' +
+                '", "stateProvince": "' +
                 usr.Contact.Account.BillingState +
-                '",' +
-                ' "country": "' +
+                '", "country": "' +
                 usr.Contact.Account.BillingCountry +
-                '",' +
-                ' "dealerId": "' +
+                '", "dealerId": "' +
                 usr.Contact.Account.Entity_ID__c +
-                '",' +
-                ' "groupCode": "USIRX"}';
+                '", "groupCode": "USIRX"}';
         }
 
         req.setBody(body);
@@ -204,9 +194,8 @@ global class PartSmartInjectorCtl {
     @RemoteAction
     global static String addToCart(String jsonString) {
         try {
-            part = (PartRequest) System.JSON.deserialize(jsonString, PartRequest.class);
-            String addToCartResult = addPartsToCart();
-            return addToCartResult;
+            requestJson = jsonString;
+            return addPartsToCart();
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -217,6 +206,12 @@ global class PartSmartInjectorCtl {
         loggedInUserId = UserInfo.getUserId();
         response = '';
         try {
+            // Log Request
+            logRequest();
+
+            // parse json request
+            part = (PartRequest) System.JSON.deserialize(requestJson, PartRequest.class);
+
             // query dealer account
             queryDealerAccountId();
 
@@ -239,6 +234,11 @@ global class PartSmartInjectorCtl {
         } catch (Exception e) {
             response = e.getMessage();
         }
+
+        // log response
+        logResponse();
+
+        // return response
         return response;
     }
 
@@ -362,12 +362,26 @@ global class PartSmartInjectorCtl {
                 throw new CustomException(messageMap.get(FriendlyMessages.BASE_ITEM) + arg.sku);
             } else if (product.B2B_Replacement_Product__c != null) {
                 if (product.B2B_Replacement_Product__r.isActive == false) {
-                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.INACTIVE_ITEM_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
+                    throw new CustomException(
+                        String.format(
+                            messageMap.get(FriendlyMessages.INACTIVE_ITEM_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
                 } else if (product.B2B_Replacement_Product__r.B2B_no_longer_available__c) {
-                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.ITEM_NLA_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
+                    throw new CustomException(
+                        String.format(
+                            messageMap.get(FriendlyMessages.ITEM_NLA_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
                 } else if (product.B2B_Replacement_Product__r.Is_Base_Part__c) {
-                    throw new CustomException(String.format(messageMap.get(FriendlyMessages.BASE_ITEM_REPLACEMENT),new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }));
-
+                    throw new CustomException(
+                        String.format(
+                            messageMap.get(FriendlyMessages.BASE_ITEM_REPLACEMENT),
+                            new List<String>{ product.ProductCode, product.B2B_Replacement_Product__r.ProductCode }
+                        )
+                    );
                 } else {
                     response = 'Success! \n Info: ' + messageMap.get(FriendlyMessages.ITEM_REPLACED) + arg.sku + ' by ' + product.B2B_Replacement_Product__r.ProductCode;
                     ConnectApi.CartItemInput cartItemInput = new ConnectApi.CartItemInput();
@@ -396,6 +410,20 @@ global class PartSmartInjectorCtl {
         if (!itemErrorMessages.isEmpty()) {
             throw new CustomException(JSON.serialize(itemErrorMessages));
         }
+    }
+
+    private static void logRequest() {
+        String codeIdentifier = 'POST';
+        String description = 'Request: PartSmart Add to Cart';
+        String extendedInformation = requestJson;
+        SystemLogHelper.insertSystemLog('PartSmartInjectorCtl', codeIdentifier, UserInfo.getUserId(), description, extendedInformation);
+    }
+
+    private static void logResponse() {
+        String codeIdentifier = 'POST';
+        String description = 'Response: PartSmart Add to Cart';
+        String extendedInformation = response;
+        SystemLogHelper.insertSystemLog('PartSmartInjectorCtl', codeIdentifier, UserInfo.getUserId(), description, extendedInformation);
     }
 
     public class TokenResponse {
