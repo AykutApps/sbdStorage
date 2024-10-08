@@ -4,12 +4,12 @@
         Execution Script:
         --------------------------------------------------------------------------
         B2B_ProductImageBatch b = new B2B_ProductImageBatch();
-        // b.whereClause= 'WHERE B2B_Image_Present__c = FALSE AND B2B_Product_Type__c IN (\'Parts\', \'Whole_Goods\')'
+        // b.whereClause= 'WHERE B2B_Image_Present__c = FALSE AND B2B_Product_Type__c IN (\'Parts\', \'Whole Goods\')';
         ID BatchProcessId = Database.executeBatch(b,B2B_ProductImageBatch.BATCH_SIZE);     
         --------------------------------------------------------------------------
 */
-public without sharing class B2B_ProductImageBatch implements Database.Batchable<SObject>, Database.Stateful {
-    private static final Integer BATCH_SIZE = 200;
+public without sharing class B2B_ProductImageBatch extends B2B_BatchJobSchedulerAbstract implements Database.Batchable<SObject>, Database.Stateful {
+    public static final Integer BATCH_SIZE = 200;
     private static String LIBRARY_DEVELOPER_NAME = 'B2B_Storefront_Admin';
 
     // This will hold the CSV content across batches
@@ -27,13 +27,17 @@ public without sharing class B2B_ProductImageBatch implements Database.Batchable
     // The start method defines the scope of the query
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id, ProductCode, Name, B2B_Image_URLs__c FROM Product2 ';
-        String defaultWhereClause = 'WHERE B2B_Image_Present__c = FALSE AND B2B_Product_Type__c IN (\'Parts\', \'Whole_Goods\')';
+        String defaultWhereClause = 'WHERE B2B_Image_Present__c = FALSE AND B2B_Product_Type__c IN (\'Parts\', \'Whole Goods\')';
 
         if (!String.isBlank(whereClause)) {
             query += whereClause;
         } else {
             query += defaultWhereClause;
         }
+
+        // log Start
+        B2B_Product2BatchJobScheduler.logStartBatchJob(this, whereClause);
+
         return Database.getQueryLocator(query);
     }
 
@@ -45,5 +49,8 @@ public without sharing class B2B_ProductImageBatch implements Database.Batchable
     // The finish method is called after all batches are processed
     public void finish(Database.BatchableContext BC) {
         B2B_ProductImageHelper.saveCSVToFile(finalCsvData, LIBRARY_DEVELOPER_NAME, isDaily);
+
+        // System Log for Finish
+        B2B_Product2BatchJobScheduler.logAndChainStopBatchJob(this, BC);
     }
 }

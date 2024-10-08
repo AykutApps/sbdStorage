@@ -1,4 +1,4 @@
-global class B2B_ProductQuantityRuleBatch implements Database.Batchable<sObject>, Database.Stateful {
+global class B2B_ProductQuantityRuleBatch extends B2B_BatchJobSchedulerAbstract implements Database.Batchable<sObject>, Database.Stateful {
     /*  
         --------------------------------------------------------------------------
         Execution Script:
@@ -22,6 +22,9 @@ global class B2B_ProductQuantityRuleBatch implements Database.Batchable<sObject>
             baseQuery += defaultWhereClause;
         }
 
+        // log Start
+        B2B_Product2BatchJobScheduler.logStartBatchJob(this, whereClause);
+
         return Database.getQueryLocator(baseQuery);
     }
 
@@ -36,5 +39,7 @@ global class B2B_ProductQuantityRuleBatch implements Database.Batchable<sObject>
     }
 
     global void finish(Database.BatchableContext BC) {
+        // System Log for Finish
+        B2B_Product2BatchJobScheduler.logAndChainStopBatchJob(this, BC);
     }
 }

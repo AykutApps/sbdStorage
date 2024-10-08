@@ -1,4 +1,4 @@
-global class \ implements Database.Batchable<sObject>, Database.Stateful {
+global class B2B_ProductCategoryBatch implements Database.Batchable<sObject>, Database.Stateful {
     /*  
         This batch class is developed for filling the B2B Product2 fiter fields
         --------------------------------------------------------------------------
@@ -13,7 +13,7 @@ global class \ implements Database.Batchable<sObject>, Database.Stateful {
     global string whereClause;
 
     global database.querylocator start(Database.BatchableContext bc) {
-        //query for pending Async_Data__c records with queue 'ESG_Link_Envelope_To_SF_Account'
+        whereClause = ' WHERE B2B_Product_Type__c != NULL';
         String query = 'SELECT Id FROM Product2';
         if (whereClause != null && whereClause != '') {
             query += whereClause;

@@ -1,4 +1,4 @@
-global class B2B_ProductAttributeBatch implements Database.Batchable<sObject>, Database.Stateful {
+global class B2B_ProductAttributeBatch extends B2B_BatchJobSchedulerAbstract implements Database.Batchable<sObject>, Database.Stateful {
     /*  
         This batch class is developed for filling the B2B Product2 fiter fields
         --------------------------------------------------------------------------
@@ -13,13 +13,16 @@ global class B2B_ProductAttributeBatch implements Database.Batchable<sObject>, D
     global string whereClause;
 
     global database.querylocator start(Database.BatchableContext bc) {
-        //query for pending Async_Data__c records with queue 'ESG_Link_Envelope_To_SF_Account'
+        whereClause = ' WHERE B2B_Product_Type__c != NULL';
         String query = 'SELECT Id FROM Product2';
         if (whereClause != null && whereClause != '') {
             query += whereClause;
         } else {
             // No where clause default
         }
+
+        // log Start
+        B2B_Product2BatchJobScheduler.logStartBatchJob(this, whereClause);
 
         return Database.getQueryLocator(query);
     }
@@ -35,5 +38,7 @@ global class B2B_ProductAttributeBatch implements Database.Batchable<sObject>, D
     }
 
     global void finish(Database.BatchableContext BC) {
+        // System Log for Finish
+        B2B_Product2BatchJobScheduler.logAndChainStopBatchJob(this, BC);
     }
 }
