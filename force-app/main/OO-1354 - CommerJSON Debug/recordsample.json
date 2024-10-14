@@ -1,0 +1,20 @@
+[
+    {
+        "category": "Cables",
+        "relatedProducts": { "X-SELL": [], "UPSELL": [], "ACCESSORY": [] },
+        "catentryId": "1909286P",
+        "additionalModelNumber": false,
+        "shortDescription": null,
+        "offerPrices": [],
+        "name": "Throttle Cable",
+        "longDescription": null,
+        "images": [],
+        "attributes": {
+            "RATINGS": [],
+            "SPECS": [{ "values": [{ "sequence": 0, "value": "Engagement" }], "grouping": "Specifications", "sequence": 19, "name": "Series", "identifier": "series" }],
+            "FEATURES": []
+        },
+        "itemNumber": "1909286P",
+        "listPrices": []
+    }
+]

@@ -33,13 +33,15 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelperTest {
         TestData_Order.createAccountPriceBookMappings(a.Entity_Id__c, pbs, true);
 
         Account_Pricebook_Mapping__c apm = [
-            SELECT Id, External_Key__c, ERP_Start_Date__c, ERP_End_Date__c, Account__c, Account__r.Entity_ID__c, Price_Book__r.External_Key__c
+            SELECT Id, CSP_Start_Date__c, CSP_End_Date__c, External_Key__c, ERP_Start_Date__c, ERP_End_Date__c, Account__c, Account__r.Entity_ID__c, Price_Book__r.External_Key__c
             FROM Account_Pricebook_Mapping__c
             LIMIT 1
         ];
         apm.External_Key__c = 'ek1';
         apm.ERP_Start_Date__c = Date.today().addDays(-1);
         apm.ERP_End_Date__c = Date.today().addDays(1);
+        apm.CSP_Start_Date__c = Date.today().addDays(-1);
+        apm.CSP_End_Date__c = Date.today().addDays(1);
         update apm;
 
         // insert Buyer Group
@@ -66,6 +68,10 @@ public with sharing class B2B_BuyerGroupAndEntitlementHelperTest {
 
         apm.ERP_Start_Date__c = Date.today().addDays(-3);
         apm.ERP_End_Date__c = Date.today().addDays(-1);
+        
+        apm.CSP_Start_Date__c = Date.today().addDays(-3);
+        apm.CSP_End_Date__c = Date.today().addDays(-1);
+        
         update apm;
 
         B2B_BuyerGroupAndEntitlementHelper.adjustBuyerGroupMember(new Set<Id>{apm.Id});

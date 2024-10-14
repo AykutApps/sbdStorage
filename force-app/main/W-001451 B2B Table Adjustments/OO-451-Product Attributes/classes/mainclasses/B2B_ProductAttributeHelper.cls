@@ -3,13 +3,27 @@ public with sharing class B2B_ProductAttributeHelper {
         Map<String, String> indetifierFieldMapping = getIdentifierFieldMapping();
 
         List<Product2> ps = [SELECT Id, Commerce_JSON__c FROM Product2 WHERE Id IN :product2Ids];
-
+        
+        System.debug('DEBUG - 1 -ps');
+        System.debug('indetifierFieldMapping');
+        System.debug(indetifierFieldMapping); 
+        System.debug('ps');
+        System.debug(ps);
         for (Product2 p : ps) {
             if (p.Commerce_JSON__c == null)
                 continue;
             Map<String, String> specMap = B2B_ProductAttributeHelper.extractSpecIdentifiersAndValues(p.Commerce_JSON__c);
+            System.debug('specMap');
+            System.debug(specMap);
             for (String identifier : indetifierFieldMapping.keySet()) {
+
                 if (specMap.keySet().contains(identifier)) {
+                    System.debug('contains identifier');
+                    System.debug(identifier);
+                    System.debug('field');
+                    System.debug(indetifierFieldMapping.get(identifier));
+                    System.debug(specMap.get(identifier));
+                    
                     p.put(indetifierFieldMapping.get(identifier), specMap.get(identifier));
                 }
             }

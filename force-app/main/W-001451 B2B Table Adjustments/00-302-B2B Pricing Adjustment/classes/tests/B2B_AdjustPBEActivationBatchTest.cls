@@ -10,8 +10,9 @@ public with sharing class B2B_AdjustPBEActivationBatchTest {
     public static void testB2B_AdjustPBEActivationBatch() {
         PricebookEntry pbe = [SELECT Id, ERP_Valid_To__c, IsActive, ERP_Future_From_Date__c FROM PricebookEntry LIMIT 1];
         pbe.ERP_Valid_To__c = Date.today().addDays(-1);
-        pbe.IsActive = true;
-        pbe.ERP_Future_Price__c = null;
+        pbe.IsActive = false;
+        pbe.ERP_Future_Price__c = 2;
+        pbe.ERP_Future_From_Date__c = Date.today();
         update pbe;
 
         Test.startTest();

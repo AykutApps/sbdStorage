@@ -93,4 +93,15 @@ public class B2B_ProductPicklistActivationHelperTest {
 
         System.assert(exceptionThrown, 'A custom exception should be thrown for unsuccessful responses.');
     }
+
+    @IsTest
+    static void testInitiatePicklistValuesFromObjectDescription_Success() {
+        String responseBody = '{"FullName":"Test.B2B_Filter_2_Cycle_Ratio__c","Metadata":{"valueSet":{"valueSetDefinition":{"value":[{"label":"Active","isActive":false,"valueName":"testvalue"}]}}}}';
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(responseBody, 200));
+
+        Test.startTest();
+        B2B_ProductPicklistActivationHelper.initiatePicklistValuesFromObjectDescription('TestFieldId');
+        Test.stopTest();
+    }
 }
