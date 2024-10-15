@@ -18,6 +18,7 @@ public with sharing class B2B_ProductCategoryHelper {
                 Commerce_JSON__c,
                 Product_Code_External_Id__c,
                 B2B_Handheld_Override__c,
+                B2B_Product_Category_Override__c,
                 (SELECT Id, IsPrimaryCategory, ProductCategory.Name FROM ProductCategoryProducts)
             FROM Product2
             WHERE Id IN :product2Ids AND (NOT Product_Code_External_Id__c LIKE '%-LEGACY')
@@ -25,7 +26,6 @@ public with sharing class B2B_ProductCategoryHelper {
         Map<String, ProductCategory> nameProductCategoryMap = getNameProductCategoryMap();
 
         for (Product2 p : prs) {
-            
             // related product category
             String productCategoryId;
 
@@ -33,23 +33,36 @@ public with sharing class B2B_ProductCategoryHelper {
             Product2 pToUpdate;
             // update Product2 if needed
             if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
-                pToUpdate = new Product2(Id = p.Id);
-                pToUpdate.Section__c = 'Part';
+                //pToUpdate = new Product2(Id = p.Id);
+                //pToUpdate.Section__c = 'Part'; //mburr.2024-08 maps to the "Type" filter in B2B Catalogs - biz does not want to filter by Part anymore
             }
 
+            CommerceData cdata = getCategoryFromCommerceJson(p.Commerce_JSON__c);
+
             // Check Product Types
-            if (p.B2B_Product_Type__c == 'Whole Goods') {
+            boolean isWG, isHH, isPart = false;
+            if (p.B2B_Product_Category_Override__c == 'Whole Good')
+                isWG = true;
+            else if (p.B2B_Product_Category_Override__c == 'Handheld')
+                isHH = true;
+            else if (p.B2B_Product_Category_Override__c == 'Part')
+                isPart = true;
+            else if (p.B2B_Product_Type__c == 'Whole Goods')
+                isWG = true;
+            else if (p.B2B_Product_Type__c == 'Parts' && cdata.category == 'Handheld')
+                isHH = true;
+            else if (p.B2B_Product_Type__c == 'Parts' || p.RecordTypeId == RecordTypes.product_Attachment.Id)
+                isPart = true;
+
+            if (isWG) {
                 productCategoryId = nameProductCategoryMap.get('Whole Goods')?.Id;
                 if (!String.isBlank(productCategoryId)) {
                     pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                } 
-            } else if (p.B2B_Product_Type__c == 'Parts') {
-                CommerceData cdata = getCategoryFromCommerceJson(p.Commerce_JSON__c);
-                if (cdata != null && String.isNotBlank(cdata.category)){
-                    
+                }
+            } else if (isHH || isPart) {
+                if (cdata != null && String.isNotBlank(cdata.category)) {
                     // Handhelds
-                    if (cdata.category == 'Handheld' || p.B2B_Handheld_Override__c) {
-                        
+                    if (isHH) {
                         //If Product2.Section__c is blank and Product2.RecordType is 'Part', then change to 'Handheld'
                         if (String.isBlank(p.Section__c) && p.RecordTypeId == RecordTypes.product_Part.Id) {
                             if (pToUpdate == null)
@@ -60,23 +73,27 @@ public with sharing class B2B_ProductCategoryHelper {
                         }
 
                         productCategoryId = nameProductCategoryMap.get('Handheld')?.Id;
-                        
+
                         if (!String.isBlank(productCategoryId)) {
                             pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                        } 
-                    // Other categories
+                        }
+                        // Other categories
                     } else {
-                        productCategoryId = (nameProductCategoryMap.get(cdata.category) == null)? nameProductCategoryMap.get('Parts')?.Id: nameProductCategoryMap.get(cdata.category)?.Id;
+                        productCategoryId = (nameProductCategoryMap.get(cdata.category) == null)
+                            ? nameProductCategoryMap.get('Parts')?.Id
+                            : nameProductCategoryMap.get(cdata.category)?.Id;
                         if (!String.isBlank(productCategoryId)) {
                             pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                        } 
+                        }
                     }
                 } else {
                     productCategoryId = nameProductCategoryMap.get('Parts')?.Id;
                     if (!String.isBlank(productCategoryId)) {
                         pcpToInsert.add(new ProductCategoryProduct(ProductCategoryId = productCategoryId, ProductId = p.Id, IsPrimaryCategory = true));
-                    } 
+                    }
                 }
+            } else {
+                //throw new MTDException('Cannot assign B2B Category for ' + p.ProductCode);
             }
 
             // delete non primary products
@@ -91,7 +108,7 @@ public with sharing class B2B_ProductCategoryHelper {
         if (!productsToUpdate.isEmpty()) {
             update productsToUpdate;
         }
-		
+
         if (!pcpToDelete.isEmpty()) {
             delete pcpToDelete;
         }
